@@ -1206,6 +1206,9 @@ function renderPinLabel(){
 //====================================================================
 let tradeWs = null;
 let tradeWsAlive = false;
+let tradeFailCount = 0;
+let tradeReconnectTimer = null;
+let lastTradeToken = null;
 let derivAuth = null;          // { loginid, is_virtual, currency, balance }
 let autoTradeEnabled = false;
 let confirmBeforeFire = true;
@@ -1242,6 +1245,8 @@ connectDerivBtn.addEventListener('click', () => {
   const tok = apiTokenInput.value.trim();
   if (!tok) { acctLine.textContent = 'Enter a Deriv API token first (Settings → API Token on deriv.com).'; return; }
   localStorage.setItem('deriv_token', tok);
+  tradeFailCount = 0;
+  clearTimeout(tradeReconnectTimer);
   connectTradingSocket(tok);
 });
 
@@ -1273,20 +1278,31 @@ killSwitchBtn.addEventListener('click', () => {
 });
 
 function connectTradingSocket(token){
-  setTradeStatus(false, 'trading: connecting…');
+  lastTradeToken = token;
+  setTradeStatus(false, (tradeFailCount ? 'trading: retrying… ' : 'trading: connecting…'));
+  let sock;
   try {
-    tradeWs = new WebSocket(TRADE_WS_URL);
+    sock = new WebSocket(TRADE_WS_URL);
   } catch (e) {
     setTradeStatus(false, 'trading: failed to open socket');
     logLine(`trading socket create failed: ${e.message}`, 'warn');
+    tradeFailCount++;
+    scheduleTradeReconnect();
     return;
   }
+  tradeWs = sock;
+  let tradeGotAuth = false;
+
   tradeWs.onopen = () => {
+    if (sock !== tradeWs) return;
     tradeWsAlive = true;
     setTradeStatus(false, 'trading: authorizing…');
+    logLine('trading socket open — authorizing…', 'trade');
     tradeWs.send(JSON.stringify({ authorize: token }));
   };
   tradeWs.onmessage = (msg) => {
+    if (sock !== tradeWs) return;
+    lastTradeMsgAt = Date.now();
     let data;
     try { data = JSON.parse(msg.data); } catch (e) { return; }
 
@@ -1304,9 +1320,12 @@ function connectTradingSocket(token){
 
     if (data.msg_type === 'authorize') {
       const a = data.authorize;
+      tradeGotAuth = true;
+      tradeFailCount = 0;
       derivAuth = { loginid: a.loginid, is_virtual: a.is_virtual, currency: a.currency, balance: a.balance };
       setTradeStatus(true, 'trading: connected');
       renderAcctLine();
+      autoTradeBtn.disabled = false;
       tradeWs.send(JSON.stringify({ balance: 1, subscribe: 1 }));
       logLine(`trading account authorized: ${a.loginid} (${a.is_virtual ? 'DEMO' : 'REAL'})`, 'trade');
       return;
@@ -1338,13 +1357,41 @@ function connectTradingSocket(token){
       return;
     }
   };
-  tradeWs.onclose = () => {
+  tradeWs.onclose = (e) => {
+    if (sock !== tradeWs) return; // a newer socket has replaced this one — ignore stale close
     tradeWsAlive = false;
-    setTradeStatus(false, 'trading: disconnected');
-    logLine('trading socket closed', 'warn');
+    derivAuth = null;
+    renderAcctLine();
+    autoTradeBtn.disabled = true;
+    tradeFailCount++;
+    const detail = `code ${e.code}${e.reason ? ' ' + e.reason : ''}`;
+    setTradeStatus(false, `trading: closed (${detail}) — retrying`);
+    logLine(`trading socket closed (${detail})${tradeGotAuth ? ' after authorizing' : ' — never authorized'} — retrying`, 'warn');
+    scheduleTradeReconnect();
   };
-  tradeWs.onerror = () => { try { tradeWs.close(); } catch (e) {} };
+  tradeWs.onerror = () => { try { sock.close(); } catch (e) {} };
 }
+
+function scheduleTradeReconnect(){
+  if (!lastTradeToken) return;
+  clearTimeout(tradeReconnectTimer);
+  const delay = Math.min(3000 * tradeFailCount, 20000);
+  tradeReconnectTimer = setTimeout(() => connectTradingSocket(lastTradeToken), delay);
+}
+
+// Trading socket also goes stale on backgrounded mobile tabs without a clean close event.
+// A periodic watchdog forces a reconnect if we haven't heard anything in a while.
+let lastTradeMsgAt = Date.now();
+setInterval(() => {
+  if (tradeWs && tradeWs.readyState === WebSocket.OPEN) {
+    if (Date.now() - lastTradeMsgAt > STALE_MS) {
+      logLine('trading feed stale — forcing reconnect', 'warn');
+      tradeWs.close();
+    } else {
+      tradeSend({ ping: 1 });
+    }
+  }
+}, PING_MS);
 
 function tradeSend(obj){
   if (tradeWs && tradeWs.readyState === WebSocket.OPEN) { tradeWs.send(JSON.stringify(obj)); return true; }

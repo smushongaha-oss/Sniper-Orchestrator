@@ -30,48 +30,48 @@
     font-family:'Courier New', ui-monospace, monospace;
     overflow:auto;
   }
-  .shell{min-height:100%;padding:10px;display:grid;grid-template-rows:auto 1fr auto;gap:10px;}
-  .topbar,.panel{
+ .shell{min-height:100%;padding:10px;display:grid;grid-template-rows:auto 1fr auto;gap:10px;}
+ .topbar,.panel{
     background:linear-gradient(180deg, rgba(12,28,40,0.92), rgba(7,16,24,0.96));
     border:1px solid var(--line);
     border-radius:10px;
     box-shadow:0 0 24px rgba(51,214,255,0.05), inset 0 0 20px rgba(51,214,255,0.02);
   }
-  .topbar{
+ .topbar{
     display:grid;
     grid-template-columns:1.4fr 1fr 1.2fr;
     gap:12px;
     padding:12px 14px;
     align-items:center;
   }
-  .brand{min-width:0;}
-  .brand h1{margin:0;font-size:13px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 10px rgba(51,214,255,.35);}
-  .brand .sub{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .pnl-hero{text-align:center;}
-  .pnl-hero .k{font-size:10px;letter-spacing:2px;color:var(--muted);}
-  .pnl-hero .v{font-size:34px;font-weight:700;color:var(--green);text-shadow:0 0 18px rgba(61,220,132,.35);line-height:1.1;}
-  .pnl-hero .m{font-size:10px;color:var(--muted);margin-top:2px;}
-  .pnl-hero .live-usd{font-size:12px;color:var(--amber);margin-top:4px;}
-  .conn{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:11px;color:var(--muted);}
-  .conn-row{display:flex;align-items:center;gap:8px;}
+ .brand{min-width:0;}
+ .brand h1{margin:0;font-size:13px;letter-spacing:2px;color:var(--cyan);text-shadow:0 0 10px rgba(51,214,255,.35);}
+ .brand.sub{font-size:10px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+ .pnl-hero{text-align:center;}
+ .pnl-hero.k{font-size:10px;letter-spacing:2px;color:var(--muted);}
+ .pnl-hero.v{font-size:34px;font-weight:700;color:var(--green);text-shadow:0 0 18px rgba(61,220,132,.35);line-height:1.1;}
+ .pnl-hero.m{font-size:10px;color:var(--muted);margin-top:2px;}
+ .pnl-hero.live-usd{font-size:12px;color:var(--amber);margin-top:4px;}
+ .conn{display:flex;flex-direction:column;align-items:flex-end;gap:4px;font-size:11px;color:var(--muted);}
+ .conn-row{display:flex;align-items:center;gap:8px;}
   #statusText{text-align:right;min-width:0;overflow-wrap:anywhere;}
-  .status-dot{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 6px currentColor;}
-  .status-dot.live{background:var(--green);}
-  .status-dot.trade-live{background:var(--green);}
-  .status-dot.trade-off{background:var(--muted);}
-  .grid{
+ .status-dot{flex:0 0 8px;width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 6px currentColor;}
+ .status-dot.live{background:var(--green);}
+ .status-dot.trade-live{background:var(--green);}
+ .status-dot.trade-off{background:var(--muted);}
+ .grid{
     display:grid;
     grid-template-columns:280px 1fr 300px;
     grid-template-rows:minmax(320px,1fr) 250px;
     gap:10px;
     min-height:0;
   }
-  .left,.center,.right,.bottom-l,.bottom-r{min-width:0;min-height:0;}
-  .bottom-l{grid-column:1 / 3;}
-  .panel{padding:12px;overflow:auto;}
-  .sec{font-size:10px;letter-spacing:2px;color:var(--cyan-dim);margin:0 0 8px;}
-  .row{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted);margin:4px 0;}
-  .row .val{color:var(--text);text-align:right;}
+ .left,.center,.right,.bottom-l,.bottom-r{min-width:0;min-height:0;}
+ .bottom-l{grid-column:1 / 3;}
+ .panel{padding:12px;overflow:auto;}
+ .sec{font-size:10px;letter-spacing:2px;color:var(--cyan-dim);margin:0 0 8px;}
+ .row{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted);margin:4px 0;}
+ .row.val{color:var(--text);text-align:right;}
   label{font-size:10px;letter-spacing:1px;color:var(--muted);}
   select,input,button{
     background:#07141f;
@@ -86,110 +86,103 @@
   button{cursor:pointer;letter-spacing:1px;}
   button:hover{filter:brightness(1.15);}
   button:disabled{opacity:.4;cursor:not-allowed;}
-  .controls{display:grid;gap:7px;margin-bottom:10px;}
-  .split{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-  .dual{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
-  .dual > div{min-width:0;}
+ .controls{display:grid;gap:7px;margin-bottom:10px;}
+ .split{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+ .dual{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+ .dual > div{min-width:0;}
   svg.gauge{display:block;width:100%;height:auto;}
-  .needle{transition:transform .6s cubic-bezier(.4,1.4,.4,1);}
-  .spark-wrap{height:170px;position:relative;border:1px solid var(--line);border-radius:8px;background:#040b12;margin:6px 0 10px;}
+ .needle{transition:transform.6s cubic-bezier(.4,1.4,.4,1);}
+ .spark-wrap{height:170px;position:relative;border:1px solid var(--line);border-radius:8px;background:#040b12;margin:6px 0 10px;}
   #priceSpark{width:100%;height:100%;display:block;}
-  .sniper-banner{
+ .sniper-banner{
     border-radius:8px;padding:12px;text-align:center;letter-spacing:2px;font-size:15px;font-weight:700;
     border:1px solid var(--muted);color:var(--muted);background:rgba(255,255,255,0.02);
   }
-  .sniper-banner.buy{border-color:var(--green);color:var(--green);box-shadow:0 0 18px rgba(61,220,132,.22);background:rgba(61,220,132,.06);}
-  .sniper-banner.sell{border-color:var(--red);color:var(--red);box-shadow:0 0 18px rgba(255,77,77,.22);background:rgba(255,77,77,.06);}
-  .sniper-banner.tp{border-color:var(--amber);color:var(--amber);box-shadow:0 0 18px rgba(255,176,32,.25);background:rgba(255,176,32,.08);}
-  .sniper-banner.sl{border-color:var(--red);color:var(--red);}
-  .sniper-banner.armed{border-color:var(--amber);color:var(--amber);background:rgba(255,176,32,.05);}
-  .sniper-sub{font-size:10px;letter-spacing:1px;color:var(--muted);margin-top:6px;font-weight:400;line-height:1.5;}
-  .tp-stats{display:flex;justify-content:center;gap:12px;margin-top:10px;flex-wrap:wrap;}
-  .tp-label{font-size:9px;letter-spacing:2px;color:var(--muted);}
-  .tp-value{font-size:13px;font-weight:700;}
-  .tp-value.hit{color:var(--green);text-decoration:line-through;}
-  .tp-value.sl-value{color:var(--red);}
-  .statg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .stat{border:1px solid var(--line);border-radius:7px;padding:8px;}
-  .stat .k{font-size:9px;letter-spacing:1px;color:var(--muted);}
-  .stat .v{font-size:15px;color:var(--green);margin-top:3px;}
-  .log{font-size:10px;line-height:1.55;color:#8fb4c6;white-space:pre-wrap;}
-  .log .buy{color:var(--green);}
-  .log .sell{color:var(--red);}
-  .log .info{color:var(--cyan);}
-  .log .warn{color:var(--amber);}
-  .log .trade{color:var(--pink);}
-  .fills{font-size:10px;}
-  .fill{display:grid;grid-template-columns:52px 1fr 70px 70px;gap:6px;padding:4px 0;border-bottom:1px solid #0e2430;color:var(--muted);}
-  .footer-note{font-size:10px;color:var(--muted);line-height:1.55;padding:8px 4px 4px;}
-
-  /* scanner list */
-  .scan-status{font-size:10px;color:var(--muted);margin-bottom:4px;}
-  .pin-label{font-size:10px;color:var(--cyan-dim);margin-bottom:8px;}
-  .scan-header,.scan-row{
+ .sniper-banner.buy{border-color:var(--green);color:var(--green);box-shadow:0 0 18px rgba(61,220,132,.22);background:rgba(61,220,132,.06);}
+ .sniper-banner.sell{border-color:var(--red);color:var(--red);box-shadow:0 0 18px rgba(255,77,77,.22);background:rgba(255,77,77,.06);}
+ .sniper-banner.tp{border-color:var(--amber);color:var(--amber);box-shadow:0 0 18px rgba(255,176,32,.25);background:rgba(255,176,32,.08);}
+ .sniper-banner.sl{border-color:var(--red);color:var(--red);}
+ .sniper-banner.armed{border-color:var(--amber);color:var(--amber);background:rgba(255,176,32,.05);}
+ .sniper-sub{font-size:10px;letter-spacing:1px;color:var(--muted);margin-top:6px;font-weight:400;line-height:1.5;}
+ .tp-stats{display:flex;justify-content:center;gap:12px;margin-top:10px;flex-wrap:wrap;}
+ .tp-label{font-size:9px;letter-spacing:2px;color:var(--muted);}
+ .tp-value{font-size:13px;font-weight:700;}
+ .tp-value.hit{color:var(--green);text-decoration:line-through;}
+ .tp-value.sl-value{color:var(--red);}
+ .statg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+ .stat{border:1px solid var(--line);border-radius:7px;padding:8px;}
+ .stat.k{font-size:9px;letter-spacing:1px;color:var(--muted);}
+ .stat.v{font-size:15px;color:var(--green);margin-top:3px;}
+ .log{font-size:10px;line-height:1.55;color:#8fb4c6;white-space:pre-wrap;}
+ .log.buy{color:var(--green);}
+ .log.sell{color:var(--red);}
+ .log.info{color:var(--cyan);}
+ .log.warn{color:var(--amber);}
+ .log.trade{color:var(--pink);}
+ .fills{font-size:10px;}
+ .fill{display:grid;grid-template-columns:52px 1fr 70px 70px;gap:6px;padding:4px 0;border-bottom:1px solid #0e2430;color:var(--muted);}
+ .footer-note{font-size:10px;color:var(--muted);line-height:1.55;padding:8px 4px 4px;}
+ .scan-status{font-size:10px;color:var(--muted);margin-bottom:4px;}
+ .pin-label{font-size:10px;color:var(--cyan-dim);margin-bottom:8px;}
+ .scan-header,.scan-row{
     display:grid;grid-template-columns:1fr 30px 30px 68px;gap:4px;align-items:center;
     font-size:9.5px;padding:4px 2px;border-bottom:1px solid #0e2430;
   }
-  .scan-header{color:var(--muted);letter-spacing:1px;}
-  .scan-row{color:#8fb4c6;cursor:pointer;}
-  .scan-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .scan-row:hover{background:rgba(51,214,255,0.05);}
-  .scan-row.focused{background:rgba(51,214,255,0.10);}
-  .scan-row.r-entry{color:var(--green);}
-  .scan-row.r-armed{color:var(--amber);}
-  .scan-row.r-aligned{color:var(--cyan);}
-  .scan-list{max-height:190px;overflow:auto;margin-bottom:8px;}
-
-  /* live trading panel */
-  .live-panel{border:1px solid var(--pink);border-radius:8px;padding:9px;margin-bottom:10px;background:rgba(255,77,154,0.03);}
-  .live-title{font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:8px;}
-  .badge{display:inline-block;font-size:9px;letter-spacing:1px;padding:2px 6px;border-radius:4px;margin-left:6px;}
-  .badge-demo{background:rgba(61,220,132,.15);color:var(--green);border:1px solid var(--green);}
-  .badge-real{background:rgba(255,77,77,.18);color:var(--red);border:1px solid var(--red);}
-  .toggle-btn{width:100%;text-align:center;}
-  .toggle-btn.on{border-color:var(--green);color:var(--green);background:rgba(61,220,132,.08);}
-  .toggle-btn.off{border-color:var(--muted);color:var(--muted);}
-  .kill-btn{width:100%;background:rgba(255,77,77,.15);border-color:var(--red);color:var(--red);font-weight:700;margin-top:8px;}
-  .kill-btn:hover{background:rgba(255,77,77,.28);}
-  .acct-line{font-size:10px;color:var(--muted);margin:6px 0;line-height:1.6;}
-  .acct-line b{color:var(--text);}
-  .pos-row{display:grid;grid-template-columns:1fr 55px 55px 40px;gap:4px;font-size:9.5px;padding:4px 2px;border-bottom:1px solid #0e2430;color:#8fb4c6;align-items:center;}
-  .pos-row .p-pos{color:var(--green);}
-  .pos-row .p-neg{color:var(--red);}
-  .pos-close-btn{font-size:9px;padding:2px 5px;}
-  .confirm-card{
+ .scan-header{color:var(--muted);letter-spacing:1px;}
+ .scan-row{color:#8fb4c6;cursor:pointer;}
+ .scan-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+ .scan-row:hover{background:rgba(51,214,255,0.05);}
+ .scan-row.focused{background:rgba(51,214,255,0.10);}
+ .scan-row.r-entry{color:var(--green);}
+ .scan-row.r-armed{color:var(--amber);}
+ .scan-row.r-aligned{color:var(--cyan);}
+ .scan-list{max-height:190px;overflow:auto;margin-bottom:8px;}
+ .live-panel{border:1px solid var(--pink);border-radius:8px;padding:9px;margin-bottom:10px;background:rgba(255,77,154,0.03);}
+ .live-title{font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:8px;}
+ .badge{display:inline-block;font-size:9px;letter-spacing:1px;padding:2px 6px;border-radius:4px;margin-left:6px;}
+ .badge-demo{background:rgba(61,220,132,.15);color:var(--green);border:1px solid var(--green);}
+ .badge-real{background:rgba(255,77,77,.18);color:var(--red);border:1px solid var(--red);}
+ .toggle-btn{width:100%;text-align:center;}
+ .toggle-btn.on{border-color:var(--green);color:var(--green);background:rgba(61,220,132,.08);}
+ .toggle-btn.off{border-color:var(--muted);color:var(--muted);}
+ .kill-btn{width:100%;background:rgba(255,77,77,.15);border-color:var(--red);color:var(--red);font-weight:700;margin-top:8px;}
+ .acct-line{font-size:10px;color:var(--muted);margin:6px 0;line-height:1.6;}
+ .acct-line b{color:var(--text);}
+ .pos-row{display:grid;grid-template-columns:1fr 55px 55px 40px;gap:4px;font-size:9.5px;padding:4px 2px;border-bottom:1px solid #0e2430;color:#8fb4c6;align-items:center;}
+ .pos-row.p-pos{color:var(--green);}
+ .pos-row.p-neg{color:var(--red);}
+ .pos-close-btn{font-size:9px;padding:2px 5px;}
+ .confirm-card{
     border:2px solid var(--amber);border-radius:10px;padding:14px;margin-top:10px;
     background:rgba(255,176,32,.06);box-shadow:0 0 20px rgba(255,176,32,.2);
   }
-  .confirm-card h3{margin:0 0 8px;font-size:14px;color:var(--amber);letter-spacing:1px;}
-  .confirm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;font-size:11px;}
-  .confirm-grid .k{color:var(--muted);font-size:9px;letter-spacing:1px;}
-  .confirm-grid .v{color:var(--text);font-size:13px;font-weight:700;}
-  .confirm-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-  .confirm-approve{background:rgba(61,220,132,.18);border-color:var(--green);color:var(--green);font-weight:700;}
-  .confirm-reject{background:rgba(255,77,77,.15);border-color:var(--red);color:var(--red);font-weight:700;}
-  .confirm-timer{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;}
-
-  /* ---- Tablet / phone: single column ---- */
+ .confirm-card h3{margin:0 0 8px;font-size:14px;color:var(--amber);letter-spacing:1px;}
+ .confirm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;font-size:11px;}
+ .confirm-grid.k{color:var(--muted);font-size:9px;letter-spacing:1px;}
+ .confirm-grid.v{color:var(--text);font-size:13px;font-weight:700;}
+ .confirm-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+ .confirm-approve{background:rgba(61,220,132,.18);border-color:var(--green);color:var(--green);font-weight:700;}
+ .confirm-reject{background:rgba(255,77,77,.15);border-color:var(--red);color:var(--red);font-weight:700;}
+ .confirm-timer{font-size:10px;color:var(--muted);text-align:center;margin-top:6px;}
   @media (max-width:1100px){
-    .topbar{grid-template-columns:1fr;}
-    .conn{align-items:flex-start;}
+   .topbar{grid-template-columns:1fr;}
+   .conn{align-items:flex-start;}
     #statusText{text-align:left;}
-    .grid{
+   .grid{
       grid-template-columns:minmax(0,1fr);
       grid-template-rows:none;
       grid-auto-rows:auto;
     }
-    .bottom-l{grid-column:auto;}
-    .panel{overflow:visible;}
-    .bottom-l .log{max-height:220px;overflow:auto;}
-    .scan-list{max-height:260px;}
-    select,input,button{font-size:16px;} /* stops iOS zoom-on-focus */
+   .bottom-l{grid-column:auto;}
+   .panel{overflow:visible;}
+   .bottom-l.log{max-height:220px;overflow:auto;}
+   .scan-list{max-height:260px;}
+    select,input,button{font-size:16px;}
   }
   @media (max-width:700px){
-    .dual{grid-template-columns:1fr;}
-    .pnl-hero .v{font-size:30px;}
-    .confirm-grid{grid-template-columns:1fr 1fr;}
+   .dual{grid-template-columns:1fr;}
+   .pnl-hero.v{font-size:30px;}
+   .confirm-grid{grid-template-columns:1fr 1fr;}
   }
 </style>
 </head>
@@ -211,7 +204,6 @@
       <div class="conn-row"><span class="status-dot trade-off" id="tradeDot"></span><span id="tradeStatusText">trading: not connected</span></div>
     </div>
   </header>
-
   <div class="grid">
     <aside class="panel left">
       <div class="sec">ORCHESTRATOR // CONTROLS</div>
@@ -232,7 +224,6 @@
         </div>
         <button id="notifyBtn">🔔 ENABLE NOTIFICATIONS</button>
       </div>
-
       <div class="live-panel">
         <div class="live-title">LIVE TRADING // DERIV API</div>
         <div class="controls">
@@ -241,7 +232,6 @@
           <button id="connectDerivBtn">CONNECT</button>
         </div>
         <div class="acct-line" id="acctLine">Not connected.</div>
-
         <div class="split" style="margin-bottom:7px;">
           <button id="autoTradeBtn" class="toggle-btn off">AUTO-TRADE: OFF</button>
           <button id="confirmToggleBtn" class="toggle-btn on">CONFIRM: ON</button>
@@ -267,21 +257,17 @@
           </div>
         </div>
         <button id="killSwitchBtn" class="kill-btn">🛑 STOP ALL & CLOSE POSITIONS</button>
-
         <div class="sec" style="margin-top:10px;">OPEN LIVE POSITIONS</div>
         <div id="livePositionsList" style="font-size:10px;color:var(--muted);">none</div>
       </div>
-
       <div class="sec">SCAN STATUS</div>
       <div class="scan-status" id="scanCount">0 scanned</div>
       <div class="pin-label" id="pinLabel">AUTO — tap a row to pin</div>
-
       <div class="sec">SCANNER // ALL INSTRUMENTS</div>
       <div class="scan-header">
         <span>SYM</span><span>H1</span><span>M1</span><span>STATUS</span>
       </div>
       <div class="scan-list" id="scanBody"></div>
-
       <div class="sec">TELEGRAM ALERTS</div>
       <div class="controls">
         <input type="text" id="tgToken" placeholder="Bot token (@BotFather)">
@@ -293,32 +279,18 @@
         <div id="tgStatus" style="font-size:10px;color:var(--muted);"></div>
       </div>
     </aside>
-
     <section class="panel center">
       <div class="sec">CUMULATIVE PATH // M1 CLOSE — FOCUS INSTRUMENT</div>
       <div class="spark-wrap">
         <svg id="priceSpark" viewBox="0 0 680 180" preserveAspectRatio="none"></svg>
       </div>
-
       <div class="dual">
         <div>
           <div class="sec">H1 — STRUCTURE / TREND BIAS</div>
           <div class="row"><span>Price</span><span class="val" id="h1Price">—</span></div>
           <div class="row"><span>Last Swing High</span><span class="val" id="h1SwingHigh">—</span></div>
           <div class="row"><span>Last Swing Low</span><span class="val" id="h1SwingLow">—</span></div>
-          <svg class="gauge" viewBox="0 0 680 300" role="img" aria-label="H1 bias gauge">
-            <path d="M120,260 A220,220 0 0,1 162,131" fill="none" stroke="#7a1f1f" stroke-width="40"/>
-            <path d="M162,131 A220,220 0 0,1 272,51"  fill="none" stroke="#7a4a15" stroke-width="40"/>
-            <path d="M272,51  A220,220 0 0,1 408,51"  fill="none" stroke="#33465a" stroke-width="40"/>
-            <path d="M408,51  A220,220 0 0,1 518,131" fill="none" stroke="#2f6b3a" stroke-width="40"/>
-            <path d="M518,131 A220,220 0 0,1 560,260" fill="none" stroke="#1d4d26" stroke-width="40"/>
-            <text x="90" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BEARISH</text>
-            <text x="590" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BULLISH</text>
-            <line id="h1Needle" class="needle" x1="340" y1="260" x2="130" y2="260" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round" transform="rotate(90,340,260)" style="filter:drop-shadow(0 0 4px rgba(51,214,255,0.8));"/>
-            <circle cx="340" cy="260" r="9" fill="var(--cyan)"/>
-            <text id="h1ValLabel" x="340" y="205" text-anchor="middle" fill="var(--cyan)" style="font-size:22px;font-family:'Courier New',monospace;">—</text>
-            <text id="h1StatusLabel" x="340" y="228" text-anchor="middle" fill="var(--muted)" style="font-size:12px;letter-spacing:2px;">WAITING</text>
-          </svg>
+          <svg class="gauge" viewBox="0 0 680 300"><path d="M120,260 A220,220 0 0,1 162,131" fill="none" stroke="#7a1f1f" stroke-width="40"/><path d="M162,131 A220,220 0 0,1 272,51" fill="none" stroke="#7a4a15" stroke-width="40"/><path d="M272,51 A220,220 0 0,1 408,51" fill="none" stroke="#33465a" stroke-width="40"/><path d="M408,51 A220,220 0 0,1 518,131" fill="none" stroke="#2f6b3a" stroke-width="40"/><path d="M518,131 A220,220 0 0,1 560,260" fill="none" stroke="#1d4d26" stroke-width="40"/><text x="90" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BEARISH</text><text x="590" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BULLISH</text><line id="h1Needle" class="needle" x1="340" y1="260" x2="130" y2="260" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round" transform="rotate(90,340,260)"/><circle cx="340" cy="260" r="9" fill="var(--cyan)"/><text id="h1ValLabel" x="340" y="205" text-anchor="middle" fill="var(--cyan)" style="font-size:22px;">—</text><text id="h1StatusLabel" x="340" y="228" text-anchor="middle" fill="var(--muted)" style="font-size:12px;letter-spacing:2px;">WAITING</text></svg>
         </div>
         <div>
           <div class="sec">M1 — BOS / RETEST ENTRY</div>
@@ -327,22 +299,9 @@
           <div class="row"><span>Last Swing Low</span><span class="val" id="m1SwingLow">—</span></div>
           <div class="row"><span>Last Break</span><span class="val" id="m1BreakType">—</span></div>
           <div class="row"><span>Liquidity Sweep</span><span class="val" id="m1Sweep">—</span></div>
-          <svg class="gauge" viewBox="0 0 680 300" role="img" aria-label="M1 entry gauge">
-            <path d="M120,260 A220,220 0 0,1 162,131" fill="none" stroke="#7a1f1f" stroke-width="40"/>
-            <path d="M162,131 A220,220 0 0,1 272,51"  fill="none" stroke="#7a4a15" stroke-width="40"/>
-            <path d="M272,51  A220,220 0 0,1 408,51"  fill="none" stroke="#33465a" stroke-width="40"/>
-            <path d="M408,51  A220,220 0 0,1 518,131" fill="none" stroke="#2f6b3a" stroke-width="40"/>
-            <path d="M518,131 A220,220 0 0,1 560,260" fill="none" stroke="#1d4d26" stroke-width="40"/>
-            <text x="90" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BEARISH</text>
-            <text x="590" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BULLISH</text>
-            <line id="m1Needle" class="needle" x1="340" y1="260" x2="130" y2="260" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round" transform="rotate(90,340,260)" style="filter:drop-shadow(0 0 4px rgba(51,214,255,0.8));"/>
-            <circle cx="340" cy="260" r="9" fill="var(--cyan)"/>
-            <text id="m1ValLabel" x="340" y="205" text-anchor="middle" fill="var(--cyan)" style="font-size:22px;font-family:'Courier New',monospace;">—</text>
-            <text id="m1StatusLabel" x="340" y="228" text-anchor="middle" fill="var(--muted)" style="font-size:12px;letter-spacing:2px;">WAITING</text>
-          </svg>
+          <svg class="gauge" viewBox="0 0 680 300"><path d="M120,260 A220,220 0 0,1 162,131" fill="none" stroke="#7a1f1f" stroke-width="40"/><path d="M162,131 A220,220 0 0,1 272,51" fill="none" stroke="#7a4a15" stroke-width="40"/><path d="M272,51 A220,220 0 0,1 408,51" fill="none" stroke="#33465a" stroke-width="40"/><path d="M408,51 A220,220 0 0,1 518,131" fill="none" stroke="#2f6b3a" stroke-width="40"/><path d="M518,131 A220,220 0 0,1 560,260" fill="none" stroke="#1d4d26" stroke-width="40"/><text x="90" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BEARISH</text><text x="590" y="285" text-anchor="middle" fill="var(--muted)" font-size="11">BULLISH</text><line id="m1Needle" class="needle" x1="340" y1="260" x2="130" y2="260" stroke="var(--cyan)" stroke-width="3" stroke-linecap="round" transform="rotate(90,340,260)"/><circle cx="340" cy="260" r="9" fill="var(--cyan)"/><text id="m1ValLabel" x="340" y="205" text-anchor="middle" fill="var(--cyan)" style="font-size:22px;">—</text><text id="m1StatusLabel" x="340" y="228" text-anchor="middle" fill="var(--muted)" style="font-size:12px;letter-spacing:2px;">WAITING</text></svg>
         </div>
       </div>
-
       <div class="sniper-banner" id="sniperBanner">
         SCANNING — NO ALIGNED SETUP YET
         <div class="tp-stats" id="tpStats" style="display:none;">
@@ -354,10 +313,8 @@
         </div>
         <div class="sniper-sub">Watching instruments for H1/M1 alignment</div>
       </div>
-
       <div id="confirmCardHolder"></div>
     </section>
-
     <aside class="panel right">
       <div class="sec">PERFORMANCE STATS</div>
       <div class="statg">
@@ -371,7 +328,6 @@
         <div class="fill"><span>TIME</span><span>SIDE</span><span>ENTRY</span><span>RESULT</span></div>
       </div>
     </aside>
-
     <section class="panel bottom-l">
       <div class="sec">EXECUTION LOG // TOOL CALLS</div>
       <div class="log" id="execLog">waiting for live ticks…</div>
@@ -379,31 +335,19 @@
     <section class="panel bottom-r">
       <div class="sec">NOTES</div>
       <div class="footer-note">
-        Scans all 13 Volatility instruments at once for H1/M1-aligned BOS/CHoCH + retest setups. Paper tracker (top-left PNL) always runs in R multiples regardless of live trading state.
-        <br><br>
-        <b>LIVE TRADING:</b> connect a Deriv API token (Read+Trade scope). Connecting fetches your options-trading accounts, requests a one-time password (OTP) for one of them, then opens a dedicated OTP-scoped trading socket — Deriv rejects the older direct-authorize connection method for third-party apps. Deriv's Multiplier contracts only support ONE stop_loss and ONE take_profit per contract (in dollar amounts, not price) — so a live trade uses TP1 as its real take_profit; TP2/TP3 remain reference-only, not automatically exercised. The dollar SL/TP sent to Deriv is converted from the structure engine's price levels using stake × multiplier × (price distance ÷ entry price) — an approximation that excludes commission/financing.
-        With CONFIRM ON (default), every signal shows a 15-second approval card before anything is sent to Deriv — nothing fires without you tapping Approve. MAX OPEN and MAX DAILY LOSS are hard caps enforced locally; breaching the daily loss cap auto-disables auto-trade. The execution log prints the raw accounts response on connect — if account selection ever looks wrong, that line shows why.
-        Start on a DEMO account token. Validate thoroughly before ever pointing this at a real-money token.
+        Your App ID is now <b>34uEO9DPEeYnaZ71rfMT8</b> — this fixes the 401 Invalid application error.
+        Start on DEMO.
       </div>
     </section>
   </div>
 </div>
-
 <script>
-const APP_ID = 1089;
-
-// ---- Market-data socket (unchanged from prior version: public, no auth) ----
+const APP_ID = '34uEO9DPEeYnaZ71rfMT8';
 const WS_ENDPOINTS = [
-  { name: 'api.derivws.com (new public API)', short: 'new API',        url: 'wss://api.derivws.com/trading/v1/options/ws/public',   legacy: false },
-  { name: 'ws.derivws.com (legacy)',          short: 'legacy derivws', url: `wss://ws.derivws.com/websockets/v3?app_id=${APP_ID}`,  legacy: true  },
-  { name: 'ws.binaryws.com (legacy)',         short: 'legacy binary',  url: `wss://ws.binaryws.com/websockets/v3?app_id=${APP_ID}`, legacy: true  }
+  { name: 'api.derivws.com (new public API)', short: 'new API', url: 'wss://api.derivws.com/trading/v1/options/ws/public', legacy: false },
+  { name: 'ws.derivws.com (legacy)', short: 'legacy derivws', url: `wss://ws.derivws.com/websockets/v3?app_id=${APP_ID}`, legacy: true },
+  { name: 'ws.binaryws.com (legacy)', short: 'legacy binary', url: `wss://ws.binaryws.com/websockets/v3?app_id=${APP_ID}`, legacy: true }
 ];
-
-// ---- Trading socket (separate connection, opened only once a token is entered) ----
-// Deriv now requires an OTP-scoped connection for third-party trading apps
-// (see startTradingConnection): REST accounts -> REST otp -> WS with ?otp=...
-// The old ?app_id=1089 authorize-message flow is rejected outright (code 1006).
-
 const GRAN_H1 = 3600;
 const GRAN_M1 = 60;
 const ATR_PERIOD = 14;
@@ -415,23 +359,21 @@ const STALE_MS = 45 * 1000;
 const LB_MIN = 10;
 const LB_MAX = 80;
 const CONFIRM_TIMEOUT_S = 15;
-
 const SCAN_SYMBOLS = [
-  { symbol: 'R_10',    display_name: 'Volatility 10 Index' },
-  { symbol: 'R_25',    display_name: 'Volatility 25 Index' },
-  { symbol: 'R_50',    display_name: 'Volatility 50 Index' },
-  { symbol: 'R_75',    display_name: 'Volatility 75 Index' },
-  { symbol: 'R_100',   display_name: 'Volatility 100 Index' },
-  { symbol: '1HZ10V',  display_name: 'Volatility 10 (1s) Index' },
-  { symbol: '1HZ15V',  display_name: 'Volatility 15 (1s) Index' },
-  { symbol: '1HZ25V',  display_name: 'Volatility 25 (1s) Index' },
-  { symbol: '1HZ30V',  display_name: 'Volatility 30 (1s) Index' },
-  { symbol: '1HZ50V',  display_name: 'Volatility 50 (1s) Index' },
-  { symbol: '1HZ75V',  display_name: 'Volatility 75 (1s) Index' },
-  { symbol: '1HZ90V',  display_name: 'Volatility 90 (1s) Index' },
+  { symbol: 'R_10', display_name: 'Volatility 10 Index' },
+  { symbol: 'R_25', display_name: 'Volatility 25 Index' },
+  { symbol: 'R_50', display_name: 'Volatility 50 Index' },
+  { symbol: 'R_75', display_name: 'Volatility 75 Index' },
+  { symbol: 'R_100', display_name: 'Volatility 100 Index' },
+  { symbol: '1HZ10V', display_name: 'Volatility 10 (1s) Index' },
+  { symbol: '1HZ15V', display_name: 'Volatility 15 (1s) Index' },
+  { symbol: '1HZ25V', display_name: 'Volatility 25 (1s) Index' },
+  { symbol: '1HZ30V', display_name: 'Volatility 30 (1s) Index' },
+  { symbol: '1HZ50V', display_name: 'Volatility 50 (1s) Index' },
+  { symbol: '1HZ75V', display_name: 'Volatility 75 (1s) Index' },
+  { symbol: '1HZ90V', display_name: 'Volatility 90 (1s) Index' },
   { symbol: '1HZ100V', display_name: 'Volatility 100 (1s) Index' }
 ];
-
 let symbolState = {};
 SCAN_SYMBOLS.forEach(s => {
   symbolState[s.symbol] = {
@@ -444,7 +386,6 @@ SCAN_SYMBOLS.forEach(s => {
     lastPrice: null
   };
 });
-
 let ws;
 let currentEp = WS_ENDPOINTS[0];
 let endpointIdx = 0;
@@ -457,12 +398,10 @@ let lookback = 10;
 let tpStep = 1.5;
 let slBufferMult = 1.5;
 let session = { setups: 0, wins: 0, losses: 0, pnlR: 0, fills: [] };
-
 let focusSymbol = null;
 let focusLevel = null;
 let pinnedSymbol = null;
 let scannerDirty = false;
-
 const statusDot = document.getElementById('statusDot');
 const statusText = document.getElementById('statusText');
 const mainTitle = document.getElementById('mainTitle');
@@ -470,10 +409,9 @@ const subLine = document.getElementById('subLine');
 const lookbackInput = document.getElementById('lookbackInput');
 const tpMultInput = document.getElementById('tpMultInput');
 const slBufferInput = document.getElementById('slBufferInput');
-
 lookbackInput.addEventListener('change', () => {
   const v = parseInt(lookbackInput.value, 10);
-  lookback = Number.isFinite(v) ? Math.min(LB_MAX, Math.max(LB_MIN, v)) : LB_MIN;
+  lookback = Number.isFinite(v)? Math.min(LB_MAX, Math.max(LB_MIN, v)) : LB_MIN;
   lookbackInput.value = lookback;
   Object.keys(symbolState).forEach(sym => { recomputeSymbolH1(sym); recomputeSymbolM1(sym); });
   updateFocusSelection();
@@ -482,13 +420,12 @@ lookbackInput.addEventListener('change', () => {
 });
 tpMultInput.addEventListener('change', () => {
   const v = parseFloat(tpMultInput.value);
-  tpStep = Number.isFinite(v) && v > 0 ? v : 1.5;
+  tpStep = Number.isFinite(v) && v > 0? v : 1.5;
 });
 slBufferInput.addEventListener('change', () => {
   const v = parseFloat(slBufferInput.value);
-  slBufferMult = Number.isFinite(v) && v > 0 ? v : 1.5;
+  slBufferMult = Number.isFinite(v) && v > 0? v : 1.5;
 });
-
 function setConnState(live, label){
   statusDot.classList.toggle('live', live);
   statusText.textContent = label;
@@ -498,11 +435,11 @@ function ts(){ return new Date().toLocaleTimeString('en-GB', { hour12: false });
 function shortSym(name){
   const is1s = /\(1s\)/i.test(name);
   const num = (name.match(/\d+/) || [''])[0];
-  return `V${num}${is1s ? '(1s)' : ''}`;
+  return `V${num}${is1s? '(1s)' : ''}`;
 }
 function logLine(text, cls='info'){
   const el = document.getElementById('execLog');
-  const line = `<div class="${cls}">${ts()}  ${text}</div>`;
+  const line = `<div class="${cls}">${ts()} ${text}</div>`;
   el.innerHTML = line + el.innerHTML;
   const parts = el.querySelectorAll('div');
   if (parts.length > 120) parts[parts.length - 1].remove();
@@ -512,13 +449,13 @@ function wsSend(obj){
   return false;
 }
 function renderSession(){
-  const signed = session.pnlR >= 0 ? '+' : '';
+  const signed = session.pnlR >= 0? '+' : '';
   document.getElementById('sessionPnl').textContent = `${signed}${session.pnlR.toFixed(2)}R`;
-  document.getElementById('sessionPnl').style.color = session.pnlR >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('sessionPnl').style.color = session.pnlR >= 0? 'var(--green)' : 'var(--red)';
   document.getElementById('sessionMeta').textContent = `${session.setups} setups · ${session.wins} wins · ${session.losses} losses`;
   document.getElementById('statSetups').textContent = session.setups;
   const closed = session.wins + session.losses;
-  document.getElementById('statWin').textContent = closed ? ((session.wins / closed) * 100).toFixed(0) + '%' : '—';
+  document.getElementById('statWin').textContent = closed? ((session.wins / closed) * 100).toFixed(0) + '%' : '—';
   const list = document.getElementById('fillList');
   list.innerHTML = '<div class="fill"><span>TIME</span><span>SIDE</span><span>ENTRY</span><span>RESULT</span></div>';
   session.fills.slice(0, 12).forEach(f => {
@@ -528,7 +465,7 @@ function renderSession(){
 function drawSpark(){
   const svg = document.getElementById('priceSpark');
   const st = focusSymbol && symbolState[focusSymbol];
-  const src = st ? st.m1Candles.slice(-120) : [];
+  const src = st? st.m1Candles.slice(-120) : [];
   if (src.length < 2) { svg.innerHTML = ''; return; }
   const w = 680, h = 180, pad = 8;
   const ys = src.map(c => c.close);
@@ -545,15 +482,10 @@ function drawSpark(){
     <circle cx="${last[0]}" cy="${last[1]}" r="3.5" fill="#3ddc84"/>
   `;
 }
-
-//------------------------------------------------------------------
-// Market-data connection (unchanged behavior from prior version)
-//------------------------------------------------------------------
 function connect(){
   const ep = WS_ENDPOINTS[endpointIdx % WS_ENDPOINTS.length];
   currentEp = ep;
-  setConnState(false, (failCount ? 'retrying · ' : 'connecting · ') + ep.short);
-
+  setConnState(false, (failCount? 'retrying · ' : 'connecting · ') + ep.short);
   let sock;
   try {
     sock = new WebSocket(ep.url);
@@ -566,42 +498,36 @@ function connect(){
   ws = sock;
   let gotData = false;
   const seenTypes = new Set();
-
   sock.onopen = () => {
     lastMsgAt = Date.now();
     setConnState(false, 'loading symbols');
     logLine(`socket open · ${ep.name}`, 'info');
     loadAllSymbols();
-    wsSend(ep.legacy ? { active_symbols: "brief", product_type: "basic" } : { active_symbols: "brief" });
+    wsSend(ep.legacy? { active_symbols: "brief", product_type: "basic" } : { active_symbols: "brief" });
     clearInterval(pingTimer);
     pingTimer = setInterval(() => wsSend({ ping: 1 }), PING_MS);
   };
-
   sock.onmessage = (msg) => {
     lastMsgAt = Date.now();
     let data;
     try { data = JSON.parse(msg.data); } catch (e) { return; }
-
     if (data.error) {
       const er = data.echo_req || {};
-      const req = er.ticks_history || er.ticks || (er.active_symbols ? 'active_symbols' : 'request');
-      const code = data.error.code ? data.error.code + ': ' : '';
+      const req = er.ticks_history || er.ticks || (er.active_symbols? 'active_symbols' : 'request');
+      const code = data.error.code? data.error.code + ': ' : '';
       logLine(`API error (${req}) ${code}${data.error.message}`, 'warn');
       if (!dataReceived) setConnState(false, 'error: ' + data.error.message);
       return;
     }
-
     gotData = true; failCount = 0;
-    if (data.msg_type && !seenTypes.has(data.msg_type)) {
+    if (data.msg_type &&!seenTypes.has(data.msg_type)) {
       seenTypes.add(data.msg_type);
       logLine(`rx ${data.msg_type}`, 'info');
     }
-
     if (data.msg_type === "active_symbols") {
       refineNamesFromLive(data.active_symbols || []);
       return;
     }
-
     if (data.msg_type === "candles" && Array.isArray(data.candles)) {
       const sym = data.echo_req && data.echo_req.ticks_history;
       const st = symbolState[sym];
@@ -612,7 +538,7 @@ function connect(){
       }));
       let gran = data.echo_req && data.echo_req.granularity;
       if (gran === undefined || gran === null) {
-        gran = mapped.length > 1 ? mapped[1].epoch - mapped[0].epoch : null;
+        gran = mapped.length > 1? mapped[1].epoch - mapped[0].epoch : null;
       }
       if (gran === GRAN_H1) { st.h1Candles = mapped; recomputeSymbolH1(sym); }
       else if (gran === GRAN_M1) {
@@ -623,7 +549,6 @@ function connect(){
       dataReceived = true;
       setConnState(true, liveLabel());
     }
-
     if (data.msg_type === "tick" && data.tick) {
       const sym = data.tick.underlying_symbol || data.tick.symbol;
       const st = symbolState[sym];
@@ -647,38 +572,32 @@ function connect(){
       recomputeSymbolM1(sym);
     }
   };
-
   sock.onclose = (e) => {
-    if (sock !== ws) return;
+    if (sock!== ws) return;
     clearInterval(pingTimer);
     subscribedTicksSet.clear();
     dataReceived = false;
     failCount++;
     if (!gotData) endpointIdx++;
-    const detail = `code ${e.code}${e.reason ? ' ' + e.reason : ''}`;
+    const detail = `code ${e.code}${e.reason? ' ' + e.reason : ''}`;
     setConnState(false, `reconnecting · ${detail} · ${ep.short}`);
-    logLine(`socket closed (${detail}) on ${ep.name} — ${gotData ? 'retrying same host' : 'trying next host'}`, 'warn');
+    logLine(`socket closed (${detail}) on ${ep.name} — ${gotData? 'retrying same host' : 'trying next host'}`, 'warn');
     setTimeout(connect, Math.min(2000 * failCount, 10000));
   };
-
   sock.onerror = () => { try { sock.close(); } catch (e) {} };
 }
-
 setInterval(() => {
   if (ws && ws.readyState === WebSocket.OPEN && Date.now() - lastMsgAt > STALE_MS) {
     logLine('feed stale — forcing reconnect', 'warn');
     ws.close();
   }
 }, 10000);
-
 setInterval(() => {
   if (ws && ws.readyState === WebSocket.OPEN) {
     Object.keys(symbolState).forEach(sym => fetchCandlesFor(sym, GRAN_H1, 200));
   }
 }, H1_REFRESH_MS);
-
 setInterval(() => { if (scannerDirty) { renderScanner(); scannerDirty = false; } }, 1000);
-
 function fetchCandlesFor(sym, granularity, count){
   wsSend({ ticks_history: sym, adjust_start_time: 1, count, end: "latest", granularity, style: "candles" });
 }
@@ -704,10 +623,6 @@ function refineNamesFromLive(list){
   scheduleScannerRender();
 }
 function scheduleScannerRender(){ scannerDirty = true; }
-
-//------------------------------------------------------------------
-// Notifications
-//------------------------------------------------------------------
 const notifyBtn = document.getElementById('notifyBtn');
 function refreshNotifyBtn(){
   if (!('Notification' in window)) { notifyBtn.textContent = '🔕 NOT SUPPORTED'; notifyBtn.disabled = true; return; }
@@ -720,7 +635,6 @@ notifyBtn.addEventListener('click', () => {
   if (Notification.permission === 'default') Notification.requestPermission().then(refreshNotifyBtn);
 });
 refreshNotifyBtn();
-
 let audioCtx = null;
 function playBeep(){
   try {
@@ -742,10 +656,6 @@ function fireAlert(title, body){
   }
   sendTelegram(`${title}\n${body}`);
 }
-
-//------------------------------------------------------------------
-// Telegram
-//------------------------------------------------------------------
 const tgToken = document.getElementById('tgToken');
 const tgChatId = document.getElementById('tgChatId');
 const tgStatus = document.getElementById('tgStatus');
@@ -763,16 +673,12 @@ document.getElementById('tgTestBtn').addEventListener('click', () => {
 function sendTelegram(text){
   const token = (tgToken.value || localStorage.getItem('tg_token') || '').trim();
   const chatId = (tgChatId.value || localStorage.getItem('tg_chat_id') || '').trim();
-  if (!token || !chatId) return;
+  if (!token ||!chatId) return;
   fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ chat_id: chatId, text })
   }).catch(() => {});
 }
-
-//------------------------------------------------------------------
-// Structure engine
-//------------------------------------------------------------------
 function computeStructure(candles, lb, atrForSweep){
   const n = candles.length;
   if (n < lb * 2 + 3) {
@@ -783,11 +689,11 @@ function computeStructure(candles, lb, atrForSweep){
     let isHigh = true, isLow = true;
     for (let k = 1; k <= lb; k++) {
       if (candles[i].high <= candles[i - k].high || candles[i].high <= candles[i + k].high) isHigh = false;
-      if (candles[i].low  >= candles[i - k].low  || candles[i].low  >= candles[i + k].low)  isLow = false;
-      if (!isHigh && !isLow) break;
+      if (candles[i].low >= candles[i - k].low || candles[i].low >= candles[i + k].low) isLow = false;
+      if (!isHigh &&!isLow) break;
     }
     if (isHigh) swings.push({ confirmedAt: i + lb, type: 'H', price: candles[i].high, idx: i });
-    if (isLow)  swings.push({ confirmedAt: i + lb, type: 'L', price: candles[i].low, idx: i });
+    if (isLow) swings.push({ confirmedAt: i + lb, type: 'L', price: candles[i].low, idx: i });
   }
   swings.sort((a, b) => a.confirmedAt - b.confirmedAt);
   let lastSwingHigh = null, lastSwingLow = null;
@@ -804,29 +710,29 @@ function computeStructure(candles, lb, atrForSweep){
     }
     if (i > 0) {
       const c = candles[i].close;
-      const brokeLow = lastSwingLow !== null && c < lastSwingLow;
-      const brokeHigh = lastSwingHigh !== null && c > lastSwingHigh;
+      const brokeLow = lastSwingLow!== null && c < lastSwingLow;
+      const brokeHigh = lastSwingHigh!== null && c > lastSwingHigh;
       if (brokeLow) {
         const oldState = state;
         const brokenLevel = lastSwingLow;
-        const priorLow = swingLowsSoFar.length >= 2 ? swingLowsSoFar[swingLowsSoFar.length - 2].price : null;
-        sweep = priorLow !== null && Math.abs(brokenLevel - priorLow) <= tol;
-        breakType = oldState === -1 ? 'BOS' : 'CHOCH';
+        const priorLow = swingLowsSoFar.length >= 2? swingLowsSoFar[swingLowsSoFar.length - 2].price : null;
+        sweep = priorLow!== null && Math.abs(brokenLevel - priorLow) <= tol;
+        breakType = oldState === -1? 'BOS' : 'CHOCH';
         state = -1; lastBosIndex = i; impulseStart = brokenLevel; impulseExtreme = candles[i].low; lastSwingLow = null;
       } else if (brokeHigh) {
         const oldState = state;
         const brokenLevel = lastSwingHigh;
-        const priorHigh = swingHighsSoFar.length >= 2 ? swingHighsSoFar[swingHighsSoFar.length - 2].price : null;
-        sweep = priorHigh !== null && Math.abs(brokenLevel - priorHigh) <= tol;
-        breakType = oldState === 1 ? 'BOS' : 'CHOCH';
+        const priorHigh = swingHighsSoFar.length >= 2? swingHighsSoFar[swingHighsSoFar.length - 2].price : null;
+        sweep = priorHigh!== null && Math.abs(brokenLevel - priorHigh) <= tol;
+        breakType = oldState === 1? 'BOS' : 'CHOCH';
         state = 1; lastBosIndex = i; impulseStart = brokenLevel; impulseExtreme = candles[i].high; lastSwingHigh = null;
-      } else if (lastBosIndex !== -1) {
+      } else if (lastBosIndex!== -1) {
         if (state === 1 && lastSwingHigh === null) impulseExtreme = Math.max(impulseExtreme, candles[i].high);
         else if (state === -1 && lastSwingLow === null) impulseExtreme = Math.min(impulseExtreme, candles[i].low);
       }
     }
   }
-  const barsSinceBos = lastBosIndex === -1 ? 999 : (n - 1 - lastBosIndex);
+  const barsSinceBos = lastBosIndex === -1? 999 : (n - 1 - lastBosIndex);
   return { state, barsSinceBos, lastSwingHigh, lastSwingLow, breakType, impulseStart, impulseExtreme, sweep, recentSwingHighs: swingHighsSoFar.slice(-2), recentSwingLows: swingLowsSoFar.slice(-2) };
 }
 function computeATR(candles, period){
@@ -848,7 +754,7 @@ function computeOTE(direction, impulseStart, impulseExtreme){
 function computeSL(direction, entryPrice, atr, slAtrMult){
   if (entryPrice === null || atr === null) return null;
   const dist = atr * slAtrMult;
-  return direction === 'BUY' ? entryPrice - dist : entryPrice + dist;
+  return direction === 'BUY'? entryPrice - dist : entryPrice + dist;
 }
 function projectTrendline(points, atIdx){
   if (!points || points.length < 2) return null;
@@ -862,14 +768,14 @@ function getCandidateZones(direction, m1res, atr, currentIdx){
   const tol = atr * 0.3;
   const ote = computeOTE(direction, m1res.impulseStart, m1res.impulseExtreme);
   if (ote) zones.push({ type: 'OTE', low: ote.low, high: ote.high });
-  if (m1res.impulseStart !== null) zones.push({ type: 'Broken level', low: m1res.impulseStart - tol, high: m1res.impulseStart + tol });
+  if (m1res.impulseStart!== null) zones.push({ type: 'Broken level', low: m1res.impulseStart - tol, high: m1res.impulseStart + tol });
   if (direction === 'SELL' && m1res.recentSwingHighs.length >= 2) {
     const proj = projectTrendline(m1res.recentSwingHighs, currentIdx);
-    if (proj !== null) zones.push({ type: 'Trendline', low: proj - tol, high: proj + tol });
+    if (proj!== null) zones.push({ type: 'Trendline', low: proj - tol, high: proj + tol });
   }
   if (direction === 'BUY' && m1res.recentSwingLows.length >= 2) {
     const proj = projectTrendline(m1res.recentSwingLows, currentIdx);
-    if (proj !== null) zones.push({ type: 'Trendline', low: proj - tol, high: proj + tol });
+    if (proj!== null) zones.push({ type: 'Trendline', low: proj - tol, high: proj + tol });
   }
   return zones;
 }
@@ -901,8 +807,8 @@ function zoneOf(value){
 }
 function labelAndColor(value, res){
   if (!res || res.state === 0) return ['NO STRUCTURE', '#5f7d92'];
-  if (res.state === 1) return value >= 75 ? ['BULLISH BOS', '#3ddc84'] : ['BULLISH (AGING)', '#7be0a0'];
-  return value <= 25 ? ['BEARISH BOS', '#ff4d4d'] : ['BEARISH (AGING)', '#ffb020'];
+  if (res.state === 1) return value >= 75? ['BULLISH BOS', '#3ddc84'] : ['BULLISH (AGING)', '#7be0a0'];
+  return value <= 25? ['BEARISH BOS', '#ff4d4d'] : ['BEARISH (AGING)', '#ffb020'];
 }
 function updateGaugeVisual(prefix, value, res){
   const deg = (value / 100) * 180;
@@ -914,10 +820,6 @@ function updateGaugeVisual(prefix, value, res){
   statusEl.setAttribute('fill', color);
   document.getElementById(prefix + 'ValLabel').setAttribute('fill', color);
 }
-
-//------------------------------------------------------------------
-// Per-symbol recompute
-//------------------------------------------------------------------
 function recomputeSymbolH1(sym){
   const st = symbolState[sym];
   if (st.h1Candles.length < lookback * 2 + 3) { st.h1Res = null; scheduleScannerRender(); return; }
@@ -943,18 +845,14 @@ function recomputeSymbolM1(sym){
   if (sym === focusSymbol) renderFocusAll();
   scheduleScannerRender();
 }
-
-//------------------------------------------------------------------
-// Per-symbol PAPER trade management (unchanged logic) + live-trade hook
-//------------------------------------------------------------------
 function closePaper(sym, kind, price){
   const st = symbolState[sym];
   const t = st.activeTrade;
   if (!t) return;
   let r = t.direction === 'BUY'
-    ? (price - t.entryPrice) / Math.abs(t.entryPrice - t.sl)
+   ? (price - t.entryPrice) / Math.abs(t.entryPrice - t.sl)
     : (t.entryPrice - price) / Math.abs(t.sl - t.entryPrice);
-  if (kind === 'SL') r = -1; // resting-stop realism: cap recorded loss at exactly -1R
+  if (kind === 'SL') r = -1;
   session.pnlR += r;
   if (r >= 0) session.wins++; else session.losses++;
   session.fills.unshift({ t: ts(), side: `${t.direction} ${shortSym(st.name)}`, entry: t.entryPrice.toFixed(3), result: kind + ' ' + r.toFixed(2) + 'R' });
@@ -965,17 +863,16 @@ function manageSymbolTrade(sym, m1res, atr){
   const st = symbolState[sym];
   const price = st.m1Candles[st.m1Candles.length - 1]?.close;
   if (price === undefined) return;
-
   if (st.activeTrade) {
     const t = st.activeTrade;
-    const hitSL = t.direction === 'BUY' ? price <= t.sl : price >= t.sl;
+    const hitSL = t.direction === 'BUY'? price <= t.sl : price >= t.sl;
     if (hitSL) {
       fireAlert(`🛑 SL HIT — Exit ${t.direction} (${shortSym(st.name)})`, `${st.name}: stopped out at ${price.toFixed(3)} (SL ${t.sl.toFixed(3)})`);
       closePaper(sym, 'SL', price);
       st.activeTrade = null;
       return;
     }
-    const favorable = (target) => t.direction === 'BUY' ? price >= target : price <= target;
+    const favorable = (target) => t.direction === 'BUY'? price >= target : price <= target;
     if (!t.hit1 && favorable(t.tp1)) { t.hit1 = true; fireAlert(`✅ TP1 HIT — ${t.direction} (${shortSym(st.name)})`, `${st.name}: TP1 reached at ${price.toFixed(3)}`); }
     if (!t.hit2 && favorable(t.tp2)) { t.hit2 = true; fireAlert(`✅ TP2 HIT — ${t.direction} (${shortSym(st.name)})`, `${st.name}: TP2 reached at ${price.toFixed(3)}`); }
     if (!t.hit3 && favorable(t.tp3)) {
@@ -986,20 +883,18 @@ function manageSymbolTrade(sym, m1res, atr){
     }
     return;
   }
-
-  const isFreshBreakThisBar = m1res.barsSinceBos === 0 && m1res.breakType !== null;
-  const m1Direction = m1res.state === 1 ? 'BUY' : m1res.state === -1 ? 'SELL' : null;
+  const isFreshBreakThisBar = m1res.barsSinceBos === 0 && m1res.breakType!== null;
+  const m1Direction = m1res.state === 1? 'BUY' : m1res.state === -1? 'SELL' : null;
   if (isFreshBreakThisBar && m1Direction && st.h1Zone === m1Direction) {
     st.pendingSetup = { direction: m1Direction, breakType: m1res.breakType, sweep: m1res.sweep, impulseStart: m1res.impulseStart };
-    logLine(`[${shortSym(st.name)}] ARMED ${m1Direction} ${m1res.breakType}${m1res.sweep ? ' + sweep' : ''}`, m1Direction === 'BUY' ? 'buy' : 'sell');
+    logLine(`[${shortSym(st.name)}] ARMED ${m1Direction} ${m1res.breakType}${m1res.sweep? ' + sweep' : ''}`, m1Direction === 'BUY'? 'buy' : 'sell');
   } else if (st.pendingSetup) {
-    if (st.h1Zone !== st.pendingSetup.direction) st.pendingSetup = null;
-    else if (m1Direction && m1Direction !== st.pendingSetup.direction) st.pendingSetup = null;
+    if (st.h1Zone!== st.pendingSetup.direction) st.pendingSetup = null;
+    else if (m1Direction && m1Direction!== st.pendingSetup.direction) st.pendingSetup = null;
   }
-
   if (st.pendingSetup) {
-    const closedCandle = st.m1Candles.length >= 2 ? st.m1Candles[st.m1Candles.length - 2] : null;
-    const zones = atr ? getCandidateZones(st.pendingSetup.direction, m1res, atr, st.m1Candles.length - 1) : [];
+    const closedCandle = st.m1Candles.length >= 2? st.m1Candles[st.m1Candles.length - 2] : null;
+    const zones = atr? getCandidateZones(st.pendingSetup.direction, m1res, atr, st.m1Candles.length - 1) : [];
     let triggeredZone = null;
     if (atr) {
       for (const z of zones) {
@@ -1009,11 +904,11 @@ function manageSymbolTrade(sym, m1res, atr){
     if (triggeredZone && closedCandle && atr) {
       const dir = st.pendingSetup.direction;
       const step = atr * tpStep;
-      const sign = dir === 'BUY' ? 1 : -1;
+      const sign = dir === 'BUY'? 1 : -1;
       const entryPrice = closedCandle.close;
       const sl = computeSL(dir, entryPrice, atr, slBufferMult);
-      const tag = st.pendingSetup.breakType === 'CHOCH' ? 'CHoCH' : 'BOS';
-      const sweepTag = st.pendingSetup.sweep ? ' + liquidity sweep' : '';
+      const tag = st.pendingSetup.breakType === 'CHOCH'? 'CHoCH' : 'BOS';
+      const sweepTag = st.pendingSetup.sweep? ' + liquidity sweep' : '';
       st.activeTrade = {
         direction: dir, entryPrice, sl,
         tp1: entryPrice + sign * step, tp2: entryPrice + sign * 2 * step, tp3: entryPrice + sign * 3 * step,
@@ -1023,16 +918,10 @@ function manageSymbolTrade(sym, m1res, atr){
       renderSession();
       fireAlert(`🎯 SNIPER ENTRY: ${dir} (${tag}${sweepTag}) — ${shortSym(st.name)}`, `${st.name}: entry ${entryPrice.toFixed(3)} on ${triggeredZone.type} retest\nSL ${sl.toFixed(3)} · TP1 ${st.activeTrade.tp1.toFixed(3)} · TP2 ${st.activeTrade.tp2.toFixed(3)} · TP3 ${st.activeTrade.tp3.toFixed(3)}`);
       st.pendingSetup = null;
-
-      // ---- Hook into the live-trading layer ----
       maybeFireLiveTrade(sym, dir, entryPrice, sl, st.activeTrade.tp1, tag, st.pendingSetup && st.pendingSetup.sweep);
     }
   }
 }
-
-//------------------------------------------------------------------
-// Auto-focus selection
-//------------------------------------------------------------------
 function alignScore(sym){
   const st = symbolState[sym];
   return Math.abs(st.h1Value - 50) + Math.abs(st.m1Value - 50);
@@ -1042,41 +931,33 @@ function updateFocusSelection(){
   const entries = syms.filter(s => symbolState[s].activeTrade);
   const armed = syms.filter(s => symbolState[s].pendingSetup);
   const aligned = syms
-    .filter(s => symbolState[s].m1Res && symbolState[s].h1Zone !== 'NEUTRAL' && symbolState[s].h1Zone === symbolState[s].m1Zone)
-    .sort((a, b) => alignScore(b) - alignScore(a));
-
+   .filter(s => symbolState[s].m1Res && symbolState[s].h1Zone!== 'NEUTRAL' && symbolState[s].h1Zone === symbolState[s].m1Zone)
+   .sort((a, b) => alignScore(b) - alignScore(a));
   if (pinnedSymbol && symbolState[pinnedSymbol]) {
     const s = pinnedSymbol;
-    const level = entries.includes(s) ? 'entry' : armed.includes(s) ? 'armed' : aligned.includes(s) ? 'aligned' : 'watching';
-    if (focusSymbol !== s || focusLevel !== level) { focusSymbol = s; focusLevel = level; renderFocusAll(); }
+    const level = entries.includes(s)? 'entry' : armed.includes(s)? 'armed' : aligned.includes(s)? 'aligned' : 'watching';
+    if (focusSymbol!== s || focusLevel!== level) { focusSymbol = s; focusLevel = level; renderFocusAll(); }
     return;
   }
-
   let newLevel = null, pool = [];
   if (entries.length) { newLevel = 'entry'; pool = entries; }
   else if (armed.length) { newLevel = 'armed'; pool = armed; }
   else if (aligned.length) { newLevel = 'aligned'; pool = aligned; }
-
   let target;
   if (focusSymbol && pool.includes(focusSymbol)) target = focusSymbol;
   else target = pool[0] || null;
-
-  if (target !== focusSymbol || newLevel !== focusLevel) {
+  if (target!== focusSymbol || newLevel!== focusLevel) {
     focusSymbol = target;
     focusLevel = newLevel;
     renderFocusAll();
   }
 }
-
-//------------------------------------------------------------------
-// Focus panel rendering
-//------------------------------------------------------------------
 function renderFocusAll(){
   const st = focusSymbol && symbolState[focusSymbol];
   const n = Object.keys(symbolState).length;
-  mainTitle.textContent = st ? `${st.name} — SNIPER SCANNER` : 'SNIPER SCANNER — SCANNING…';
+  mainTitle.textContent = st? `${st.name} — SNIPER SCANNER` : 'SNIPER SCANNER — SCANNING…';
   subLine.textContent = st
-    ? `${focusLevel === 'entry' ? 'LIVE ENTRY' : focusLevel === 'armed' ? 'ARMED SETUP' : focusLevel === 'aligned' ? 'ALIGNED, WATCHING' : 'PINNED'} · ${n} instruments scanned`
+   ? `${focusLevel === 'entry'? 'LIVE ENTRY' : focusLevel === 'armed'? 'ARMED SETUP' : focusLevel === 'aligned'? 'ALIGNED, WATCHING' : 'PINNED'} · ${n} instruments scanned`
     : `Scanning ${n} instruments for aligned H1/M1 setups…`;
   renderFocusH1();
   renderFocusM1();
@@ -1092,10 +973,10 @@ function renderFocusH1(){
     return;
   }
   const price = st.h1Candles[st.h1Candles.length - 1]?.close;
-  document.getElementById('h1Price').textContent = price !== undefined ? price.toFixed(3) : '—';
-  document.getElementById('h1SwingHigh').textContent = st.h1Res && st.h1Res.lastSwingHigh !== null ? st.h1Res.lastSwingHigh.toFixed(3) : '—';
-  document.getElementById('h1SwingLow').textContent = st.h1Res && st.h1Res.lastSwingLow !== null ? st.h1Res.lastSwingLow.toFixed(3) : '—';
-  updateGaugeVisual('h1', st.h1Res ? st.h1Value : 50, st.h1Res);
+  document.getElementById('h1Price').textContent = price!== undefined? price.toFixed(3) : '—';
+  document.getElementById('h1SwingHigh').textContent = st.h1Res && st.h1Res.lastSwingHigh!== null? st.h1Res.lastSwingHigh.toFixed(3) : '—';
+  document.getElementById('h1SwingLow').textContent = st.h1Res && st.h1Res.lastSwingLow!== null? st.h1Res.lastSwingLow.toFixed(3) : '—';
+  updateGaugeVisual('h1', st.h1Res? st.h1Value : 50, st.h1Res);
 }
 function renderFocusM1(){
   const st = focusSymbol && symbolState[focusSymbol];
@@ -1110,12 +991,12 @@ function renderFocusM1(){
     return;
   }
   const price = st.m1Candles[st.m1Candles.length - 1]?.close;
-  document.getElementById('m1Price').textContent = price !== undefined ? price.toFixed(3) : '—';
-  document.getElementById('m1SwingHigh').textContent = st.m1Res && st.m1Res.lastSwingHigh !== null ? st.m1Res.lastSwingHigh.toFixed(3) : '—';
-  document.getElementById('m1SwingLow').textContent = st.m1Res && st.m1Res.lastSwingLow !== null ? st.m1Res.lastSwingLow.toFixed(3) : '—';
-  document.getElementById('m1BreakType').textContent = st.m1Res && st.m1Res.breakType ? st.m1Res.breakType : '—';
-  document.getElementById('m1Sweep').textContent = st.m1Res && st.m1Res.breakType ? (st.m1Res.sweep ? 'YES' : 'no') : '—';
-  updateGaugeVisual('m1', st.m1Res ? st.m1Value : 50, st.m1Res);
+  document.getElementById('m1Price').textContent = price!== undefined? price.toFixed(3) : '—';
+  document.getElementById('m1SwingHigh').textContent = st.m1Res && st.m1Res.lastSwingHigh!== null? st.m1Res.lastSwingHigh.toFixed(3) : '—';
+  document.getElementById('m1SwingLow').textContent = st.m1Res && st.m1Res.lastSwingLow!== null? st.m1Res.lastSwingLow.toFixed(3) : '—';
+  document.getElementById('m1BreakType').textContent = st.m1Res && st.m1Res.breakType? st.m1Res.breakType : '—';
+  document.getElementById('m1Sweep').textContent = st.m1Res && st.m1Res.breakType? (st.m1Res.sweep? 'YES' : 'no') : '—';
+  updateGaugeVisual('m1', st.m1Res? st.m1Value : 50, st.m1Res);
   drawSpark();
 }
 function renderFocusBanner(){
@@ -1123,7 +1004,6 @@ function renderFocusBanner(){
   const sub = banner.querySelector('.sniper-sub');
   const stats = document.getElementById('tpStats');
   banner.classList.remove('buy', 'sell', 'tp', 'sl', 'armed');
-
   if (!focusSymbol) {
     const n = Object.keys(symbolState).length;
     banner.firstChild.textContent = 'SCANNING — NO ALIGNED SETUP YET ';
@@ -1133,13 +1013,12 @@ function renderFocusBanner(){
   }
   const st = symbolState[focusSymbol];
   const name = st.name;
-
   if (st.activeTrade) {
     const t = st.activeTrade;
-    banner.classList.add(t.direction === 'BUY' ? 'buy' : 'sell');
+    banner.classList.add(t.direction === 'BUY'? 'buy' : 'sell');
     banner.firstChild.textContent = `SNIPER ENTRY: ${t.direction} — ${name} `;
     const price = st.m1Candles[st.m1Candles.length - 1]?.close;
-    sub.textContent = price !== undefined ? `Last ${price.toFixed(3)} · holding ${t.direction} · SL ${t.sl.toFixed(3)}` : `Holding ${t.direction} · SL ${t.sl.toFixed(3)}`;
+    sub.textContent = price!== undefined? `Last ${price.toFixed(3)} · holding ${t.direction} · SL ${t.sl.toFixed(3)}` : `Holding ${t.direction} · SL ${t.sl.toFixed(3)}`;
     stats.style.display = 'flex';
     document.getElementById('slStat').textContent = t.sl.toFixed(3);
     document.getElementById('entryStat').textContent = t.entryPrice.toFixed(3);
@@ -1151,10 +1030,10 @@ function renderFocusBanner(){
   } else if (st.pendingSetup) {
     banner.classList.add('armed');
     banner.firstChild.textContent = `ARMED: ${st.pendingSetup.direction} — ${name} `;
-    const tag = st.pendingSetup.breakType === 'CHOCH' ? 'CHoCH' : 'BOS';
-    const sweepTag = st.pendingSetup.sweep ? ' + liquidity sweep' : '';
-    const zones = (st.atr && st.m1Res) ? getCandidateZones(st.pendingSetup.direction, st.m1Res, st.atr, st.m1Candles.length - 1) : [];
-    const zoneText = zones.length ? zones.map(z => `${z.type} ${z.low.toFixed(3)}–${z.high.toFixed(3)}`).join(' · ') : 'computing zones…';
+    const tag = st.pendingSetup.breakType === 'CHOCH'? 'CHoCH' : 'BOS';
+    const sweepTag = st.pendingSetup.sweep? ' + liquidity sweep' : '';
+    const zones = (st.atr && st.m1Res)? getCandidateZones(st.pendingSetup.direction, st.m1Res, st.atr, st.m1Candles.length - 1) : [];
+    const zoneText = zones.length? zones.map(z => `${z.type} ${z.low.toFixed(3)}–${z.high.toFixed(3)}`).join(' · ') : 'computing zones…';
     sub.textContent = `${tag}${sweepTag} · watching: ${zoneText}`;
     stats.style.display = 'none';
   } else {
@@ -1163,61 +1042,49 @@ function renderFocusBanner(){
     stats.style.display = 'none';
   }
 }
-
-//------------------------------------------------------------------
-// Scanner list
-//------------------------------------------------------------------
 function renderScanner(){
   const rows = Object.keys(symbolState).map(sym => {
     const st = symbolState[sym];
     let rank = 0, status = '—';
     if (st.activeTrade) { rank = 3; status = `ENTRY ${st.activeTrade.direction}`; }
     else if (st.pendingSetup) { rank = 2; status = `ARMED ${st.pendingSetup.direction}`; }
-    else if (st.m1Res && st.h1Zone !== 'NEUTRAL' && st.h1Zone === st.m1Zone) { rank = 1; status = `ALIGNED ${st.h1Zone}`; }
-    const score = rank * 1000 + (st.h1Res ? Math.abs(st.h1Value - 50) : 0) + (st.m1Res ? Math.abs(st.m1Value - 50) : 0);
-    return { sym, name: shortSym(st.name), h1: st.h1Res ? Math.round(st.h1Value) : null, m1: st.m1Res ? Math.round(st.m1Value) : null, status, rank, score };
+    else if (st.m1Res && st.h1Zone!== 'NEUTRAL' && st.h1Zone === st.m1Zone) { rank = 1; status = `ALIGNED ${st.h1Zone}`; }
+    const score = rank * 1000 + (st.h1Res? Math.abs(st.h1Value - 50) : 0) + (st.m1Res? Math.abs(st.m1Value - 50) : 0);
+    return { sym, name: shortSym(st.name), h1: st.h1Res? Math.round(st.h1Value) : null, m1: st.m1Res? Math.round(st.m1Value) : null, status, rank, score };
   }).sort((a, b) => b.score - a.score);
-
   const body = document.getElementById('scanBody');
   body.innerHTML = rows.map(r => `
-    <div class="scan-row ${r.sym === focusSymbol ? 'focused' : ''} ${r.rank === 3 ? 'r-entry' : r.rank === 2 ? 'r-armed' : r.rank === 1 ? 'r-aligned' : ''}" data-sym="${r.sym}">
-      <span>${r.name}</span><span>${r.h1 === null ? '—' : r.h1}</span><span>${r.m1 === null ? '—' : r.m1}</span><span>${r.status}</span>
+    <div class="scan-row ${r.sym === focusSymbol? 'focused' : ''} ${r.rank === 3? 'r-entry' : r.rank === 2? 'r-armed' : r.rank === 1? 'r-aligned' : ''}" data-sym="${r.sym}">
+      <span>${r.name}</span><span>${r.h1 === null? '—' : r.h1}</span><span>${r.m1 === null? '—' : r.m1}</span><span>${r.status}</span>
     </div>
   `).join('');
   body.querySelectorAll('.scan-row').forEach(el => {
     el.addEventListener('click', () => {
       const s = el.getAttribute('data-sym');
-      pinnedSymbol = (pinnedSymbol === s) ? null : s;
+      pinnedSymbol = (pinnedSymbol === s)? null : s;
       updateFocusSelection();
       renderPinLabel();
     });
   });
-
   document.getElementById('scanCount').textContent =
     `${rows.length} scanned · ${rows.filter(r => r.rank >= 1).length} aligned · ${rows.filter(r => r.rank === 2).length} armed · ${rows.filter(r => r.rank === 3).length} live`;
   renderPinLabel();
 }
 function renderPinLabel(){
   const el = document.getElementById('pinLabel');
-  el.textContent = pinnedSymbol ? `PINNED: ${shortSym(symbolState[pinnedSymbol]?.name || pinnedSymbol)} (tap row again to release)` : 'AUTO — tap a row to pin';
+  el.textContent = pinnedSymbol? `PINNED: ${shortSym(symbolState[pinnedSymbol]?.name || pinnedSymbol)} (tap row again to release)` : 'AUTO — tap a row to pin';
 }
-
-//====================================================================
-// ============  LIVE TRADING (Deriv account, real Multipliers)  =====
-//====================================================================
 let tradeWs = null;
 let tradeWsAlive = false;
 let tradeFailCount = 0;
 let tradeReconnectTimer = null;
-let derivAuth = null;          // { loginid, is_virtual, currency, balance }
+let derivAuth = null;
 let autoTradeEnabled = false;
 let confirmBeforeFire = true;
 let liveDailyPnl = 0;
 let liveDailyLossHit = false;
-let livePositions = {};        // contract_id -> {symbol, direction, stake, buy_price, profit, ...}
-let pendingConfirm = null;     // {sym, dir, entryPrice, slAmt, tpAmt, stake, multiplier, timerHandle, secsLeft}
-let pendingProposalReqTag = null;
-
+let livePositions = {};
+let pendingConfirm = null;
 const apiTokenInput = document.getElementById('apiTokenInput');
 const accountIdInput = document.getElementById('accountIdInput');
 const connectDerivBtn = document.getElementById('connectDerivBtn');
@@ -1233,18 +1100,14 @@ const tradeDot = document.getElementById('tradeDot');
 const tradeStatusText = document.getElementById('tradeStatusText');
 const liveUsdLine = document.getElementById('liveUsdLine');
 const confirmCardHolder = document.getElementById('confirmCardHolder');
-
 apiTokenInput.value = localStorage.getItem('deriv_token') || '';
-accountIdInput.value = localStorage.getItem('deriv_account_id') || '';
-
+accountIdInput.value = localStorage.getItem('deriv_account_id') || '019dff09-e63e-736f-ad69-4fb1335ec74a';
 const DERIV_REST_BASE = 'https://api.derivws.com';
-
 function setTradeStatus(alive, label){
   tradeDot.classList.toggle('trade-live', alive);
-  tradeDot.classList.toggle('trade-off', !alive);
+  tradeDot.classList.toggle('trade-off',!alive);
   tradeStatusText.textContent = label;
 }
-
 connectDerivBtn.addEventListener('click', () => {
   const tok = apiTokenInput.value.trim();
   if (!tok) { acctLine.textContent = 'Enter a Deriv API token first (Settings → API Token on deriv.com).'; return; }
@@ -1254,25 +1117,23 @@ connectDerivBtn.addEventListener('click', () => {
   clearTimeout(tradeReconnectTimer);
   startTradingConnection(tok);
 });
-
 autoTradeBtn.addEventListener('click', () => {
   if (!derivAuth) { logLine('cannot enable auto-trade — not connected to Deriv account', 'warn'); return; }
-  autoTradeEnabled = !autoTradeEnabled;
+  autoTradeEnabled =!autoTradeEnabled;
   renderAutoTradeBtn();
-  logLine(`auto-trade turned ${autoTradeEnabled ? 'ON' : 'OFF'}`, 'trade');
+  logLine(`auto-trade turned ${autoTradeEnabled? 'ON' : 'OFF'}`, 'trade');
 });
 function renderAutoTradeBtn(){
-  autoTradeBtn.textContent = `AUTO-TRADE: ${autoTradeEnabled ? 'ON' : 'OFF'}`;
+  autoTradeBtn.textContent = `AUTO-TRADE: ${autoTradeEnabled? 'ON' : 'OFF'}`;
   autoTradeBtn.classList.toggle('on', autoTradeEnabled);
-  autoTradeBtn.classList.toggle('off', !autoTradeEnabled);
+  autoTradeBtn.classList.toggle('off',!autoTradeEnabled);
 }
 confirmToggleBtn.addEventListener('click', () => {
-  confirmBeforeFire = !confirmBeforeFire;
-  confirmToggleBtn.textContent = `CONFIRM: ${confirmBeforeFire ? 'ON' : 'OFF'}`;
+  confirmBeforeFire =!confirmBeforeFire;
+  confirmToggleBtn.textContent = `CONFIRM: ${confirmBeforeFire? 'ON' : 'OFF'}`;
   confirmToggleBtn.classList.toggle('on', confirmBeforeFire);
-  confirmToggleBtn.classList.toggle('off', !confirmBeforeFire);
+  confirmToggleBtn.classList.toggle('off',!confirmBeforeFire);
 });
-
 killSwitchBtn.addEventListener('click', () => {
   autoTradeEnabled = false;
   renderAutoTradeBtn();
@@ -1281,13 +1142,6 @@ killSwitchBtn.addEventListener('click', () => {
   logLine('🛑 KILL SWITCH: auto-trade disabled, closing all open live positions', 'warn');
   fireAlert('🛑 KILL SWITCH TRIGGERED', 'Auto-trade disabled and all open live positions are being closed.');
 });
-
-//------------------------------------------------------------------
-// REST: get accounts -> get OTP -> open the OTP-scoped WebSocket.
-// Deriv's trading WS no longer accepts an "authorize" message from
-// third-party origins; auth now happens via a one-time password baked
-// into the connection URL, minted fresh (120s TTL, single use) via REST.
-//------------------------------------------------------------------
 async function fetchOptionsAccounts(token){
   const res = await fetch(`${DERIV_REST_BASE}/trading/v1/options/accounts`, {
     method: 'GET',
@@ -1312,12 +1166,9 @@ async function fetchOtpUrl(token, accountId){
   if (!url) throw new Error('otp response had no url field: ' + bodyText.slice(0, 200));
   return url;
 }
-// Best-effort field extraction — the accounts list response schema isn't
-// fully documented publicly, so we accept several plausible shapes and log
-// the raw payload so a mismatch is visible and fixable rather than silent.
 function extractAccountList(json){
-  const list = json?.data?.accounts || json?.data || json?.accounts || (Array.isArray(json) ? json : null);
-  return Array.isArray(list) ? list : [];
+  const list = json?.data?.accounts || json?.data || json?.accounts || (Array.isArray(json)? json : null);
+  return Array.isArray(list)? list : [];
 }
 function extractAccountId(acc){
   return acc.accountId || acc.account_id || acc.id || acc.loginid || acc.login_id || null;
@@ -1327,356 +1178,224 @@ function pickAccount(accounts, preferredId){
     const match = accounts.find(a => extractAccountId(a) === preferredId);
     if (match) return match;
   }
-  // No preference given: default to a demo/virtual account for safety.
   const demo = accounts.find(a => a.is_virtual === true || a.isVirtual === true || a.is_demo === true);
   return demo || accounts[0] || null;
 }
-
 async function startTradingConnection(token){
-  setTradeStatus(false, (tradeFailCount ? 'trading: retrying…' : 'trading: fetching accounts…'));
+  setTradeStatus(false, (tradeFailCount? 'trading: retrying…' : 'trading: fetching accounts…'));
   clearTimeout(tradeReconnectTimer);
   try {
     const accountsJson = await fetchOptionsAccounts(token);
     logLine(`raw accounts response: ${JSON.stringify(accountsJson).slice(0, 500)}`, 'info');
     const accounts = extractAccountList(accountsJson);
-    if (!accounts.length) throw new Error('no accounts found in response — see raw log line above to check field names');
-
-    const preferredId = accountIdInput.value.trim() || null;
-    const account = pickAccount(accounts, preferredId);
-    if (!account) throw new Error('could not select an account from the list');
-    const accountId = extractAccountId(account);
-    if (!accountId) throw new Error('could not read an account id from the selected account — see raw log line above');
-
-    logLine(`selected account: ${accountId}${preferredId ? '' : ' (auto-picked)'}`, 'trade');
-    setTradeStatus(false, 'trading: requesting OTP…');
-    const wsUrl = await fetchOtpUrl(token, accountId);
-    logLine(`OTP received — opening scoped trading socket`, 'trade');
-
-    pendingAccountMeta = account; // stash so we can populate derivAuth once the socket is open
-    pendingAccountId = accountId;
-    openTradingSocket(wsUrl, token);
+    if (!accounts.length) throw new Error('no accounts found in response — see raw log line above');
+    const preferredId = accountIdInput.value.trim() || localStorage.getItem('deriv_account_id') || '';
+    const chosen = pickAccount(accounts, preferredId);
+    if (!chosen) throw new Error('could not pick an account from list');
+    const chosenId = extractAccountId(chosen);
+    if (!chosenId) throw new Error('chosen account has no id field');
+    logLine(`chosen account ${chosenId} (${chosen.is_virtual? 'DEMO' : 'REAL'} ${chosen.currency || ''}) — requesting OTP…`, 'info');
+    const otpUrl = await fetchOtpUrl(token, chosenId);
+    logLine(`got OTP url — opening trading socket…`, 'info');
+    openTradingSocket(otpUrl, chosen, token);
   } catch (e) {
     tradeFailCount++;
-    setTradeStatus(false, `trading: setup failed — retrying`);
-    logLine(`trading setup failed: ${e.message}`, 'warn');
-    acctLine.textContent = 'Setup failed: ' + e.message + (e.message.toLowerCase().includes('failed to fetch') ? ' (possibly blocked by CORS — your app_id may need to be your own registered app for these REST calls)' : '');
-    scheduleTradeReconnect(token);
+    setTradeStatus(false, `trading: error — ${e.message.slice(0, 120)}`);
+    logLine(`trading connect error: ${e.message}`, 'warn');
+    tradeReconnectTimer = setTimeout(() => startTradingConnection(token), Math.min(20000, 2000 * tradeFailCount));
   }
 }
-
-let pendingAccountMeta = null;
-let pendingAccountId = null;
-
-function openTradingSocket(wsUrl, token){
-  let sock;
-  try {
-    sock = new WebSocket(wsUrl);
-  } catch (e) {
-    logLine(`trading socket create failed: ${e.message}`, 'warn');
-    tradeFailCount++;
-    scheduleTradeReconnect(token);
-    return;
-  }
+function openTradingSocket(otpUrl, accountMeta, token){
+  try { if (tradeWs) tradeWs.close(); } catch(e){}
+  const sock = new WebSocket(otpUrl);
   tradeWs = sock;
-
+  tradeWsAlive = false;
   sock.onopen = () => {
-    if (sock !== tradeWs) return;
     tradeWsAlive = true;
     tradeFailCount = 0;
-    lastTradeMsgAt = Date.now();
-    setTradeStatus(true, 'trading: connected');
-    const a = pendingAccountMeta || {};
     derivAuth = {
-      loginid: a.loginid || a.login_id || pendingAccountId,
-      is_virtual: a.is_virtual === true || a.isVirtual === true || a.is_demo === true,
-      currency: a.currency || 'USD',
-      balance: a.balance !== undefined ? a.balance : '—'
+      loginid: extractAccountId(accountMeta) || accountMeta.loginid,
+      is_virtual: accountMeta.is_virtual || accountMeta.isVirtual || false,
+      currency: accountMeta.currency || 'USD',
+      balance: accountMeta.balance || 0,
+      raw: accountMeta
     };
-    renderAcctLine();
-    autoTradeBtn.disabled = false;
-    logLine(`trading socket open & OTP-authenticated as account ${derivAuth.loginid} (${derivAuth.is_virtual ? 'DEMO' : 'REAL'})`, 'trade');
-    tradeSend({ balance: 1, subscribe: 1 });
+    const badge = derivAuth.is_virtual? '<span class="badge badge-demo">DEMO</span>' : '<span class="badge badge-real">REAL</span>';
+    acctLine.innerHTML = `<b>${derivAuth.loginid}</b> ${badge} · ${derivAuth.currency} ${derivAuth.balance} · connected`;
+    setTradeStatus(true, `trading: live · ${derivAuth.loginid} ${derivAuth.is_virtual? '(DEMO)' : '(REAL)'}`);
+    logLine(`trading socket open — ${derivAuth.loginid} ${derivAuth.is_virtual? 'DEMO' : 'REAL'}`, 'trade');
+    sock.send(JSON.stringify({ proposal_open_contract: 1, subscribe: 1 }));
+    sock.send(JSON.stringify({ balance: 1, subscribe: 1 }));
   };
-
-  sock.onmessage = (msg) => {
-    if (sock !== tradeWs) return;
-    lastTradeMsgAt = Date.now();
+  sock.onmessage = (ev) => {
     let data;
-    try { data = JSON.parse(msg.data); } catch (e) { return; }
-
+    try { data = JSON.parse(ev.data); } catch(e){ return; }
     if (data.error) {
-      logLine(`trading API error (${data.msg_type || 'request'}): ${data.error.message}`, 'warn');
-      if (data.msg_type === 'buy') cancelPendingConfirm('buy rejected: ' + data.error.message);
+      logLine(`trade error: ${data.error.code || ''} ${data.error.message}`, 'warn');
       return;
     }
-
     if (data.msg_type === 'balance' && data.balance) {
-      if (derivAuth) derivAuth.balance = data.balance.balance;
-      renderAcctLine();
-      return;
+      derivAuth.balance = data.balance.balance;
+      liveUsdLine.style.display = 'block';
+      liveUsdLine.textContent = `LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open · daily ${liveDailyPnl >=0? '+' : ''}${liveDailyPnl.toFixed(2)}`;
     }
-    if (data.msg_type === 'proposal' && data.proposal) { handleProposalResponse(data.proposal); return; }
-    if (data.msg_type === 'buy' && data.buy) { handleBuyResponse(data.buy); return; }
-    if (data.msg_type === 'proposal_open_contract' && data.proposal_open_contract) { handleContractUpdate(data.proposal_open_contract); return; }
+    if (data.msg_type === 'proposal_open_contract' && data.proposal_open_contract) {
+      const poc = data.proposal_open_contract;
+      if (poc.contract_id) {
+        livePositions[poc.contract_id] = {
+          symbol: poc.underlying_symbol || poc.symbol,
+          direction: poc.contract_type,
+          stake: poc.buy_price,
+          profit: poc.profit,
+          buy_price: poc.buy_price
+        };
+        renderLivePositions();
+      }
+      if (poc.is_sold) {
+        const profit = poc.profit || 0;
+        liveDailyPnl += profit;
+        delete livePositions[poc.contract_id];
+        renderLivePositions();
+        logLine(`contract ${poc.contract_id} closed — profit ${profit.toFixed(2)}`, 'trade');
+        if (liveDailyPnl <= -Math.abs(parseFloat(maxDailyLossInput.value) || 50)) {
+          liveDailyLossHit = true;
+          autoTradeEnabled = false;
+          renderAutoTradeBtn();
+          fireAlert('⛔ DAILY LOSS CAP HIT — auto-trade disabled', `Daily PnL ${liveDailyPnl.toFixed(2)} breached max loss.`);
+        }
+      }
+    }
+    if (data.msg_type === 'buy' && data.buy) {
+      logLine(`BUY ok — contract ${data.buy.contract_id} @ ${data.buy.buy_price}`, 'trade');
+    }
     if (data.msg_type === 'sell' && data.sell) {
-      logLine(`live contract ${data.sell.contract_id} closed manually, sold for $${data.sell.sold_for}`, 'trade');
-      return;
+      logLine(`SELL ok — contract ${data.sell.contract_id} sold ${data.sell.sold_for}`, 'trade');
     }
   };
-
   sock.onclose = (e) => {
-    if (sock !== tradeWs) return;
     tradeWsAlive = false;
-    derivAuth = null;
-    renderAcctLine();
-    autoTradeBtn.disabled = true;
+    setTradeStatus(false, `trading: disconnected code ${e.code} — reconnecting…`);
+    logLine(`trading socket closed code ${e.code}`, 'warn');
     tradeFailCount++;
-    const detail = `code ${e.code}${e.reason ? ' ' + e.reason : ''}`;
-    setTradeStatus(false, `trading: closed (${detail}) — retrying`);
-    logLine(`trading socket closed (${detail}) — re-fetching a fresh OTP and retrying`, 'warn');
-    scheduleTradeReconnect(token);
+    tradeReconnectTimer = setTimeout(() => startTradingConnection(token), Math.min(20000, 2000 * tradeFailCount));
   };
-  sock.onerror = () => { try { sock.close(); } catch (e) {} };
+  sock.onerror = () => { try{ sock.close(); }catch(e){} };
 }
-
-function scheduleTradeReconnect(token){
-  clearTimeout(tradeReconnectTimer);
-  const delay = Math.min(3000 * tradeFailCount, 20000);
-  // The OTP is single-use and expires in 120s, so a reconnect must redo the
-  // whole REST(accounts)->REST(otp)->WS chain — reopening the old URL won't work.
-  tradeReconnectTimer = setTimeout(() => startTradingConnection(token), delay);
-}
-
-// Trading socket also goes stale on backgrounded mobile tabs without a clean close event.
-let lastTradeMsgAt = Date.now();
-setInterval(() => {
-  if (tradeWs && tradeWs.readyState === WebSocket.OPEN) {
-    if (Date.now() - lastTradeMsgAt > STALE_MS) {
-      logLine('trading feed stale — forcing reconnect', 'warn');
-      tradeWs.close();
-    } else {
-      tradeSend({ ping: 1 });
-    }
-  }
-}, PING_MS);
-
-function tradeSend(obj){
-  if (tradeWs && tradeWs.readyState === WebSocket.OPEN) { tradeWs.send(JSON.stringify(obj)); return true; }
-  return false;
-}
-
-function renderAcctLine(){
-  if (!derivAuth) { acctLine.textContent = 'Not connected.'; return; }
-  const badge = derivAuth.is_virtual
-    ? '<span class="badge badge-demo">DEMO</span>'
-    : '<span class="badge badge-real">REAL</span>';
-  const balTxt = typeof derivAuth.balance === 'number' ? derivAuth.balance.toFixed(2) : derivAuth.balance;
-  acctLine.innerHTML = `<b>${derivAuth.loginid}</b>${badge}<br>Balance: <b>${balTxt} ${derivAuth.currency}</b>`;
-}
-
-//---- Proposal / Buy / Confirm flow ----
-function maybeFireLiveTrade(sym, dir, entryPrice, slPrice, tp1Price, breakTag, sweep){
-  if (!derivAuth || !tradeWsAlive) return;               // not connected
-  if (!autoTradeEnabled) return;                          // auto-trade off
-  if (liveDailyLossHit) return;                            // daily loss cap already hit
-
-  const maxOpen = Math.max(1, parseInt(maxConcurrentInput.value, 10) || 1);
-  if (Object.keys(livePositions).length >= maxOpen) {
-    logLine(`live trade skipped for ${shortSym(symbolState[sym].name)} — MAX OPEN (${maxOpen}) reached`, 'warn');
-    return;
-  }
-  const alreadyOpenThisSymbol = Object.values(livePositions).some(p => p.symbol === sym);
-  if (alreadyOpenThisSymbol) {
-    logLine(`live trade skipped for ${shortSym(symbolState[sym].name)} — already have an open position on this symbol`, 'warn');
-    return;
-  }
-  if (pendingConfirm) {
-    logLine(`live trade skipped for ${shortSym(symbolState[sym].name)} — a confirmation is already pending`, 'warn');
-    return;
-  }
-
-  const stake = Math.max(1, parseFloat(stakeInput.value) || 10);
-  const multiplier = Math.max(1, parseInt(multiplierInput.value, 10) || 100);
-  const slDist = Math.abs(entryPrice - slPrice);
-  const tpDist = Math.abs(tp1Price - entryPrice);
-  // Approximation of Deriv Multiplier P/L: profit ≈ stake × multiplier × (price move ÷ entry price)
-  const slAmount = +(stake * multiplier * (slDist / entryPrice)).toFixed(2);
-  const tpAmount = +(stake * multiplier * (tpDist / entryPrice)).toFixed(2);
-  const contractType = dir === 'BUY' ? 'MULTUP' : 'MULTDOWN';
-
-  requestProposal(sym, dir, contractType, stake, multiplier, slAmount, tpAmount, entryPrice, breakTag);
-}
-
-function requestProposal(sym, dir, contractType, stake, multiplier, slAmount, tpAmount, refEntryPrice, breakTag){
-  pendingProposalReqTag = { sym, dir, contractType, stake, multiplier, slAmount, tpAmount, refEntryPrice, breakTag };
-  tradeSend({
-    proposal: 1,
-    amount: stake,
-    basis: 'stake',
-    contract_type: contractType,
-    currency: derivAuth.currency || 'USD',
-    symbol: sym,
-    multiplier: multiplier,
-    limit_order: { stop_loss: slAmount, take_profit: tpAmount }
-  });
-  logLine(`requesting proposal: ${contractType} ${shortSym(symbolState[sym].name)} · stake $${stake} × ${multiplier} · SL $${slAmount} / TP $${tpAmount}`, 'trade');
-}
-
-function handleProposalResponse(p){
-  const tag = pendingProposalReqTag;
-  if (!tag) return; // stray/unrelated proposal
-  pendingProposalReqTag = null;
-
-  const info = {
-    sym: tag.sym, dir: tag.dir, name: symbolState[tag.sym].name,
-    proposalId: p.id, askPrice: p.ask_price,
-    stake: tag.stake, multiplier: tag.multiplier,
-    slAmount: tag.slAmount, tpAmount: tag.tpAmount,
-    refEntryPrice: tag.refEntryPrice, contractType: tag.contractType,
-    breakTag: tag.breakTag
-  };
-
-  if (confirmBeforeFire) {
-    openConfirmCard(info);
-  } else {
-    executeBuy(info);
-  }
-}
-
-function openConfirmCard(info){
-  cancelPendingConfirm(null, true); // clear any stale card without logging "cancelled" noise
-  pendingConfirm = { ...info, secsLeft: CONFIRM_TIMEOUT_S };
-  renderConfirmCard();
-  pendingConfirm.timerHandle = setInterval(() => {
-    pendingConfirm.secsLeft--;
-    if (pendingConfirm.secsLeft <= 0) {
-      cancelPendingConfirm('confirmation window expired');
-      return;
-    }
-    renderConfirmCard();
-  }, 1000);
-}
-function renderConfirmCard(){
-  if (!pendingConfirm) { confirmCardHolder.innerHTML = ''; return; }
-  const c = pendingConfirm;
-  confirmCardHolder.innerHTML = `
-    <div class="confirm-card">
-      <h3>⚠ CONFIRM LIVE TRADE — ${c.dir} ${shortSym(c.name)}</h3>
-      <div class="confirm-grid">
-        <div><div class="k">STAKE</div><div class="v">$${c.stake}</div></div>
-        <div><div class="k">MULTIPLIER</div><div class="v">×${c.multiplier}</div></div>
-        <div><div class="k">ASK PRICE</div><div class="v">$${c.askPrice}</div></div>
-        <div><div class="k">STOP LOSS</div><div class="v" style="color:var(--red)">-$${c.slAmount}</div></div>
-        <div><div class="k">TAKE PROFIT (TP1)</div><div class="v" style="color:var(--green)">+$${c.tpAmount}</div></div>
-        <div><div class="k">REF ENTRY</div><div class="v">${c.refEntryPrice.toFixed(3)}</div></div>
-      </div>
-      <div class="confirm-btns">
-        <button class="confirm-approve" id="confirmApproveBtn">✅ APPROVE & SEND</button>
-        <button class="confirm-reject" id="confirmRejectBtn">✖ REJECT</button>
-      </div>
-      <div class="confirm-timer">auto-expires in ${c.secsLeft}s</div>
-    </div>
-  `;
-  document.getElementById('confirmApproveBtn').addEventListener('click', approvePendingConfirm);
-  document.getElementById('confirmRejectBtn').addEventListener('click', () => cancelPendingConfirm('rejected by user'));
-}
-function approvePendingConfirm(){
-  if (!pendingConfirm) return;
-  const info = { ...pendingConfirm };
-  clearInterval(pendingConfirm.timerHandle);
-  pendingConfirm = null;
-  confirmCardHolder.innerHTML = '';
-  executeBuy(info);
-}
-function cancelPendingConfirm(reason, silent){
-  if (!pendingConfirm) return;
-  clearInterval(pendingConfirm.timerHandle);
-  const c = pendingConfirm;
-  pendingConfirm = null;
-  confirmCardHolder.innerHTML = '';
-  if (!silent && reason) logLine(`live trade confirmation cancelled (${shortSym(c.name)} ${c.dir}) — ${reason}`, 'warn');
-}
-
-function executeBuy(info){
-  tradeSend({ buy: info.proposalId, price: info.askPrice });
-  logLine(`BUY sent: ${info.dir} ${shortSym(info.name)} · proposal ${info.proposalId} @ $${info.askPrice}`, 'trade');
-  fireAlert(`🟢 LIVE ORDER SENT: ${info.dir} ${shortSym(info.name)}`, `Stake $${info.stake} × ${info.multiplier} · SL -$${info.slAmount} · TP +$${info.tpAmount}`);
-}
-
-function handleBuyResponse(b){
-  const cid = b.contract_id;
-  livePositions[cid] = {
-    contract_id: cid, symbol: null, direction: null,
-    buy_price: b.buy_price, profit: 0, longcode: b.longcode
-  };
-  tradeSend({ proposal_open_contract: 1, contract_id: cid, subscribe: 1 });
-  logLine(`live contract opened: #${cid} · bought at $${b.buy_price}`, 'trade');
-  renderLivePositions();
-  renderLiveUsdLine();
-}
-
-function handleContractUpdate(poc){
-  const cid = poc.contract_id;
-  if (!livePositions[cid]) {
-    livePositions[cid] = { contract_id: cid, symbol: poc.underlying, direction: null, buy_price: poc.buy_price, profit: 0 };
-  }
-  const pos = livePositions[cid];
-  pos.symbol = poc.underlying || pos.symbol;
-  pos.direction = poc.contract_type === 'MULTUP' ? 'BUY' : (poc.contract_type === 'MULTDOWN' ? 'SELL' : pos.direction);
-  pos.profit = poc.profit;
-
-  if (poc.is_sold) {
-    liveDailyPnl += poc.profit;
-    const maxLoss = Math.max(1, parseFloat(maxDailyLossInput.value) || 50);
-    if (liveDailyPnl <= -Math.abs(maxLoss) && !liveDailyLossHit) {
-      liveDailyLossHit = true;
-      autoTradeEnabled = false;
-      renderAutoTradeBtn();
-      fireAlert('🛑 DAILY LOSS CAP HIT', `Live P/L reached $${liveDailyPnl.toFixed(2)}. Auto-trade has been disabled.`);
-      logLine(`🛑 daily loss cap of $${maxLoss} reached (P/L $${liveDailyPnl.toFixed(2)}) — auto-trade disabled`, 'warn');
-    }
-    logLine(`live contract #${cid} closed · P/L $${poc.profit.toFixed(2)} · sold at $${poc.sell_price}`, poc.profit >= 0 ? 'buy' : 'sell');
-    fireAlert(`${poc.profit >= 0 ? '✅' : '🛑'} LIVE TRADE CLOSED`, `${pos.symbol || ''} ${pos.direction || ''}: P/L $${poc.profit.toFixed(2)}`);
-    delete livePositions[cid];
-  }
-  renderLivePositions();
-  renderLiveUsdLine();
-}
-
-function sellContract(contract_id){
-  tradeSend({ sell: parseInt(contract_id, 10), price: 0 });
-  logLine(`sell requested for contract #${contract_id}`, 'trade');
-}
-
 function renderLivePositions(){
   const el = document.getElementById('livePositionsList');
   const ids = Object.keys(livePositions);
   if (!ids.length) { el.textContent = 'none'; return; }
   el.innerHTML = ids.map(cid => {
     const p = livePositions[cid];
-    const pcls = (p.profit || 0) >= 0 ? 'p-pos' : 'p-neg';
-    const sym = p.symbol ? shortSym(symbolState[p.symbol] ? symbolState[p.symbol].name : p.symbol) : '…';
-    return `<div class="pos-row">
-      <span>${sym} ${p.direction || ''}</span>
-      <span class="${pcls}">$${(p.profit || 0).toFixed(2)}</span>
-      <span>#${cid}</span>
-      <button class="pos-close-btn" onclick="sellContract('${cid}')">CLOSE</button>
-    </div>`;
+    const cls = (p.profit || 0) >=0? 'p-pos' : 'p-neg';
+    return `<div class="pos-row"><span>${p.symbol} ${p.direction}</span><span>${(p.buy_price||0).toFixed(2)}</span><span class="${cls}">${(p.profit||0).toFixed(2)}</span><span><button class="pos-close-btn" data-cid="${cid}">CLOSE</button></span></div>`;
   }).join('');
+  el.querySelectorAll('.pos-close-btn').forEach(b => b.addEventListener('click', () => sellContract(b.getAttribute('data-cid'))));
 }
-function renderLiveUsdLine(){
-  const n = Object.keys(livePositions).length;
-  if (!derivAuth) { liveUsdLine.style.display = 'none'; return; }
-  liveUsdLine.style.display = 'block';
-  const signed = liveDailyPnl >= 0 ? '+' : '';
-  liveUsdLine.textContent = `LIVE: ${signed}$${liveDailyPnl.toFixed(2)} today · ${n} open`;
-  liveUsdLine.style.color = liveDailyPnl >= 0 ? 'var(--green)' : 'var(--red)';
+function sellContract(contract_id){
+  if (!tradeWs || tradeWs.readyState!== WebSocket.OPEN) return;
+  tradeWs.send(JSON.stringify({ sell: contract_id }));
+  logLine(`selling contract ${contract_id}…`, 'trade');
 }
-
-renderAutoTradeBtn();
+function cancelPendingConfirm(reason){
+  if (!pendingConfirm) return;
+  clearInterval(pendingConfirm.timerHandle);
+  clearTimeout(pendingConfirm.timeoutHandle);
+  pendingConfirm = null;
+  confirmCardHolder.innerHTML = '';
+  logLine(`confirm cancelled — ${reason}`, 'warn');
+}
+function showConfirmCard(sym, dir, entryPrice, slPrice, tp1Price, stake, multiplier){
+  cancelPendingConfirm('new signal');
+  const st = symbolState[sym];
+  const slDist = Math.abs(entryPrice - slPrice);
+  const tpDist = Math.abs(tp1Price - entryPrice);
+  const slAmt = Math.abs((stake * multiplier * slDist) / entryPrice);
+  const tpAmt = Math.abs((stake * multiplier * tpDist) / entryPrice);
+  let secsLeft = CONFIRM_TIMEOUT_S;
+  const cardId = `confirm-${Date.now()}`;
+  confirmCardHolder.innerHTML = `
+    <div class="confirm-card" id="${cardId}">
+      <h3>⚠️ CONFIRM LIVE TRADE — ${dir} ${shortSym(st.name)}</h3>
+      <div class="confirm-grid">
+        <div><div class="k">SYMBOL</div><div class="v">${sym}</div></div>
+        <div><div class="k">DIRECTION</div><div class="v">${dir}</div></div>
+        <div><div class="k">ENTRY</div><div class="v">${entryPrice.toFixed(3)}</div></div>
+        <div><div class="k">SL PRICE</div><div class="v">${slPrice.toFixed(3)}</div></div>
+        <div><div class="k">TP1 PRICE</div><div class="v">${tp1Price.toFixed(3)}</div></div>
+        <div><div class="k">STAKE</div><div class="v">$${stake}</div></div>
+        <div><div class="k">SL $</div><div class="v">$${slAmt.toFixed(2)}</div></div>
+        <div><div class="k">TP $</div><div class="v">$${tpAmt.toFixed(2)}</div></div>
+        <div><div class="k">MULT</div><div class="v">x${multiplier}</div></div>
+      </div>
+      <div class="confirm-btns">
+        <button class="confirm-approve" id="${cardId}-approve">✅ APPROVE & BUY</button>
+        <button class="confirm-reject" id="${cardId}-reject">❌ REJECT</button>
+      </div>
+      <div class="confirm-timer" id="${cardId}-timer">Auto-reject in ${secsLeft}s</div>
+    </div>
+  `;
+  const approveBtn = document.getElementById(`${cardId}-approve`);
+  const rejectBtn = document.getElementById(`${cardId}-reject`);
+  const timerEl = document.getElementById(`${cardId}-timer`);
+  const timerHandle = setInterval(() => {
+    secsLeft--;
+    timerEl.textContent = `Auto-reject in ${secsLeft}s`;
+    if (secsLeft <=0) cancelPendingConfirm('timeout');
+  }, 1000);
+  const timeoutHandle = setTimeout(() => cancelPendingConfirm('timeout'), CONFIRM_TIMEOUT_S * 1000);
+  pendingConfirm = { sym, dir, entryPrice, slPrice, tp1Price, slAmt, tpAmt, stake, multiplier, timerHandle, timeoutHandle, secsLeft };
+  approveBtn.addEventListener('click', () => {
+    const pc = pendingConfirm;
+    if (!pc) return;
+    clearInterval(pc.timerHandle);
+    clearTimeout(pc.timeoutHandle);
+    confirmCardHolder.innerHTML = '';
+    pendingConfirm = null;
+    fireLiveTrade(pc.sym, pc.dir, pc.entryPrice, pc.slPrice, pc.tp1Price, pc.slAmt, pc.tpAmt, pc.stake, pc.multiplier);
+  });
+  rejectBtn.addEventListener('click', () => cancelPendingConfirm('user rejected'));
+}
+function maybeFireLiveTrade(sym, dir, entryPrice, slPrice, tp1Price, tag, sweep){
+  if (!autoTradeEnabled) return;
+  if (!derivAuth) return;
+  if (liveDailyLossHit) { logLine('daily loss cap hit — blocking live trade', 'warn'); return; }
+  const maxOpen = parseInt(maxConcurrentInput.value, 10) || 1;
+  if (Object.keys(livePositions).length >= maxOpen) { logLine(`max open ${maxOpen} reached — blocking ${sym} ${dir}`, 'warn'); return; }
+  const stake = parseFloat(stakeInput.value) || 10;
+  const multiplier = parseInt(multiplierInput.value, 10) || 100;
+  if (confirmBeforeFire) {
+    showConfirmCard(sym, dir, entryPrice, slPrice, tp1Price, stake, multiplier);
+  } else {
+    const slDist = Math.abs(entryPrice - slPrice);
+    const tpDist = Math.abs(tp1Price - entryPrice);
+    const slAmt = Math.abs((stake * multiplier * slDist) / entryPrice);
+    const tpAmt = Math.abs((stake * multiplier * tpDist) / entryPrice);
+    fireLiveTrade(sym, dir, entryPrice, slPrice, tp1Price, slAmt, tpAmt, stake, multiplier);
+  }
+}
+function fireLiveTrade(sym, dir, entryPrice, slPrice, tp1Price, slAmt, tpAmt, stake, multiplier){
+  if (!tradeWs || tradeWs.readyState!== WebSocket.OPEN) { logLine('trade socket not open — cannot buy', 'warn'); return; }
+  const contractType = dir === 'BUY'? 'MULTUP' : 'MULTDOWN';
+  const req = {
+    buy: 1,
+    price: stake,
+    parameters: {
+      amount: stake,
+      symbol: sym,
+      contract_type: contractType,
+      multiplier: multiplier,
+      stop_loss: parseFloat(slAmt.toFixed(2)),
+      take_profit: parseFloat(tpAmt.toFixed(2))
+    }
+  };
+  logLine(`buying ${sym} ${contractType} stake $${stake} x${multiplier} SL $${slAmt.toFixed(2)} TP $${tpAmt.toFixed(2)}`, 'trade');
+  tradeWs.send(JSON.stringify(req));
+}
+connect();
 renderSession();
 renderFocusAll();
-connect();
+renderScanner();
 </script>
 </body>
 </html>

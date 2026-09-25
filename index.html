@@ -1,58 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SNIPER v9 — FULL AUTO VERIFIED + MT5 SIMPLE</title>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0">
+<title>SNIPER v10 — MOBILE FIXED</title>
 <style>
 :root{--bg:#03070c;--panel:#071018;--line:#123041;--cyan:#33d6ff;--red:#ff4d4d;--amber:#ffb020;--green:#3ddc84;--text:#dff6ff;--muted:#5f7d92;--pink:#ff4d9a}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Courier New',monospace}
-.shell{padding:10px;display:grid;gap:10px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Courier New',monospace;-webkit-text-size-adjust:100%}
+.shell{padding:8px;display:grid;gap:8px;max-width:100vw;overflow-x:hidden}
 .topbar,.panel{background:linear-gradient(180deg,rgba(12,28,40,0.92),rgba(7,16,24,0.96));border:1px solid var(--line);border-radius:10px}
 .topbar{display:grid;grid-template-columns:1.4fr 1fr 1.2fr;gap:12px;padding:12px}
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}.status-dot.live,.status-dot.trade-live{background:var(--green)}
-.grid{display:grid;grid-template-columns:280px 1fr 320px;gap:10px}
-.panel{padding:12px;overflow:auto}
+.grid{display:grid;grid-template-columns:280px 1fr 320px;gap:8px;align-items:start}
+.panel{padding:12px;overflow:auto;min-width:0}
 .sec{font-size:10px;letter-spacing:2px;color:#1a7a99;margin-bottom:8px}
-input,button{background:#07141f;color:var(--cyan);border:1px solid #1a7a99;border-radius:6px;padding:7px 8px;font-family:inherit;width:100%;font-size:12px}button{cursor:pointer}
+input,button{background:#07141f;color:var(--cyan);border:1px solid #1a7a99;border-radius:6px;padding:9px 8px;font-family:inherit;width:100%;font-size:13px}button{cursor:pointer;min-height:38px}
 .split{display:grid;grid-template-columns:1fr 1fr;gap:7px}.controls{display:grid;gap:7px;margin-bottom:10px}
-.spark-wrap{height:160px;border:1px solid var(--line);border-radius:8px;background:#040b12;margin:6px 0 10px}#priceSpark{width:100%;height:100%;display:block}
-.sniper-banner{border-radius:8px;padding:12px;text-align:center;letter-spacing:2px;font-size:14px;font-weight:700;border:1px solid var(--muted);color:var(--muted);margin-bottom:10px}.sniper-banner.buy{border-color:var(--green);color:var(--green)}.sniper-banner.sell{border-color:var(--red);color:var(--red)}.sniper-banner.armed{border-color:var(--amber);color:var(--amber)}
+.spark-wrap{height:160px;border:1px solid var(--line);border-radius:8px;background:#040b12;margin:6px 0 10px;overflow:hidden}#priceSpark{width:100%;height:100%;display:block}
+.sniper-banner{border-radius:8px;padding:12px;text-align:center;letter-spacing:1px;font-size:12px;font-weight:700;border:1px solid var(--muted);color:var(--muted);margin-bottom:10px;word-break:break-word}
+.sniper-banner.buy{border-color:var(--green);color:var(--green)}.sniper-banner.sell{border-color:var(--red);color:var(--red)}.sniper-banner.armed{border-color:var(--amber);color:var(--amber)}
 .manual-panel{border:1px solid #123041;border-radius:10px;padding:10px;background:rgba(0,0,0,0.2);margin-top:10px}
 .manual-title{font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:8px;text-align:center}
-.manual-price{font-size:11px;color:var(--muted);text-align:center;margin-bottom:8px}.manual-price b{color:var(--text)}
+.manual-price{font-size:11px;color:var(--muted);text-align:center;margin-bottom:8px;line-height:1.6}.manual-price b{color:var(--text)}
 .manual-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn-buy{background:#082d18;border:2px solid var(--green);color:var(--green);font-weight:800;font-size:16px;padding:18px;border-radius:10px}
-.btn-sell{background:#2d0808;border:2px solid var(--red);color:var(--red);font-weight:800;font-size:16px;padding:18px;border-radius:10px}
+.btn-buy{background:#082d18;border:2px solid var(--green);color:var(--green);font-weight:800;font-size:16px;padding:20px;border-radius:10px}
+.btn-sell{background:#2d0808;border:2px solid var(--red);color:var(--red);font-weight:800;font-size:16px;padding:20px;border-radius:10px}
 .live-panel{border:1px solid var(--pink);border-radius:8px;padding:9px;margin-bottom:10px;background:rgba(255,77,154,0.03)}.live-title{font-size:10px;letter-spacing:2px;color:var(--pink);margin-bottom:8px}
 .badge{font-size:9px;padding:2px 6px;border-radius:4px;margin-left:6px}.badge-demo{background:rgba(61,220,132,.15);color:var(--green);border:1px solid var(--green)}.badge-real{background:rgba(255,77,77,.18);color:var(--red);border:1px solid var(--red)}
 .toggle-btn.on{border-color:var(--green);color:var(--green);background:rgba(61,220,132,.08)}.toggle-btn.off{border-color:var(--muted);color:var(--muted)}
 .kill-btn{width:100%;background:rgba(255,77,77,.15);border-color:var(--red);color:var(--red);font-weight:700;margin-top:8px}
-.acct-line{font-size:10px;color:var(--muted);margin:6px 0}.acct-line b{color:var(--text)}
-.pos-row{display:grid;grid-template-columns:1fr 50px 60px 42px;gap:4px;font-size:9.5px;padding:5px 2px;border-bottom:1px solid #0e2430;color:#8fb4c6}
-.scan-header,.scan-row{display:grid;grid-template-columns:1fr 30px 30px 68px;gap:4px;font-size:9.5px;padding:4px 2px;border-bottom:1px solid #0e2430}.scan-header{color:var(--muted)}.scan-row{color:#8fb4c6;cursor:pointer}.scan-row.focused{background:rgba(51,214,255,0.10)}.scan-list{max-height:190px;overflow:auto}
-.log{font-size:10px;line-height:1.55;color:#8fb4c6;white-space:pre-wrap}
-.auto-status{border:1px solid var(--line);border-radius:8px;padding:8px;margin-top:8px;font-size:10px;line-height:1.6;color:var(--muted)}
-.auto-status b{color:var(--text)}.auto-status.on{color:var(--green)}.auto-status.off{color:var(--red)}
+.acct-line{font-size:10px;color:var(--muted);margin:6px 0;word-break:break-all}.acct-line b{color:var(--text)}
+.pos-row{display:grid;grid-template-columns:1fr 50px 60px 42px;gap:4px;font-size:10px;padding:6px 2px;border-bottom:1px solid #0e2430;color:#8fb4c6}
+.scan-header,.scan-row{display:grid;grid-template-columns:1fr 32px 32px 72px;gap:4px;font-size:10px;padding:5px 2px;border-bottom:1px solid #0e2430}.scan-header{color:var(--muted)}.scan-row{color:#8fb4c6;cursor:pointer}.scan-row.focused{background:rgba(51,214,255,0.10)}.scan-list{max-height:220px;overflow:auto}
+.log{font-size:10px;line-height:1.55;color:#8fb4c6;white-space:pre-wrap;word-break:break-word}
+.auto-status{border:1px solid var(--line);border-radius:8px;padding:8px;margin-top:8px;font-size:10px;line-height:1.6;color:var(--muted);word-break:break-word}
+
+/* --- MOBILE FIX --- */
+@media(max-width:900px){
+ .topbar{grid-template-columns:1fr;gap:8px}
+ .grid{grid-template-columns:1fr!important; gap:8px}
+ .panel{width:100%; max-width:100vw}
+ .shell{padding:6px}
+  #mainTitle{font-size:12px!important}
+ .manual-btns{grid-template-columns:1fr 1fr}
+ .btn-buy,.btn-sell{font-size:15px;padding:18px}
+ .spark-wrap{height:140px}
+}
 </style>
 </head>
 <body>
 <div class="shell">
-<header class="topbar"><div><h1 id="mainTitle" style="margin:0;font-size:13px;color:#33d6ff;letter-spacing:2px">SNIPER v9 — AUTO VERIFIED</h1><div id="subLine" style="font-size:10px;color:#5f7d92">SCANS ALL SYMBOLS · REAL SL/TP · MT5 SIMPLE</div></div><div style="text-align:center"><div id="sessionPnl" style="font-size:28px;color:#3ddc84">+0.00R</div><div id="sessionMeta" style="font-size:10px;color:#5f7d92">0 setups · 0 auto trades</div><div id="liveUsdLine" style="display:none;font-size:12px;color:#ffb020">LIVE: $0</div></div><div style="text-align:right;font-size:11px;color:#5f7d92"><div><span class="status-dot" id="statusDot"></span> <span id="statusText">connecting</span></div><div><span class="status-dot" id="tradeDot"></span> <span id="tradeStatusText">trading: not connected</span></div></div></header>
+<header class="topbar"><div><h1 id="mainTitle" style="margin:0;font-size:13px;color:#33d6ff;letter-spacing:1px">SNIPER v10 — MOBILE FIXED + AUTO VERIFIED</h1><div id="subLine" style="font-size:10px;color:#5f7d92">SCANS 5 SYMBOLS · REAL SL/TP · MT5 SIMPLE · MOBILE GRID FIX</div></div><div style="text-align:center"><div id="sessionPnl" style="font-size:26px;color:#3ddc84">+0.00R</div><div id="sessionMeta" style="font-size:10px;color:#5f7d92">0 setups · 0 auto</div><div id="liveUsdLine" style="display:none;font-size:12px;color:#ffb020">LIVE: $0</div></div><div style="text-align:right;font-size:11px;color:#5f7d92"><div><span class="status-dot" id="statusDot"></span> <span id="statusText">connecting</span></div><div><span class="status-dot" id="tradeDot"></span> <span id="tradeStatusText">trading: not connected</span></div></div></header>
 <div class="grid">
-<aside class="panel"><div class="sec">AUTO SYSTEM CONTROLS</div><div class="controls"><div class="split"><div>SWING LB<input type="number" id="lookbackInput" value="10"></div><div>TP×ATR<input type="number" id="tpMultInput" value="1.5"></div></div>SL×ATR<input type="number" id="slBufferInput" value="1.5"></div>
-<div class="live-panel"><div class="live-title">LIVE — v9 FULL AUTO + MT5</div><div class="controls"><input type="password" id="apiTokenInput" placeholder="pat_..."><input type="text" id="accountIdInput" value="DOT91733593"><button id="connectDerivBtn">CONNECT DEMO</button></div><div class="acct-line" id="acctLine">Not connected</div><div class="split"><button id="autoTradeBtn" class="toggle-btn off">AUTO-TRADE: OFF</button><button id="confirmToggleBtn" class="toggle-btn on">CONFIRM: ON</button></div><div class="split" style="margin-top:7px"><div>STAKE $<input type="number" id="stakeInput" value="1"></div><div>MULT<input type="number" id="multiplierInput" value="100"></div></div><div class="split" style="margin-top:7px"><div>MAX OPEN<input type="number" id="maxConcurrentInput" value="3"></div><div>MAX LOSS $<input type="number" id="maxDailyLossInput" value="50"></div></div><button id="killSwitchBtn" class="kill-btn">CLOSE ALL — price:0</button><div class="auto-status" id="autoStatus">Auto: <span class="off">OFF</span> · Waiting for H1+M1 alignment across 5 symbols<br>When ARMED → ENTRY → real SL from swing/ATR wired to $ risk<br>Guard: req_id race protection + max open + daily loss</div><div class="sec" style="margin-top:10px">OPEN POSITIONS — VERIFIED ON DOT91733593</div><div id="livePositionsList" style="font-size:10px;color:var(--muted)">none</div></div>
-<div class="sec">SCANNER — FULLY AUTOMATED (ALL SYMBOLS)</div><div class="scan-header"><span>SYM</span><span>H1</span><span>M1</span><span>STATUS</span></div><div class="scan-list" id="scanBody"></div>
+<aside class="panel" style="order:1"><div class="sec">AUTO SYSTEM CONTROLS</div><div class="controls"><div class="split"><div>SWING LB<input type="number" id="lookbackInput" value="10"></div><div>TP×ATR<input type="number" id="tpMultInput" value="1.5"></div></div>SL×ATR<input type="number" id="slBufferInput" value="1.5"></div>
+<div class="live-panel"><div class="live-title">LIVE — v10 MOBILE FIXED</div><div class="controls"><input type="password" id="apiTokenInput" placeholder="pat_..."><input type="text" id="accountIdInput" value="DOT91733593"><button id="connectDerivBtn">CONNECT DEMO</button></div><div class="acct-line" id="acctLine">Not connected</div><div class="split"><button id="autoTradeBtn" class="toggle-btn off">AUTO-TRADE: OFF</button><button id="confirmToggleBtn" class="toggle-btn on">CONFIRM: ON</button></div><div class="split" style="margin-top:7px"><div>STAKE $<input type="number" id="stakeInput" value="1"></div><div>MULT<input type="number" id="multiplierInput" value="100"></div></div><div class="split" style="margin-top:7px"><div>MAX OPEN<input type="number" id="maxConcurrentInput" value="3"></div><div>MAX LOSS $<input type="number" id="maxDailyLossInput" value="50"></div></div><button id="killSwitchBtn" class="kill-btn">CLOSE ALL — price:0</button><div class="auto-status" id="autoStatus">Auto: OFF · Connect PAT first</div><div class="sec" style="margin-top:10px">OPEN POSITIONS — VERIFIED</div><div id="livePositionsList" style="font-size:10px;color:var(--muted)">none</div></div>
+<div class="sec">SCANNER — ALL SYMBOLS AUTO</div><div class="scan-header"><span>SYM</span><span>H1</span><span>M1</span><span>STATUS</span></div><div class="scan-list" id="scanBody"></div>
 </aside>
-<section class="panel"><div class="sec">M1 PRICE — AUTO FOCUS BEST ALIGNED</div><div class="spark-wrap"><svg id="priceSpark" viewBox="0 0 680 180" preserveAspectRatio="none"></svg></div><div class="sniper-banner" id="sniperBanner">SCANNING ALL SYMBOLS — WAITING FOR ALIGNMENT</div>
-<div class="manual-panel"><div class="manual-title">MT5 SIMPLE — MANUAL OVERRIDE + AUTO STATUS</div><div class="manual-price">Focus: <b id="manualSymbol">R_100</b> · Price: <b id="manualPrice">—</b> · Entry <b id="entryDisplay">—</b> SL <b id="slDisplay">—</b> TP <b id="tpDisplay">—</b><br>Stake $<b id="manualStakeDisplay">1</b> x<b id="manualMultDisplay">100</b> → Risk $<b id="riskDisplay">—</b> / $<b id="rewardDisplay">—</b></div><div class="manual-btns"><button id="manualSellBtn" class="btn-sell">SELL<br>MULTDOWN<br><span id="sellPriceDisplay">—</span></button><button id="manualBuyBtn" class="btn-buy">BUY<br>MULTUP<br><span id="buyPriceDisplay">—</span></button></div><div style="font-size:9px;color:var(--muted);text-align:center;margin-top:8px">AUTO-Trade scans all 5 vols. When H1 zone = M1 zone + BOS/CHOCH, it auto-fires with real SL/TP. Manual buttons are override.</div></div><div id="confirmCardHolder"></div></section>
-<aside class="panel"><div class="sec">PERF — VERIFIED</div><div id="statSetups">0 setups</div><div id="statAuto">0 auto trades fired</div><div id="statLast" style="font-size:10px;color:var(--muted);margin-top:8px">No trades yet</div><div class="sec" style="margin-top:12px">VERIFICATION</div><div style="font-size:10px;color:var(--muted);line-height:1.6">
-<b style="color:var(--green)">1. Scanner:</b> H1+M1 structure on all 5<br>
-<b style="color:var(--green)">2. SL:</b> swing + ATR → $ risk wired<br>
-<b style="color:var(--amber)">3. Race:</b> req_id guard, blocks 2nd while in-flight<br>
-<b style="color:var(--pink)">4. Safety:</b> CONFIRM ON default, REAL ROT... blocked for AUTO<br>
-<b>Test:</b> CONNECT → set AUTO ON + CONFIRM OFF on DEMO → watch LOG for<br>ARMED → ENTRY → proposal → BUY OK
-</div></aside>
-<section class="panel"><div class="sec">LOG — VERIFIED AUTO EXECUTION</div><div class="log" id="execLog">waiting…</div></section>
+<section class="panel" style="order:2"><div class="sec">M1 PRICE — AUTO FOCUS</div><div class="spark-wrap"><svg id="priceSpark" viewBox="0 0 680 180" preserveAspectRatio="none"></svg></div><div class="sniper-banner" id="sniperBanner">SCANNING ALL SYMBOLS</div>
+<div class="manual-panel"><div class="manual-title">MT5 SIMPLE — MANUAL + AUTO</div><div class="manual-price">Focus: <b id="manualSymbol">R_100</b> · Price: <b id="manualPrice">—</b> · Entry <b id="entryDisplay">—</b> SL <b id="slDisplay">—</b> TP <b id="tpDisplay">—</b><br>Stake $<b id="manualStakeDisplay">1</b> x<b id="manualMultDisplay">100</b> → Risk $<b id="riskDisplay">—</b> / $<b id="rewardDisplay">—</b></div><div class="manual-btns"><button id="manualSellBtn" class="btn-sell">SELL<br>MULTDOWN<br><span id="sellPriceDisplay">—</span></button><button id="manualBuyBtn" class="btn-buy">BUY<br>MULTUP<br><span id="buyPriceDisplay">—</span></button></div></div><div id="confirmCardHolder"></div>
+</section>
+<aside class="panel" style="order:3"><div class="sec">PERF — VERIFIED</div><div id="statSetups">0 setups</div><div id="statAuto">0 auto trades</div><div id="statLast" style="font-size:10px;color:var(--muted);margin-top:8px">No trades yet</div><div class="sec" style="margin-top:12px">MOBILE FIX</div><div style="font-size:10px;color:var(--muted);line-height:1.6">Grid now stacks: Controls → Price → Perf → Log on phones. No more side-squeeze. MT5 buttons full width.</div></aside>
+<section class="panel" style="order:4"><div class="sec">LOG — VERIFIED AUTO</div><div class="log" id="execLog">waiting…</div></section>
 </div></div>
 <script>
 const APP_ID='34uEO9DPEeYnaZ71rfMT8';
@@ -64,7 +71,7 @@ let symbolState={};SCAN_SYMBOLS.forEach(s=>{symbolState[s.symbol]={name:s.displa
 let wsData=null,subscribedTicksSet=new Set(),lookback=10,tpStep=1.5,slBufferMult=1.5,focusSymbol='R_100',pinnedSymbol=null,scannerDirty=false,session={setups:0,autoTrades:0,pnlR:0,loss:0};
 function ts(){return new Date().toLocaleTimeString('en-GB',{hour12:false})}function logLine(t,c='info'){const el=document.getElementById('execLog');const col=c==='warn'?'#ffb020':c==='trade'?'#ff4d9a':c==='buy'?'#3ddc84':c==='sell'?'#ff4d4d':'#8fb4c6';el.innerHTML=`<div style="color:${col}">${ts()} ${t}</div>`+el.innerHTML;if(el.children.length>300)el.lastChild.remove()}
 function wsSend(sock,obj){if(sock&&sock.readyState===WebSocket.OPEN){sock.send(JSON.stringify(obj));return true}return false}
-function renderSession(){document.getElementById('sessionPnl').textContent=`${session.pnlR>=0?'+':''}${session.pnlR.toFixed(2)}R`;document.getElementById('sessionMeta').textContent=`${session.setups} setups · ${session.autoTrades} auto`;document.getElementById('statSetups').textContent=`${session.setups} setups`;document.getElementById('statAuto').textContent=`${session.autoTrades} auto trades fired`;}
+function renderSession(){document.getElementById('sessionPnl').textContent=`${session.pnlR>=0?'+':''}${session.pnlR.toFixed(2)}R`;document.getElementById('sessionMeta').textContent=`${session.setups} setups · ${session.autoTrades} auto`;document.getElementById('statSetups').textContent=`${session.setups} setups`;document.getElementById('statAuto').textContent=`${session.autoTrades} auto trades`;}
 function drawSpark(){const svg=document.getElementById('priceSpark');const st=focusSymbol&&symbolState[focusSymbol];const src=st?st.m1Candles.slice(-120):[];if(src.length<2){svg.innerHTML='';return}const ys=src.map(c=>c.close);const min=Math.min(...ys),max=Math.max(...ys);const span=max-min||1;const w=680,h=180,pad=8;const pts=src.map((c,i)=>{const x=pad+(i/(src.length-1))*(w-pad*2);const y=pad+(1-(c.close-min)/span)*(h-pad*2);return `${x.toFixed(1)},${y.toFixed(1)}`});svg.innerHTML=`<polyline fill="none" stroke="#3ddc84" stroke-width="2" points="${pts.join(' ')}"/>`}
 function computeStructure(candles,lb){const n=candles.length;if(n<lb*2+3)return{state:0,barsSinceBos:999,breakType:null};const swings=[];for(let i=lb;i<n-lb;i++){let isH=true,isL=true;for(let k=1;k<=lb;k++){if(candles[i].high<=candles[i-k].high||candles[i].high<=candles[i+k].high)isH=false;if(candles[i].low>=candles[i-k].low||candles[i].low>=candles[i+k].low)isL=false;if(!isH&&!isL)break}if(isH)swings.push({confirmedAt:i+lb,type:'H',price:candles[i].high});if(isL)swings.push({confirmedAt:i+lb,type:'L',price:candles[i].low})}swings.sort((a,b)=>a.confirmedAt-b.confirmedAt);let lastH=null,lastL=null,state=0,lastBos=-1,bType=null,ptr=0;for(let i=0;i<n;i++){while(ptr<swings.length&&swings[ptr].confirmedAt<=i){const s=swings[ptr];if(s.type==='H')lastH=s.price;else lastL=s.price;ptr++}if(i>0){const c=candles[i].close;if(lastL!==null&&c<lastL){bType=state===-1?'BOS':'CHOCH';state=-1;lastBos=i;lastL=null}else if(lastH!==null&&c>lastH){bType=state===1?'BOS':'CHOCH';state=1;lastBos=i;lastH=null}}}return{state,barsSinceBos:lastBos===-1?999:(n-1-lastBos),breakType:bType}}
 function computeATR(c,p){if(c.length<p+1)return null;const tr=[];for(let i=c.length-p;i<c.length;i++){const cur=c[i],pr=c[i-1];tr.push(Math.max(cur.high-cur.low,Math.abs(cur.high-pr.close),Math.abs(cur.low-pr.close)))}return tr.reduce((a,b)=>a+b,0)/p}
@@ -76,33 +83,22 @@ function recomputeM1(sym){const st=symbolState[sym];const atr=computeATR(st.m1Ca
 function manageTrade(sym,m1res,atr){
  const st=symbolState[sym]; const price=st.m1Candles[st.m1Candles.length-1]?.close; if(price===undefined)return; if(st.activeTrade)return;
  const fresh=m1res.barsSinceBos===0&&m1res.breakType!==null; const m1Dir=m1res.state===1?'BUY':m1res.state===-1?'SELL':null;
- if(fresh&&m1Dir&&st.h1Zone===m1Dir){
-  st.pendingSetup={direction:m1Dir,breakType:m1res.breakType};
-  logLine(`[${sym}] AUTO-SCAN ARMED ${m1Dir} ${m1res.breakType} — H1 ${st.h1Zone} M1 ${st.m1Zone}`,m1Dir==='BUY'?'buy':'sell');
- }else if(st.pendingSetup){if(st.h1Zone!==st.pendingSetup.direction)st.pendingSetup=null}
+ if(fresh&&m1Dir&&st.h1Zone===m1Dir){st.pendingSetup={direction:m1Dir,breakType:m1res.breakType}; logLine(`[${sym}] ARMED ${m1Dir} ${m1res.breakType}`,m1Dir==='BUY'?'buy':'sell')}
+ else if(st.pendingSetup){if(st.h1Zone!==st.pendingSetup.direction)st.pendingSetup=null}
  if(st.pendingSetup){
   const closed=st.m1Candles.length>=2?st.m1Candles[st.m1Candles.length-2]:null;
-  if(closed&&atr){
-   const dir=st.pendingSetup.direction; const entry=closed.close; const sl=computeSL(dir,entry,atr,slBufferMult); const tp1=dir==='BUY'?entry+atr*tpStep:entry-atr*tpStep;
-   st.lastEntry=entry; st.lastSL=sl; st.lastTP1=tp1;
-   st.activeTrade={direction:dir,entryPrice:entry,sl,tp1};
-   session.setups++;renderSession();
-   logLine(`🎯 VERIFIED ENTRY ${dir} ${sym} @${entry.toFixed(2)} SL ${sl.toFixed(2)} TP ${tp1.toFixed(2)} — auto scanning will fire`,'trade');
-   const ps=st.pendingSetup;st.pendingSetup=null;
-   maybeFireAuto(sym,dir,entry,sl,tp1,atr);
-  }
+  if(closed&&atr){const dir=st.pendingSetup.direction; const entry=closed.close; const sl=computeSL(dir,entry,atr,slBufferMult); const tp1=dir==='BUY'?entry+atr*tpStep:entry-atr*tpStep; st.lastEntry=entry; st.lastSL=sl; st.lastTP1=tp1; st.activeTrade={direction:dir,entryPrice:entry,sl,tp1}; session.setups++;renderSession(); logLine(`🎯 ENTRY ${dir} ${sym} @${entry.toFixed(2)} SL ${sl.toFixed(2)} TP ${tp1.toFixed(2)}`,'trade'); const ps=st.pendingSetup;st.pendingSetup=null; maybeFireAuto(sym,dir,entry,sl,tp1,atr);}
  }
 }
 function updateFocus(){if(pinnedSymbol&&symbolState[pinnedSymbol]){focusSymbol=pinnedSymbol;renderFocus();return}const syms=Object.keys(symbolState);const armed=syms.filter(s=>symbolState[s].pendingSetup);const aligned=syms.filter(s=>symbolState[s].m1Res&&symbolState[s].h1Zone!=='NEUTRAL'&&symbolState[s].h1Zone===symbolState[s].m1Zone);let pool=[];if(armed.length)pool=armed;else if(aligned.length)pool=aligned;let target=pool[0]||focusSymbol||'R_100';if(target!==focusSymbol){focusSymbol=target;renderFocus()}}
 function renderFocus(){
  const st=focusSymbol&&symbolState[focusSymbol];
- document.getElementById('mainTitle').textContent=st?`${st.name} — SNIPER v9 AUTO`:'SNIPER v9 — SCANNING ALL';
+ document.getElementById('mainTitle').textContent=st?`${st.name} — SNIPER v10 MOBILE`:'SNIPER v10';
  const b=document.getElementById('sniperBanner');
- if(!focusSymbol){b.textContent='SCANNING ALL 5 SYMBOLS';return}
- if(st.activeTrade){b.className='sniper-banner '+(st.activeTrade.direction==='BUY'?'buy':'sell');b.textContent=`AUTO ENTRY ${st.activeTrade.direction} — ${st.name} @${st.activeTrade.entryPrice.toFixed(2)} SL ${st.activeTrade.sl.toFixed(2)}`}
- else if(st.pendingSetup){b.className='sniper-banner armed';b.textContent=`AUTO ARMED ${st.pendingSetup.direction} — ${st.name} — waiting for close`}
- else{b.className='sniper-banner';b.textContent=st.h1Zone!=='NEUTRAL'&&st.h1Zone===st.m1Zone?`${st.name} ALIGNED ${st.h1Zone} — watching for BOS`:`${st.name} ${st.h1Zone}/${st.m1Zone} — scanning`}
- drawSpark();updateManualPrice();
+ if(!focusSymbol){b.textContent='SCANNING';return}
+ if(st.activeTrade){b.className='sniper-banner '+(st.activeTrade.direction==='BUY'?'buy':'sell');b.textContent=`ENTRY ${st.activeTrade.direction} — ${st.name} @${st.activeTrade.entryPrice.toFixed(2)}`}
+ else if(st.pendingSetup){b.className='sniper-banner armed';b.textContent=`ARMED ${st.pendingSetup.direction} — ${st.name}`}
+ else{b.className='sniper-banner';b.textContent=`${st.name} ${st.h1Zone}/${st.m1Zone} — scanning`} drawSpark();updateManualPrice();
 }
 function renderScanner(){const rows=Object.keys(symbolState).map(sym=>{const st=symbolState[sym];let rank=0,status='—';if(st.activeTrade){rank=3;status=`ENTRY ${st.activeTrade.direction}`}else if(st.pendingSetup){rank=2;status=`ARMED ${st.pendingSetup.direction}`}else if(st.m1Res&&st.h1Zone!=='NEUTRAL'&&st.h1Zone===st.m1Zone){rank=1;status=`ALIGNED ${st.h1Zone}`}else if(st.h1Res){status=`${st.h1Zone}/${st.m1Zone}`}const score=rank*1000+(st.h1Res?Math.abs(st.h1Value-50):0);return{sym,name:st.name,h1:st.h1Res?Math.round(st.h1Value):null,m1:st.m1Res?Math.round(st.m1Value):null,status,rank,score}}).sort((a,b)=>b.score-a.score);const body=document.getElementById('scanBody');body.innerHTML=rows.map(r=>`<div class="scan-row ${r.sym===focusSymbol?'focused':''}" data-sym="${r.sym}"><span>${r.name}</span><span>${r.h1===null?'—':r.h1}</span><span>${r.m1===null?'—':r.m1}</span><span>${r.status}</span></div>`).join('');body.querySelectorAll('.scan-row').forEach(el=>el.addEventListener('click',()=>{const s=el.getAttribute('data-sym');pinnedSymbol=pinnedSymbol===s?null:s;updateFocus()}))}
 function feedTickToCandle(sym, price, epochSec){
@@ -113,9 +109,9 @@ function feedTickToCandle(sym, price, epochSec){
 }
 function connectData(){
  const sock=new WebSocket(WS_DATA_URL); wsData=sock;
- sock.onopen=()=>{document.getElementById('statusDot').classList.add('live');document.getElementById('statusText').textContent='live · data 1089 (auto)';logLine(`data socket open 1089 — auto scanner live`,'info');Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:60,style:"candles"})});setInterval(()=>wsSend(sock,{ping:1}),PING_MS)};
+ sock.onopen=()=>{document.getElementById('statusDot').classList.add('live');document.getElementById('statusText').textContent='live · data';logLine(`data socket open 1089`,'info');Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:60,style:"candles"})});setInterval(()=>wsSend(sock,{ping:1}),PING_MS)};
  sock.onmessage=(ev)=>{let d;try{d=JSON.parse(ev.data)}catch(e){return}if(d.msg_type==="candles"&&Array.isArray(d.candles)){const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));const gran=d.echo_req.granularity;if(gran===3600){st.h1Candles=mapped;recomputeH1(sym)}else if(gran===60){st.m1Candles=mapped;recomputeM1(sym);if(!subscribedTicksSet.has(sym)){wsSend(sock,{ticks:sym,subscribe:1});subscribedTicksSet.add(sym)}}scannerDirty=true}if(d.msg_type==="tick"&&d.tick){feedTickToCandle(d.tick.symbol,+d.tick.quote,d.tick.epoch)}};
- sock.onclose=()=>{document.getElementById('statusDot').classList.remove('live');document.getElementById('statusText').textContent='reconnecting data… using trading ticks fallback';subscribedTicksSet.clear();setTimeout(connectData,3000)};
+ sock.onclose=()=>{document.getElementById('statusDot').classList.remove('live');document.getElementById('statusText').textContent='reconnecting data…';subscribedTicksSet.clear();setTimeout(connectData,3000)};
 }
 setInterval(()=>{if(scannerDirty){renderScanner();scannerDirty=false}},800);
 
@@ -124,107 +120,100 @@ let currentPat=null,currentAccountId=null;
 const apiTokenInput=document.getElementById('apiTokenInput'),accountIdInput=document.getElementById('accountIdInput'),connectDerivBtn=document.getElementById('connectDerivBtn'),acctLine=document.getElementById('acctLine'),autoTradeBtn=document.getElementById('autoTradeBtn'),confirmToggleBtn=document.getElementById('confirmToggleBtn'),stakeInput=document.getElementById('stakeInput'),multiplierInput=document.getElementById('multiplierInput'),maxConcurrentInput=document.getElementById('maxConcurrentInput'),maxDailyLossInput=document.getElementById('maxDailyLossInput'),killSwitchBtn=document.getElementById('killSwitchBtn'),liveUsdLine=document.getElementById('liveUsdLine'),autoStatus=document.getElementById('autoStatus');
 apiTokenInput.value=localStorage.getItem('deriv_token')||'';accountIdInput.value=localStorage.getItem('deriv_account_id')||'DOT91733593';
 function setTradeStatus(a,l){document.getElementById('tradeDot').classList.toggle('trade-live',a);document.getElementById('tradeStatusText').textContent=l}
-function updateAutoStatus(){if(!derivAuth){autoStatus.innerHTML=`Auto: <span class="off">OFF</span> · Connect PAT first`; return} if(!autoTradeEnabled){autoStatus.innerHTML=`Auto: <span class="off">OFF</span> · Scanning all 5 symbols H1+M1, not firing<br>Turn AUTO ON to let it execute`; return} const pend=Object.keys(pendingMap).length; const open=Object.keys(livePositions).length; autoStatus.innerHTML=`Auto: <span class="on">ON</span> · Scanning 5 symbols · ${open} open / max ${maxConcurrentInput.value} · ${pend?`in-flight req_id ${Object.keys(pendingMap)[0]} — guard active`:`ready for next alignment`}<br>CONFIRM ${confirmBeforeFire?'ON (will ask)':'OFF (instant fire on DEMO)'} · Daily loss $${session.loss.toFixed(2)}/${maxDailyLossInput.value}`;}
+function updateAutoStatus(){if(!derivAuth){autoStatus.innerHTML=`Auto: OFF · Connect PAT`;return} if(!autoTradeEnabled){autoStatus.innerHTML=`Auto: OFF · Scanning 5 symbols, not firing`;return} autoStatus.innerHTML=`Auto: ON · ${Object.keys(livePositions).length}/${maxConcurrentInput.value} open · ${Object.keys(pendingMap).length?'in-flight guard':`ready`}`;}
 connectDerivBtn.addEventListener('click',()=>{const tok=apiTokenInput.value.trim();if(!tok){acctLine.textContent='Enter pat_...';return}localStorage.setItem('deriv_token',tok);localStorage.setItem('deriv_account_id',accountIdInput.value.trim());currentPat=tok;currentAccountId=accountIdInput.value.trim();startPatFlow(tok,currentAccountId)});
-autoTradeBtn.addEventListener('click',()=>{if(!derivAuth){logLine('connect first','warn');return}if(derivAuth&&!derivAuth.is_demo&&!autoTradeEnabled){logLine('⚠️ REAL ROT... — AUTO blocked for safety, use DEMO','warn'); return} autoTradeEnabled=!autoTradeEnabled; autoTradeBtn.textContent=`AUTO-TRADE: ${autoTradeEnabled?'ON':'OFF'}`; autoTradeBtn.className=`toggle-btn ${autoTradeEnabled?'on':'off'}`; updateAutoStatus(); logLine(autoTradeEnabled?'🤖 AUTO-TRADE ENABLED — scanning all symbols and will auto-fire on alignment':'🛑 AUTO-TRADE DISABLED','trade')});
-confirmToggleBtn.addEventListener('click',()=>{confirmBeforeFire=!confirmBeforeFire;confirmToggleBtn.textContent=`CONFIRM: ${confirmBeforeFire?'ON':'OFF'}`;confirmToggleBtn.className=`toggle-btn ${confirmBeforeFire?'on':'off'}`; updateAutoStatus()});
-killSwitchBtn.addEventListener('click',()=>{autoTradeEnabled=false;autoTradeBtn.textContent='AUTO-TRADE: OFF';autoTradeBtn.className='toggle-btn off';const cids=Object.keys(livePositions); if(cids.length===0){logLine('no positions — refetching POC','info'); if(wsTrade)wsSend(wsTrade,{proposal_open_contract:1,subscribe:1}); return} cids.forEach(cid=>sellContract(cid)); logLine(`🛑 KILL ${cids.length} price:0`,'warn'); updateAutoStatus()});
-async function fetchAccounts(pat){const res=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}}); const txt=await res.text(); if(!res.ok)throw new Error(`accounts ${res.status}: ${txt.slice(0,200)}`); return JSON.parse(txt);}
-async function fetchOtp(pat,accountId){const res=await fetch(`${REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(accountId)}/otp`,{method:'POST',headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}}); const txt=await res.text(); if(!res.ok)throw new Error(`otp ${res.status}: ${txt.slice(0,200)}`); const j=JSON.parse(txt); const url=j?.data?.url||j?.url; if(!url)throw new Error('no otp url'); return url;}
+autoTradeBtn.addEventListener('click',()=>{if(!derivAuth){logLine('connect first','warn');return}if(derivAuth&&!derivAuth.is_demo&&!autoTradeEnabled){logLine('REAL blocked — use DEMO','warn');return}autoTradeEnabled=!autoTradeEnabled;autoTradeBtn.textContent=`AUTO-TRADE: ${autoTradeEnabled?'ON':'OFF'}`;autoTradeBtn.className=`toggle-btn ${autoTradeEnabled?'on':'off'}`;updateAutoStatus();});
+confirmToggleBtn.addEventListener('click',()=>{confirmBeforeFire=!confirmBeforeFire;confirmToggleBtn.textContent=`CONFIRM: ${confirmBeforeFire?'ON':'OFF'}`;confirmToggleBtn.className=`toggle-btn ${confirmBeforeFire?'on':'off'}`;});
+killSwitchBtn.addEventListener('click',()=>{autoTradeEnabled=false;autoTradeBtn.textContent='AUTO-TRADE: OFF';autoTradeBtn.className='toggle-btn off';const cids=Object.keys(livePositions);if(cids.length===0){if(wsTrade)wsSend(wsTrade,{proposal_open_contract:1,subscribe:1});return}cids.forEach(cid=>sellContract(cid));});
+async function fetchAccounts(pat){const res=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await res.text();if(!res.ok)throw new Error(`accounts ${res.status}: ${txt.slice(0,200)}`);return JSON.parse(txt);}
+async function fetchOtp(pat,accountId){const res=await fetch(`${REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(accountId)}/otp`,{method:'POST',headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await res.text();if(!res.ok)throw new Error(`otp ${res.status}: ${txt.slice(0,200)}`);const j=JSON.parse(txt);const url=j?.data?.url||j?.url;if(!url)throw new Error('no otp url');return url;}
 function extractAccountList(j){const l=j?.data?.accounts||j?.data||j?.accounts||(Array.isArray(j)?j:null);return Array.isArray(l)?l:[]}
 function extractAccountId(a){return a.account_id||a.accountId||a.id||null}
 function isDemo(a){const id=extractAccountId(a)||'';if(id.startsWith('DOT'))return true;if(a.is_virtual||a.account_type==='demo')return true;return false}
 async function startPatFlow(pat,preferredId){
  setTradeStatus(false,'fetching accounts…');
  try{
-  const js=await fetchAccounts(pat); const accs=extractAccountList(js); if(!accs.length)throw new Error('no accounts');
+  const js=await fetchAccounts(pat);const accs=extractAccountList(js);if(!accs.length)throw new Error('no accounts');
   let chosen=accs.find(a=>extractAccountId(a)===preferredId)||accs.find(a=>isDemo(a))||accs[0];
-  const cid=extractAccountId(chosen); currentAccountId=cid;
-  logLine(`chosen ${cid} (${isDemo(chosen)?'DEMO':'REAL'}) — OTP…`,'info');
-  const otpUrl=await fetchOtp(pat,cid); openTradingSocket(otpUrl,chosen);
- }catch(e){setTradeStatus(false,`error: ${e.message.slice(0,100)}`);logLine(`PAT err: ${e.message}`,'warn')}
+  const cid=extractAccountId(chosen);currentAccountId=cid;
+  const otpUrl=await fetchOtp(pat,cid);openTradingSocket(otpUrl,chosen);
+ }catch(e){setTradeStatus(false,`error: ${e.message.slice(0,80)}`);logLine(`PAT err: ${e.message}`,'warn')}
 }
 function openTradingSocket(otpUrl,accountMeta){
- if(wsTrade)try{wsTrade.close()}catch(e){} if(tradePing)clearInterval(tradePing);
- const sock=new WebSocket(otpUrl); wsTrade=sock; pendingMap={}; livePositions={};
+ if(wsTrade)try{wsTrade.close()}catch(e){}if(tradePing)clearInterval(tradePing);
+ const sock=new WebSocket(otpUrl);wsTrade=sock;pendingMap={};livePositions={};
  setTradeStatus(false,'connecting OTP…');
  sock.onopen=()=>{
-  logLine(`trading OPEN — ${extractAccountId(accountMeta)} ${isDemo(accountMeta)?'DEMO':'REAL'} — auto scanner ready`,'trade');
   derivAuth={loginid:extractAccountId(accountMeta),is_demo:isDemo(accountMeta),currency:accountMeta.currency||'USD',balance:parseFloat(accountMeta.balance)||0};
   const badge=derivAuth.is_demo?'<span class="badge badge-demo">DEMO</span>':'<span class="badge badge-real">REAL</span>';
-  acctLine.innerHTML=`<b>${derivAuth.loginid}</b> ${badge} · ${derivAuth.currency} ${derivAuth.balance.toFixed(2)} · OTP live`;
+  acctLine.innerHTML=`<b>${derivAuth.loginid}</b> ${badge} · ${derivAuth.currency} ${derivAuth.balance.toFixed(2)}`;
   setTradeStatus(true,`trading: live · ${derivAuth.loginid} ${derivAuth.is_demo?'(DEMO)':'(REAL)'}`);
-  liveUsdLine.style.display='block'; liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · loading…`;
-  wsSend(sock,{proposal_open_contract:1,subscribe:1}); wsSend(sock,{balance:1,subscribe:1});
+  liveUsdLine.style.display='block';liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · 0 open`;
+  wsSend(sock,{proposal_open_contract:1,subscribe:1});wsSend(sock,{balance:1,subscribe:1});
   SCAN_SYMBOLS.forEach(s=>{wsSend(sock,{ticks:s.symbol,subscribe:1})});
-  tradePing=setInterval(()=>wsSend(sock,{ping:1}),25000);
-  updateAutoStatus();
-  setTimeout(()=>wsSend(sock,{proposal_open_contract:1,subscribe:1}),1500);
+  tradePing=setInterval(()=>wsSend(sock,{ping:1}),25000);updateAutoStatus();
  };
  sock.onmessage=(ev)=>{
   let d;try{d=JSON.parse(ev.data)}catch(e){return}
-  if(d.error){logLine(`❌ ${d.error.code} ${d.error.message}`,'warn'); if((d.error.message||'').toLowerCase().includes('in flight'))pendingMap={} updateAutoStatus(); return}
-  if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance; liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`;}
+  if(d.error){logLine(`❌ ${d.error.code} ${d.error.message}`,'warn');if((d.error.message||'').toLowerCase().includes('in flight'))pendingMap={}return}
+  if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance;liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`;}
   if(d.msg_type==='tick'&&d.tick){feedTickToCandle(d.tick.symbol||d.tick.underlying_symbol,+d.tick.quote,d.tick.epoch);}
   if(d.msg_type==='proposal_open_contract'){
    const poc=d.proposal_open_contract;
-   if(Array.isArray(poc)){livePositions={}; poc.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});}
-   else if(poc&&poc.contract_id){if(!poc.is_sold)livePositions[poc.contract_id]={symbol:poc.underlying_symbol||poc.symbol,contract_type:poc.contract_type,buy_price:poc.buy_price,profit:poc.profit}; else {if(poc.profit<0)session.loss+=Math.abs(poc.profit); delete livePositions[poc.contract_id];}}
-   else if(poc&&poc.contracts){livePositions={}; poc.contracts.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});}
-   renderLivePositions(); liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`; updateAutoStatus();
+   if(Array.isArray(poc)){livePositions={};poc.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});}
+   else if(poc&&poc.contract_id){if(!poc.is_sold)livePositions[poc.contract_id]={symbol:poc.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit};else delete livePositions[poc.contract_id];}
+   else if(poc&&poc.contracts){livePositions={};poc.contracts.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});}
+   renderLivePositions();liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`;updateAutoStatus();
   }
   if(d.msg_type==='proposal'&&d.proposal){
-   const prop=d.proposal; const reqId=d.req_id; const meta=pendingMap[reqId]; if(!meta){logLine(`⚠️ proposal id=${prop.id} no pending req_id=${reqId} — race guard blocked`,'warn'); return}
-   logLine(`✅ proposal ok id=${prop.id} req_id=${reqId} ask=${prop.ask_price} SL$${meta.slDollar.toFixed(2)} TP$${meta.tpDollar.toFixed(2)} — auto buying`,'trade');
-   wsSend(sock,{buy:prop.id,price:meta.stake}); delete pendingMap[reqId]; updateAutoStatus();
+   const prop=d.proposal;const reqId=d.req_id;const meta=pendingMap[reqId];if(!meta)return;
+   wsSend(sock,{buy:prop.id,price:meta.stake});delete pendingMap[reqId];updateAutoStatus();
   }
-  if(d.msg_type==='buy'&&d.buy){session.autoTrades++; renderSession(); logLine(`✅ AUTO BUY OK ${d.buy.contract_id} @ ${d.buy.buy_price} — LIVE`,'trade'); document.getElementById('statLast').textContent=`Last: BUY ${d.buy.contract_id} ${new Date().toLocaleTimeString()}`;}
-  if(d.msg_type==='sell'&&d.sell){logLine(`✅ SELL OK ${d.sell.contract_id} sold ${d.sell.sold_for}`,'trade'); delete livePositions[d.sell.contract_id]; renderLivePositions(); updateAutoStatus();}
+  if(d.msg_type==='buy'&&d.buy){session.autoTrades++;renderSession();logLine(`✅ BUY OK ${d.buy.contract_id} @ ${d.buy.buy_price}`,'trade');}
+  if(d.msg_type==='sell'&&d.sell){delete livePositions[d.sell.contract_id];renderLivePositions();updateAutoStatus();}
  };
- sock.onclose=(e)=>{clearInterval(tradePing); pendingMap={}; setTradeStatus(false,`closed ${e.code} — new OTP 3s`); logLine(`OTP closed ${e.code} — new OTP…`,'warn'); setTimeout(()=>{if(currentPat&&currentAccountId)startPatFlow(currentPat,currentAccountId)},3000);};
+ sock.onclose=(e)=>{clearInterval(tradePing);pendingMap={};setTradeStatus(false,`closed ${e.code} — new OTP 3s`);setTimeout(()=>{if(currentPat&&currentAccountId)startPatFlow(currentPat,currentAccountId)},3000);};
 }
-function sellContract(cid){if(!wsTrade||wsTrade.readyState!==WebSocket.OPEN)return;wsSend(wsTrade,{sell:cid,price:0});logLine(`selling ${cid} price:0…`,'trade')}
-function renderLivePositions(){const el=document.getElementById('livePositionsList'); const ids=Object.keys(livePositions); if(!ids.length){el.textContent='none — flat, ready for auto'; killSwitchBtn.textContent='CLOSE ALL — none'; return} el.innerHTML=ids.map(cid=>{const p=livePositions[cid]; return `<div class="pos-row"><span>${p.symbol} ${p.contract_type}</span><span>${(p.buy_price||0).toFixed(2)}</span><span style="color:${(p.profit||0)>=0?'#3ddc84':'#ff4d4d'}">${(p.profit||0).toFixed(2)}</span><span><button data-cid="${cid}" class="cbtn">CLOSE</button></span></div>`}).join(''); el.querySelectorAll('.cbtn').forEach(b=>b.addEventListener('click',()=>sellContract(b.getAttribute('data-cid')))); killSwitchBtn.textContent=`CLOSE ALL ${ids.length} — price:0`; updateAutoStatus();}
-function computeDollarRisk(entry, slPrice, tpPrice, stake, mult){
- if(!entry||!slPrice||entry<=0)return {slDollar:stake*0.5, tpDollar:stake*0.8};
- const slDist=Math.abs(entry-slPrice); const tpDist=tpPrice?Math.abs(tpPrice-entry):slDist*1.5;
- let slDollar=(slDist/entry)*stake*mult; let tpDollar=(tpDist/entry)*stake*mult;
- slDollar=Math.max(stake*0.3, Math.min(stake*0.9, slDollar)); tpDollar=Math.max(stake*0.5, Math.min(stake*3.0, tpDollar));
- return {slDollar, tpDollar};
+function sellContract(cid){if(!wsTrade||wsTrade.readyState!==WebSocket.OPEN)return;wsSend(wsTrade,{sell:cid,price:0});}
+function renderLivePositions(){const el=document.getElementById('livePositionsList');const ids=Object.keys(livePositions);if(!ids.length){el.textContent='none — flat';killSwitchBtn.textContent='CLOSE ALL — none';return}el.innerHTML=ids.map(cid=>{const p=livePositions[cid];return `<div class="pos-row"><span>${p.symbol} ${p.contract_type}</span><span>${(p.buy_price||0).toFixed(2)}</span><span style="color:${(p.profit||0)>=0?'#3ddc84':'#ff4d4d'}">${(p.profit||0).toFixed(2)}</span><span><button data-cid="${cid}" class="cbtn">CLOSE</button></span></div>`}).join('');el.querySelectorAll('.cbtn').forEach(b=>b.addEventListener('click',()=>sellContract(b.getAttribute('data-cid'))));killSwitchBtn.textContent=`CLOSE ALL ${ids.length} — price:0`;}
+function computeDollarRisk(entry,slPrice,tpPrice,stake,mult){
+ if(!entry||!slPrice||entry<=0)return{slDollar:stake*0.5,tpDollar:stake*0.8};
+ const slDist=Math.abs(entry-slPrice);const tpDist=tpPrice?Math.abs(tpPrice-entry):slDist*1.5;
+ let slDollar=(slDist/entry)*stake*mult;let tpDollar=(tpDist/entry)*stake*mult;
+ slDollar=Math.max(stake*0.3,Math.min(stake*0.9,slDollar));tpDollar=Math.max(stake*0.5,Math.min(stake*3.0,tpDollar));
+ return{slDollar,tpDollar};
 }
 function maybeFireAuto(sym,dir,entry,sl,tp1,atr){
- if(!autoTradeEnabled)return; if(!derivAuth)return;
- if(!derivAuth.is_demo){logLine('AUTO blocked on REAL ROT... — use DEMO','warn'); autoTradeEnabled=false; autoTradeBtn.textContent='AUTO-TRADE: OFF'; autoTradeBtn.className='toggle-btn off'; updateAutoStatus(); return}
- const maxOpen=parseInt(maxConcurrentInput.value,10)||3; const maxLoss=parseFloat(maxDailyLossInput.value)||50;
- if(Object.keys(livePositions).length>=maxOpen){logLine(`AUTO guard: max open ${maxOpen} reached — skipping ${sym}`,'warn');return}
- if(session.loss>=maxLoss){logLine(`AUTO guard: daily loss $${session.loss.toFixed(2)} >= $${maxLoss} — stopping AUTO`,'warn'); autoTradeEnabled=false; autoTradeBtn.textContent='AUTO-TRADE: OFF'; autoTradeBtn.className='toggle-btn off'; updateAutoStatus(); return}
- if(Object.keys(pendingMap).length>0){logLine(`AUTO guard: proposal in-flight — skipping ${sym} ${dir}`,'warn');return}
- const stake=parseFloat(stakeInput.value)||1; const mult=parseInt(multiplierInput.value,10)||100;
+ if(!autoTradeEnabled)return;if(!derivAuth||!derivAuth.is_demo)return;
+ const maxOpen=parseInt(maxConcurrentInput.value,10)||3;const maxLoss=parseFloat(maxDailyLossInput.value)||50;
+ if(Object.keys(livePositions).length>=maxOpen)return;
+ if(session.loss>=maxLoss){autoTradeEnabled=false;autoTradeBtn.textContent='AUTO-TRADE: OFF';autoTradeBtn.className='toggle-btn off';return}
+ if(Object.keys(pendingMap).length>0)return;
+ const stake=parseFloat(stakeInput.value)||1;const mult=parseInt(multiplierInput.value,10)||100;
  if(confirmBeforeFire){
-  const id=`c${Date.now()}`; const {slDollar,tpDollar}=computeDollarRisk(entry,sl,tp1,stake,mult);
-  document.getElementById('confirmCardHolder').innerHTML=`<div style="border:2px solid #ffb020;border-radius:10px;padding:12px;margin-top:10px"><h3 style="margin:0;color:#ffb020">AUTO CONFIRM ${dir} ${sym}</h3><div style="margin:8px 0;font-size:11px">ENTRY ${entry.toFixed(2)} SL ${sl.toFixed(2)} TP ${tp1.toFixed(2)}<br>Risk $${slDollar.toFixed(2)} Reward $${tpDollar.toFixed(2)} · ${Object.keys(livePositions).length}/${maxOpen} open</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button id="${id}-a" style="border-color:#3ddc84;color:#3ddc84">APPROVE AUTO</button><button id="${id}-r" style="border-color:#ff4d4d;color:#ff4d4d">REJECT</button></div></div>`;
+  const id=`c${Date.now()}`;const {slDollar,tpDollar}=computeDollarRisk(entry,sl,tp1,stake,mult);
+  document.getElementById('confirmCardHolder').innerHTML=`<div style="border:2px solid #ffb020;border-radius:10px;padding:12px;margin-top:10px"><h3 style="margin:0;color:#ffb020">AUTO CONFIRM ${dir} ${sym}</h3><div style="margin:8px 0;font-size:11px">ENTRY ${entry.toFixed(2)} SL ${sl.toFixed(2)} TP ${tp1.toFixed(2)}<br>Risk $${slDollar.toFixed(2)} Reward $${tpDollar.toFixed(2)}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px"><button id="${id}-a" style="border-color:#3ddc84;color:#3ddc84">APPROVE</button><button id="${id}-r" style="border-color:#ff4d4d;color:#ff4d4d">REJECT</button></div></div>`;
   document.getElementById(`${id}-a`).onclick=()=>{document.getElementById('confirmCardHolder').innerHTML='';fireTrade(sym,dir,stake,mult,entry,sl,tp1)};
-  document.getElementById(`${id}-r`).onclick=()=>{document.getElementById('confirmCardHolder').innerHTML='';const st=symbolState[sym]; if(st)st.activeTrade=null;};
+  document.getElementById(`${id}-r`).onclick=()=>{document.getElementById('confirmCardHolder').innerHTML='';const st=symbolState[sym];if(st)st.activeTrade=null;};
  }else{fireTrade(sym,dir,stake,mult,entry,sl,tp1)}
 }
 function fireTrade(sym,dir,stake,mult,entry,sl,tp1){
- if(!wsTrade||wsTrade.readyState!==WebSocket.OPEN){logLine('not ready — wait OTP live','warn');return}
- if(Object.keys(pendingMap).length>0){logLine(`in-flight guard: blocked ${sym}`,'warn');return}
- if(derivAuth&&!derivAuth.is_demo){logLine('REAL blocked','warn'); return}
+ if(!wsTrade||wsTrade.readyState!==WebSocket.OPEN)return;
+ if(Object.keys(pendingMap).length>0)return;
  const ct=dir==='BUY'?'MULTUP':'MULTDOWN';
  const st=symbolState[sym];
- const realEntry=entry||st?.lastEntry||st?.lastPrice||st?.m1Candles[st?.m1Candles.length-1]?.close||0;
- const realSL=sl||st?.lastSL|| (realEntry? (dir==='BUY'?realEntry - (st?.atr||0)*slBufferMult : realEntry + (st?.atr||0)*slBufferMult) : null);
- const realTP1=tp1||st?.lastTP1|| (realEntry? (dir==='BUY'?realEntry + (st?.atr||0)*tpStep : realEntry - (st?.atr||0)*tpStep) : null);
+ const realEntry=entry||st?.lastEntry||st?.lastPrice||0;
+ const realSL=sl||st?.lastSL||0;
+ const realTP1=tp1||st?.lastTP1||0;
  const {slDollar,tpDollar}=computeDollarRisk(realEntry,realSL,realTP1,stake,mult);
- const reqId=reqIdCounter++; pendingMap[reqId]={sym,ct,stake,entry:realEntry,sl:realSL,tp:realTP1,slDollar,tpDollar};
- const proposalReq={proposal:1,amount:stake,basis:'stake',contract_type:ct,underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar, take_profit:tpDollar},req_id:reqId};
- logLine(`⬆️ AUTO req_id=${reqId} ${sym} ${ct} $${stake} x${mult} entry ${realEntry.toFixed(2)} sl ${realSL.toFixed(2)} → SL$${slDollar.toFixed(2)} TP$${tpDollar.toFixed(2)}`,'trade');
- wsSend(wsTrade,proposalReq); updateAutoStatus();
+ const reqId=reqIdCounter++;pendingMap[reqId]={sym,ct,stake,slDollar,tpDollar};
+ const proposalReq={proposal:1,amount:stake,basis:'stake',contract_type:ct,underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar,take_profit:tpDollar},req_id:reqId};
+ logLine(`⬆️ req_id=${reqId} ${sym} ${ct} $${stake} x${mult} SL$${slDollar.toFixed(2)} TP$${tpDollar.toFixed(2)}`,'trade');
+ wsSend(wsTrade,proposalReq);updateAutoStatus();
 }
 function updateManualPrice(){
- if(!focusSymbol){document.getElementById('manualSymbol').textContent='—';return}
- const st=symbolState[focusSymbol]; const price=st.lastPrice||st.m1Candles[st.m1Candles.length-1]?.close||0;
+ const st=symbolState[focusSymbol]; if(!st)return;
+ const price=st.lastPrice||st.m1Candles[st.m1Candles.length-1]?.close||0;
  const entry=st.lastEntry||price; const sl=st.lastSL||0; const tp=st.lastTP1||0;
  const stake=parseFloat(stakeInput.value)||1; const mult=parseInt(multiplierInput.value,10)||100;
  const {slDollar,tpDollar}=entry&&sl?computeDollarRisk(entry,sl,tp,stake,mult):{slDollar:0,tpDollar:0};
@@ -235,17 +224,9 @@ function updateManualPrice(){
  document.getElementById('riskDisplay').textContent=slDollar?slDollar.toFixed(2):'—'; document.getElementById('rewardDisplay').textContent=tpDollar?tpDollar.toFixed(2):'—';
 }
 stakeInput.addEventListener('input',updateManualPrice); multiplierInput.addEventListener('input',updateManualPrice);
-document.getElementById('manualBuyBtn').addEventListener('click',()=>{
- if(!derivAuth){logLine('connect PAT first','warn');return} if(Object.keys(pendingMap).length>0){logLine('in-flight — wait','warn');return}
- const stake=parseFloat(stakeInput.value)||1;const mult=parseInt(multiplierInput.value,10)||100; const st=symbolState[focusSymbol];
- logLine(`MANUAL OVERRIDE BUY ${focusSymbol} $${stake} x${mult}`,'buy'); fireTrade(focusSymbol,'BUY',stake,mult,st.lastEntry,st.lastSL,st.lastTP1);
-});
-document.getElementById('manualSellBtn').addEventListener('click',()=>{
- if(!derivAuth){logLine('connect PAT first','warn');return} if(Object.keys(pendingMap).length>0){logLine('in-flight — wait','warn');return}
- const stake=parseFloat(stakeInput.value)||1;const mult=parseInt(multiplierInput.value,10)||100; const st=symbolState[focusSymbol];
- logLine(`MANUAL OVERRIDE SELL ${focusSymbol} $${stake} x${mult}`,'sell'); fireTrade(focusSymbol,'SELL',stake,mult,st.lastEntry,st.lastSL,st.lastTP1);
-});
-connectData();renderSession();renderFocus();renderScanner(); updateAutoStatus();
+document.getElementById('manualBuyBtn').addEventListener('click',()=>{const st=symbolState[focusSymbol]; fireTrade(focusSymbol,'BUY',parseFloat(stakeInput.value)||1,parseInt(multiplierInput.value,10)||100,st.lastEntry,st.lastSL,st.lastTP1);});
+document.getElementById('manualSellBtn').addEventListener('click',()=>{const st=symbolState[focusSymbol]; fireTrade(focusSymbol,'SELL',parseFloat(stakeInput.value)||1,parseInt(multiplierInput.value,10)||100,st.lastEntry,st.lastSL,st.lastTP1);});
+connectData();renderSession();renderFocus();renderScanner();updateAutoStatus();
 document.getElementById('lookbackInput').addEventListener('change',e=>{lookback=parseInt(e.target.value)||10;Object.keys(symbolState).forEach(s=>{recomputeH1(s);recomputeM1(s)})});
 </script>
 </body>

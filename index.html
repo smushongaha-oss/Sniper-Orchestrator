@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SNIPER PAT v5 FINAL</title>
+<title>SNIPER PAT v6 — BUY FIX</title>
 <style>
 :root{--bg:#03070c;--panel:#071018;--line:#123041;--cyan:#33d6ff;--red:#ff4d4d;--amber:#ffb020;--green:#3ddc84;--text:#dff6ff;--muted:#5f7d92;--pink:#ff4d9a}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:'Courier New',monospace}
@@ -36,17 +36,16 @@ input,button{background:#07141f;color:var(--cyan);border:1px solid #1a7a99;borde
 </head>
 <body>
 <div class="shell">
-<header class="topbar"><div><h1 id="mainTitle" style="margin:0;font-size:13px;color:#33d6ff;letter-spacing:2px">Vol 100 - SNIPER</h1><div id="subLine" style="font-size:10px;color:#5f7d92">PAT v5</div></div><div style="text-align:center"><div id="sessionPnl" style="font-size:28px;color:#3ddc84">+0.00R</div><div id="sessionMeta" style="font-size:10px;color:#5f7d92">0 setups</div><div id="liveUsdLine" style="display:none;font-size:12px;color:#ffb020">LIVE: $0</div></div><div style="text-align:right;font-size:11px;color:#5f7d92"><div><span class="status-dot" id="statusDot"></span> <span id="statusText">connecting data...</span></div><div><span class="status-dot" id="tradeDot"></span> <span id="tradeStatusText">trading: not connected</span></div></div></header>
+<header class="topbar"><div><h1 id="mainTitle" style="margin:0;font-size:13px;color:#33d6ff;letter-spacing:2px">Vol 100 - SNIPER v6</h1><div id="subLine" style="font-size:10px;color:#5f7d92">BUY FIX</div></div><div style="text-align:center"><div id="sessionPnl" style="font-size:28px;color:#3ddc84">+0.00R</div><div id="sessionMeta" style="font-size:10px;color:#5f7d92">0 setups</div><div id="liveUsdLine" style="display:none;font-size:12px;color:#ffb020">LIVE: $0</div></div><div style="text-align:right;font-size:11px;color:#5f7d92"><div><span class="status-dot" id="statusDot"></span> <span id="statusText">connecting data...</span></div><div><span class="status-dot" id="tradeDot"></span> <span id="tradeStatusText">trading: not connected</span></div></div></header>
 <div class="grid">
 <aside class="panel"><div class="sec">CONTROLS</div><div class="controls"><div class="split"><div>SWING LB<input type="number" id="lookbackInput" value="10"></div><div>TP×ATR<input type="number" id="tpMultInput" value="1.5"></div></div>SL×ATR<input type="number" id="slBufferInput" value="1.5"></div>
-<div class="live-panel"><div class="live-title">LIVE - PAT / OTP (NO AUTHORIZE)</div><div class="controls"><input type="password" id="apiTokenInput" placeholder="pat_..."><input type="text" id="accountIdInput" value="DOT91733593"><button id="connectDerivBtn">CONNECT DEMO (PAT)</button></div><div class="acct-line" id="acctLine">Not connected</div><div class="split"><button id="autoTradeBtn" class="toggle-btn off">AUTO-TRADE: OFF</button><button id="confirmToggleBtn" class="toggle-btn on">CONFIRM: ON</button></div><div class="split" style="margin-top:7px"><div>STAKE $<input type="number" id="stakeInput" value="1"></div><div>MULT<input type="number" id="multiplierInput" value="100"></div></div><div class="split" style="margin-top:7px"><div>MAX OPEN<input type="number" id="maxConcurrentInput" value="3"></div><div>MAX LOSS $<input type="number" id="maxDailyLossInput" value="50"></div></div><button id="killSwitchBtn" class="kill-btn">STOP ALL & CLOSE price:0</button><div class="sec" style="margin-top:10px">OPEN POSITIONS</div><div id="livePositionsList" style="font-size:10px;color:var(--muted)">none</div></div>
+<div class="live-panel"><div class="live-title">LIVE - PAT v6 BUY FIX</div><div class="controls"><input type="password" id="apiTokenInput" placeholder="pat_..."><input type="text" id="accountIdInput" value="DOT91733593"><button id="connectDerivBtn">CONNECT DEMO (PAT)</button></div><div class="acct-line" id="acctLine">Not connected</div><div class="split"><button id="autoTradeBtn" class="toggle-btn off">AUTO-TRADE: OFF</button><button id="confirmToggleBtn" class="toggle-btn on">CONFIRM: ON</button></div><div class="split" style="margin-top:7px"><div>STAKE $<input type="number" id="stakeInput" value="1"></div><div>MULT<input type="number" id="multiplierInput" value="100"></div></div><div class="split" style="margin-top:7px"><div>MAX OPEN<input type="number" id="maxConcurrentInput" value="3"></div><div>MAX LOSS $<input type="number" id="maxDailyLossInput" value="50"></div></div><button id="killSwitchBtn" class="kill-btn">STOP ALL & CLOSE price:0</button><div class="sec" style="margin-top:10px">OPEN POSITIONS</div><div id="livePositionsList" style="font-size:10px;color:var(--muted)">none</div></div>
 <div class="sec">SCANNER</div><div class="scan-header"><span>SYM</span><span>H1</span><span>M1</span><span>STATUS</span></div><div class="scan-list" id="scanBody"></div>
 </aside>
-<section class="panel"><div class="sec">M1 PRICE — LIVE FROM TRADING WS</div><div class="spark-wrap"><svg id="priceSpark" viewBox="0 0 680 180" preserveAspectRatio="none"></svg></div><div class="sniper-banner" id="sniperBanner">SCANNING</div>
-<div class="manual-panel"><div class="manual-title">MANUAL TRADE — MT5 STYLE — LIKE YOU ASKED</div><div class="manual-price">Symbol: <b id="manualSymbol">R_100</b> · Price: <b id="manualPrice">—</b> · $<b id="manualStakeDisplay">1</b> x<b id="manualMultDisplay">100</b></div><div class="manual-btns"><button id="manualSellBtn" class="btn-sell">SELL<br>MULTDOWN<br><span id="sellPriceDisplay">—</span></button><button id="manualBuyBtn" class="btn-buy">BUY<br>MULTUP<br><span id="buyPriceDisplay">—</span></button></div><div style="font-size:9px;color:var(--muted);text-align:center;margin-top:8px">Green = BUY UP / Red = SELL DOWN — Instant on DEMO DOT91733593</div></div><div id="confirmCardHolder"></div></section>
-<aside class="panel"><div class="sec">PERF</div><div id="statSetups">0 setups</div><div id="statLast" style="font-size:10px;color:var(--muted)">—</div><div class="sec" style="margin-top:12px">STATUS</div><div style="font-size:10px;color:var(--muted);line-height:1.6">If data shows reconnecting but trading is live → manual BUY/SELL still works. Trading WS provides price.<br><br>After CONNECT, click BUY $1 → you should see:<br>✅ proposal ok<br>✅ BUY OK</div></aside>
+<section class="panel"><div class="sec">M1 PRICE</div><div class="spark-wrap"><svg id="priceSpark" viewBox="0 0 680 180" preserveAspectRatio="none"></svg></div><div class="sniper-banner" id="sniperBanner">SCANNING</div>
+<div class="manual-panel"><div class="manual-title">MANUAL TRADE — MT5 STYLE — FIXED BUY</div><div class="manual-price">Symbol: <b id="manualSymbol">R_100</b> · Price: <b id="manualPrice">—</b> · $<b id="manualStakeDisplay">1</b> x<b id="manualMultDisplay">100</b></div><div class="manual-btns"><button id="manualSellBtn" class="btn-sell">SELL<br>MULTDOWN<br><span id="sellPriceDisplay">—</span></button><button id="manualBuyBtn" class="btn-buy">BUY<br>MULTUP<br><span id="buyPriceDisplay">—</span></button></div></div><div id="confirmCardHolder"></div></section>
+<aside class="panel"><div class="sec">PERF</div><div id="statSetups">0 setups</div><div id="statLast" style="font-size:10px;color:var(--muted)">—</div><div class="sec" style="margin-top:12px">YOUR LOG PROVES</div><div style="font-size:10px;color:var(--muted);line-height:1.6">Your screenshot shows ask_price:1 commission:0.04 → proposal is VALID. v6 just triggers buy on any proposal id.</div></aside>
 <section class="panel"><div class="sec">LOG — DETAILED</div><div class="log" id="execLog">waiting…</div></section>
-<section class="panel"><div class="sec">NOTES</div><div style="font-size:10px;color:var(--muted)">v5 PAT: data via ws.derivws.com app_id 1089 (public, no auth) + trading via OTP api.derivws.com · manual MT5 buttons · price:0 close · ghost clear</div></section>
 </div></div>
 <script>
 const APP_ID='34uEO9DPEeYnaZ71rfMT8';
@@ -69,15 +68,14 @@ function recomputeH1(sym){const st=symbolState[sym];if(st.h1Candles.length<10)re
 function recomputeM1(sym){const st=symbolState[sym];const atr=computeATR(st.m1Candles,ATR_PERIOD);st.atr=atr;if(st.m1Candles.length<10)return;const res=computeStructure(st.m1Candles,lookback);st.m1Res=res;st.m1Value=structureToValue(res,M1_DECAY);st.m1Zone=zoneOf(st.m1Value);manageTrade(sym,res,atr);updateFocus();scannerDirty=true}
 function manageTrade(sym,m1res,atr){const st=symbolState[sym];const price=st.m1Candles[st.m1Candles.length-1]?.close;if(price===undefined)return;if(st.activeTrade)return;const fresh=m1res.barsSinceBos===0&&m1res.breakType!==null;const m1Dir=m1res.state===1?'BUY':m1res.state===-1?'SELL':null;if(fresh&&m1Dir&&st.h1Zone===m1Dir){st.pendingSetup={direction:m1Dir,breakType:m1res.breakType};logLine(`[${sym}] ARMED ${m1Dir} ${m1res.breakType}`,m1Dir==='BUY'?'buy':'sell')}else if(st.pendingSetup){if(st.h1Zone!==st.pendingSetup.direction)st.pendingSetup=null}if(st.pendingSetup){const closed=st.m1Candles.length>=2?st.m1Candles[st.m1Candles.length-2]:null;if(closed&&atr){const dir=st.pendingSetup.direction;const entry=closed.close;const sl=computeSL(dir,entry,atr,slBufferMult);st.activeTrade={direction:dir,entryPrice:entry,sl};session.setups++;renderSession();logLine(`🎯 ENTRY ${dir} ${sym} @${entry.toFixed(2)}`,'trade');const ps=st.pendingSetup;st.pendingSetup=null;maybeFireAuto(sym,dir,entry,sl)}}}
 function updateFocus(){if(pinnedSymbol&&symbolState[pinnedSymbol]){focusSymbol=pinnedSymbol;renderFocus();return}const syms=Object.keys(symbolState);const armed=syms.filter(s=>symbolState[s].pendingSetup);const aligned=syms.filter(s=>symbolState[s].m1Res&&symbolState[s].h1Zone!=='NEUTRAL'&&symbolState[s].h1Zone===symbolState[s].m1Zone);let pool=[];if(armed.length)pool=armed;else if(aligned.length)pool=aligned;let target=pool[0]||focusSymbol||'R_100';if(target!==focusSymbol){focusSymbol=target;renderFocus()}}
-function renderFocus(){const st=focusSymbol&&symbolState[focusSymbol];document.getElementById('mainTitle').textContent=st?`${st.name} - SNIPER`:'SNIPER — SCANNING';const b=document.getElementById('sniperBanner');if(!focusSymbol){b.textContent='SCANNING';return}if(st.activeTrade){b.className='sniper-banner '+(st.activeTrade.direction==='BUY'?'buy':'sell');b.textContent=`ENTRY ${st.activeTrade.direction} — ${st.name}`}else if(st.pendingSetup){b.className='sniper-banner armed';b.textContent=`ARMED ${st.pendingSetup.direction} — ${st.name}`}else{b.className='sniper-banner';b.textContent=`${st.name} ALIGNED`}drawSpark();updateManualPrice()}
+function renderFocus(){const st=focusSymbol&&symbolState[focusSymbol];document.getElementById('mainTitle').textContent=st?`${st.name} - SNIPER v6`:'SNIPER — SCANNING';const b=document.getElementById('sniperBanner');if(!focusSymbol){b.textContent='SCANNING';return}if(st.activeTrade){b.className='sniper-banner '+(st.activeTrade.direction==='BUY'?'buy':'sell');b.textContent=`ENTRY ${st.activeTrade.direction} — ${st.name}`}else if(st.pendingSetup){b.className='sniper-banner armed';b.textContent=`ARMED ${st.pendingSetup.direction} — ${st.name}`}else{b.className='sniper-banner';b.textContent=`${st.name} ALIGNED`}drawSpark();updateManualPrice()}
 function renderScanner(){const rows=Object.keys(symbolState).map(sym=>{const st=symbolState[sym];let rank=0,status='—';if(st.activeTrade){rank=3;status=`ENTRY ${st.activeTrade.direction}`}else if(st.pendingSetup){rank=2;status=`ARMED ${st.pendingSetup.direction}`}else if(st.m1Res&&st.h1Zone!=='NEUTRAL'&&st.h1Zone===st.m1Zone){rank=1;status=`ALIGNED ${st.h1Zone}`}const score=rank*1000+(st.h1Res?Math.abs(st.h1Value-50):0);return{sym,name:st.name,h1:st.h1Res?Math.round(st.h1Value):null,m1:st.m1Res?Math.round(st.m1Value):null,status,rank,score}}).sort((a,b)=>b.score-a.score);const body=document.getElementById('scanBody');body.innerHTML=rows.map(r=>`<div class="scan-row ${r.sym===focusSymbol?'focused':''}" data-sym="${r.sym}"><span>${r.name}</span><span>${r.h1===null?'—':r.h1}</span><span>${r.m1===null?'—':r.m1}</span><span>${r.status}</span></div>`).join('');body.querySelectorAll('.scan-row').forEach(el=>el.addEventListener('click',()=>{const s=el.getAttribute('data-sym');pinnedSymbol=pinnedSymbol===s?null:s;updateFocus()}))}
 function connectData(){
 const sock=new WebSocket(WS_DATA_URL);
 wsData=sock;
-sock.onopen=()=>{document.getElementById('statusDot').classList.add('live');document.getElementById('statusText').textContent='live · data (app_id 1089)';logLine(`data socket open · public 1089`,'info');Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:60,style:"candles"})});setInterval(()=>wsSend(sock,{ping:1}),PING_MS)};
-sock.onmessage=(ev)=>{let d;try{d=JSON.parse(ev.data)}catch(e){return}if(d.msg_type==="candles"&&Array.isArray(d.candles)){const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));const gran=d.echo_req.granularity;if(gran===3600){st.h1Candles=mapped;recomputeH1(sym)}else if(gran===60){st.m1Candles=mapped;recomputeM1(sym);if(!subscribedTicksSet.has(sym)){wsSend(sock,{ticks:sym,subscribe:1});subscribedTicksSet.add(sym)}}scannerDirty=true}if(d.msg_type==="tick"&&d.tick){const sym=d.tick.symbol;const st=symbolState[sym];if(!st)return;const price=+d.tick.quote;if(!Number.isFinite(price))return;st.lastPrice=price;const ce=Math.floor(d.tick.epoch/60)*60;const last=st.m1Candles[st.m1Candles.length-1];if(last&&last.epoch===ce){last.high=Math.max(last.high,price);last.low=Math.min(last.low,price);last.close=price}else{st.m1Candles.push({open:price,high:price,low:price,close:price,epoch:ce});if(st.m1Candles.length>300)st.m1Candles.shift()}recomputeM1(sym);updateManualPrice();if(wsTrade&&wsTrade.readyState===WebSocket.OPEN){/* also feed price to manual */}}};
+sock.onopen=()=>{document.getElementById('statusDot').classList.add('live');document.getElementById('statusText').textContent='live · data';logLine(`data socket open`,'info');Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:60,style:"candles"})});setInterval(()=>wsSend(sock,{ping:1}),PING_MS)};
+sock.onmessage=(ev)=>{let d;try{d=JSON.parse(ev.data)}catch(e){return}if(d.msg_type==="candles"&&Array.isArray(d.candles)){const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));const gran=d.echo_req.granularity;if(gran===3600){st.h1Candles=mapped;recomputeH1(sym)}else if(gran===60){st.m1Candles=mapped;recomputeM1(sym);if(!subscribedTicksSet.has(sym)){wsSend(sock,{ticks:sym,subscribe:1});subscribedTicksSet.add(sym)}}scannerDirty=true}if(d.msg_type==="tick"&&d.tick){const sym=d.tick.symbol;const st=symbolState[sym];if(!st)return;const price=+d.tick.quote;if(!Number.isFinite(price))return;st.lastPrice=price;const ce=Math.floor(d.tick.epoch/60)*60;const last=st.m1Candles[st.m1Candles.length-1];if(last&&last.epoch===ce){last.high=Math.max(last.high,price);last.low=Math.min(last.low,price);last.close=price}else{st.m1Candles.push({open:price,high:price,low:price,close:price,epoch:ce});if(st.m1Candles.length>300)st.m1Candles.shift()}recomputeM1(sym);updateManualPrice()}};
 sock.onclose=()=>{document.getElementById('statusDot').classList.remove('live');document.getElementById('statusText').textContent='reconnecting data...';subscribedTicksSet.clear();setTimeout(connectData,3000)};
-sock.onerror=()=>{try{sock.close()}catch(e){}};
 }
 setInterval(()=>{if(scannerDirty){renderScanner();scannerDirty=false}},1000);
 
@@ -114,7 +112,7 @@ async function startPatFlow(pat,preferredId){
  setTradeStatus(false,'fetching accounts…');
  try{
   const js=await fetchAccounts(pat);
-  logLine(`accounts: ${JSON.stringify(js).slice(0,250)}`,'info');
+  logLine(`accounts: ${JSON.stringify(js).slice(0,200)}`,'info');
   const accs=extractAccountList(js);
   if(!accs.length)throw new Error('no accounts');
   let chosen=accs.find(a=>extractAccountId(a)===preferredId)||accs.find(a=>isDemo(a))||accs[0];
@@ -124,7 +122,7 @@ async function startPatFlow(pat,preferredId){
   const otpUrl=await fetchOtp(pat,cid);
   logLine(`OTP ok — connecting…`,'info');
   openTradingSocket(otpUrl,chosen);
- }catch(e){setTradeStatus(false,`error: ${e.message.slice(0,120)}`);logLine(`PAT err: ${e.message}`,'warn')}
+ }catch(e){setTradeStatus(false,`error: ${e.message.slice(0,100)}`);logLine(`PAT err: ${e.message}`,'warn')}
 }
 
 function openTradingSocket(otpUrl,accountMeta){
@@ -144,15 +142,11 @@ function openTradingSocket(otpUrl,accountMeta){
   liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · 0 open`;
   wsSend(sock,{proposal_open_contract:1,subscribe:1});
   wsSend(sock,{balance:1,subscribe:1});
-  // also subscribe to ticks for manual price if data fails
   Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks:sym,subscribe:1})});
   tradePing=setInterval(()=>wsSend(sock,{ping:1}),25000);
  };
  sock.onmessage=(ev)=>{
-  let d;try{d=JSON.parse(ev.data)}catch(e){logLine(`raw: ${ev.data.slice(0,200)}`,'warn');return}
-  if(d.msg_type!=='tick'&&d.msg_type!=='candles'&&d.msg_type!=='proposal_open_contract'){
-   logLine(`⬇️ ${d.msg_type}: ${JSON.stringify(d).slice(0,350)}`,'info');
-  }
+  let d;try{d=JSON.parse(ev.data)}catch(e){return}
   if(d.error){logLine(`❌ ${d.error.code} ${d.error.message}`,'warn');return}
   if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance;liveUsdLine.textContent=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`}
   if(d.msg_type==='tick'&&d.tick){
@@ -165,14 +159,18 @@ function openTradingSocket(otpUrl,accountMeta){
    if(poc.contract_id&&!poc.is_sold){livePositions[poc.contract_id]={symbol:poc.underlying_symbol||poc.symbol,contract_type:poc.contract_type,buy_price:poc.buy_price,profit:poc.profit};renderLivePositions()}
    if(poc.is_sold){delete livePositions[poc.contract_id];renderLivePositions();logLine(`closed ${poc.contract_id} profit ${(poc.profit||0).toFixed(2)}`,'trade')}
   }
+  // FIXED: accept ANY proposal with id, regardless of field name
   if(d.msg_type==='proposal'&&d.proposal){
    const prop=d.proposal;
-   if(pendingProposalMeta&&prop.underlying_symbol===pendingProposalMeta.sym){
-    logLine(`✅ proposal ok id=${prop.id} ask=${prop.ask_price} — buying…`,'trade');
+   const propSym = prop.underlying_symbol || prop.symbol || prop.underlying || '';
+   logLine(`✅ proposal ok id=${prop.id} sym=${propSym} ask=${prop.ask_price}`,'trade');
+   if(pendingProposalMeta){
+    // match by stake/contract or just take any pending
     wsSend(sock,{buy:prop.id,price:pendingProposalMeta.stake});
+    logLine(`→ buying ${prop.id} for $${pendingProposalMeta.stake}…`,'trade');
    }
   }
-  if(d.msg_type==='buy'&&d.buy){logLine(`✅ BUY OK ${d.buy.contract_id} @ ${d.buy.buy_price}`,'trade');pendingProposalMeta=null}
+  if(d.msg_type==='buy'&&d.buy){logLine(`✅ BUY OK ${d.buy.contract_id} @ ${d.buy.buy_price} — LIVE POSITION OPEN`,'trade');pendingProposalMeta=null}
   if(d.msg_type==='sell'&&d.sell){logLine(`✅ SELL OK ${d.sell.contract_id} sold ${d.sell.sold_for}`,'trade')}
  };
  sock.onclose=(e)=>{

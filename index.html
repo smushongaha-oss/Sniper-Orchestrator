@@ -237,6 +237,7 @@
         <div class="live-title">LIVE TRADING // DERIV API</div>
         <div class="controls">
           <input type="password" id="apiTokenInput" placeholder="Deriv API token (Read+Trade scope)">
+          <input type="text" id="accountIdInput" placeholder="Account ID (optional — auto-detected)">
           <button id="connectDerivBtn">CONNECT</button>
         </div>
         <div class="acct-line" id="acctLine">Not connected.</div>
@@ -380,8 +381,8 @@
       <div class="footer-note">
         Scans all 13 Volatility instruments at once for H1/M1-aligned BOS/CHoCH + retest setups. Paper tracker (top-left PNL) always runs in R multiples regardless of live trading state.
         <br><br>
-        <b>LIVE TRADING:</b> connect a Deriv API token (Read+Trade scope) to enable real Multiplier contracts. Deriv's Multiplier contracts only support ONE stop_loss and ONE take_profit per contract (in dollar amounts, not price) — so a live trade uses TP1 as its real take_profit; TP2/TP3 remain reference-only, not automatically exercised. The dollar SL/TP sent to Deriv is converted from the structure engine's price levels using stake × multiplier × (price distance ÷ entry price) — an approximation that excludes commission/financing.
-        With CONFIRM ON (default), every signal shows a 15-second approval card before anything is sent to Deriv — nothing fires without you tapping Approve. MAX OPEN and MAX DAILY LOSS are hard caps enforced locally; breaching the daily loss cap auto-disables auto-trade.
+        <b>LIVE TRADING:</b> connect a Deriv API token (Read+Trade scope). Connecting fetches your options-trading accounts, requests a one-time password (OTP) for one of them, then opens a dedicated OTP-scoped trading socket — Deriv rejects the older direct-authorize connection method for third-party apps. Deriv's Multiplier contracts only support ONE stop_loss and ONE take_profit per contract (in dollar amounts, not price) — so a live trade uses TP1 as its real take_profit; TP2/TP3 remain reference-only, not automatically exercised. The dollar SL/TP sent to Deriv is converted from the structure engine's price levels using stake × multiplier × (price distance ÷ entry price) — an approximation that excludes commission/financing.
+        With CONFIRM ON (default), every signal shows a 15-second approval card before anything is sent to Deriv — nothing fires without you tapping Approve. MAX OPEN and MAX DAILY LOSS are hard caps enforced locally; breaching the daily loss cap auto-disables auto-trade. The execution log prints the raw accounts response on connect — if account selection ever looks wrong, that line shows why.
         Start on a DEMO account token. Validate thoroughly before ever pointing this at a real-money token.
       </div>
     </section>
@@ -399,9 +400,9 @@ const WS_ENDPOINTS = [
 ];
 
 // ---- Trading socket (separate connection, opened only once a token is entered) ----
-// The public market-data endpoint above does NOT support authorize/trading, so live
-// trading uses Deriv's legacy trading endpoint on its own dedicated connection.
-const TRADE_WS_URL = `wss://ws.derivws.com/websockets/v3?app_id=${APP_ID}`;
+// Deriv now requires an OTP-scoped connection for third-party trading apps
+// (see startTradingConnection): REST accounts -> REST otp -> WS with ?otp=...
+// The old ?app_id=1089 authorize-message flow is rejected outright (code 1006).
 
 const GRAN_H1 = 3600;
 const GRAN_M1 = 60;
@@ -1208,7 +1209,6 @@ let tradeWs = null;
 let tradeWsAlive = false;
 let tradeFailCount = 0;
 let tradeReconnectTimer = null;
-let lastTradeToken = null;
 let derivAuth = null;          // { loginid, is_virtual, currency, balance }
 let autoTradeEnabled = false;
 let confirmBeforeFire = true;
@@ -1219,6 +1219,7 @@ let pendingConfirm = null;     // {sym, dir, entryPrice, slAmt, tpAmt, stake, mu
 let pendingProposalReqTag = null;
 
 const apiTokenInput = document.getElementById('apiTokenInput');
+const accountIdInput = document.getElementById('accountIdInput');
 const connectDerivBtn = document.getElementById('connectDerivBtn');
 const acctLine = document.getElementById('acctLine');
 const autoTradeBtn = document.getElementById('autoTradeBtn');
@@ -1234,6 +1235,9 @@ const liveUsdLine = document.getElementById('liveUsdLine');
 const confirmCardHolder = document.getElementById('confirmCardHolder');
 
 apiTokenInput.value = localStorage.getItem('deriv_token') || '';
+accountIdInput.value = localStorage.getItem('deriv_account_id') || '';
+
+const DERIV_REST_BASE = 'https://api.derivws.com';
 
 function setTradeStatus(alive, label){
   tradeDot.classList.toggle('trade-live', alive);
@@ -1245,9 +1249,10 @@ connectDerivBtn.addEventListener('click', () => {
   const tok = apiTokenInput.value.trim();
   if (!tok) { acctLine.textContent = 'Enter a Deriv API token first (Settings → API Token on deriv.com).'; return; }
   localStorage.setItem('deriv_token', tok);
+  localStorage.setItem('deriv_account_id', accountIdInput.value.trim());
   tradeFailCount = 0;
   clearTimeout(tradeReconnectTimer);
-  connectTradingSocket(tok);
+  startTradingConnection(tok);
 });
 
 autoTradeBtn.addEventListener('click', () => {
@@ -1277,30 +1282,123 @@ killSwitchBtn.addEventListener('click', () => {
   fireAlert('🛑 KILL SWITCH TRIGGERED', 'Auto-trade disabled and all open live positions are being closed.');
 });
 
-function connectTradingSocket(token){
-  lastTradeToken = token;
-  setTradeStatus(false, (tradeFailCount ? 'trading: retrying… ' : 'trading: connecting…'));
+//------------------------------------------------------------------
+// REST: get accounts -> get OTP -> open the OTP-scoped WebSocket.
+// Deriv's trading WS no longer accepts an "authorize" message from
+// third-party origins; auth now happens via a one-time password baked
+// into the connection URL, minted fresh (120s TTL, single use) via REST.
+//------------------------------------------------------------------
+async function fetchOptionsAccounts(token){
+  const res = await fetch(`${DERIV_REST_BASE}/trading/v1/options/accounts`, {
+    method: 'GET',
+    headers: { 'Authorization': `Bearer ${token}`, 'Deriv-App-ID': String(APP_ID) }
+  });
+  const bodyText = await res.text();
+  if (!res.ok) throw new Error(`accounts request failed (HTTP ${res.status}): ${bodyText.slice(0, 200)}`);
+  let json;
+  try { json = JSON.parse(bodyText); } catch (e) { throw new Error('accounts response was not valid JSON: ' + bodyText.slice(0, 200)); }
+  return json;
+}
+async function fetchOtpUrl(token, accountId){
+  const res = await fetch(`${DERIV_REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(accountId)}/otp`, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}`, 'Deriv-App-ID': String(APP_ID) }
+  });
+  const bodyText = await res.text();
+  if (!res.ok) throw new Error(`otp request failed (HTTP ${res.status}): ${bodyText.slice(0, 200)}`);
+  let json;
+  try { json = JSON.parse(bodyText); } catch (e) { throw new Error('otp response was not valid JSON: ' + bodyText.slice(0, 200)); }
+  const url = json?.data?.url || json?.url;
+  if (!url) throw new Error('otp response had no url field: ' + bodyText.slice(0, 200));
+  return url;
+}
+// Best-effort field extraction — the accounts list response schema isn't
+// fully documented publicly, so we accept several plausible shapes and log
+// the raw payload so a mismatch is visible and fixable rather than silent.
+function extractAccountList(json){
+  const list = json?.data?.accounts || json?.data || json?.accounts || (Array.isArray(json) ? json : null);
+  return Array.isArray(list) ? list : [];
+}
+function extractAccountId(acc){
+  return acc.accountId || acc.account_id || acc.id || acc.loginid || acc.login_id || null;
+}
+function pickAccount(accounts, preferredId){
+  if (preferredId) {
+    const match = accounts.find(a => extractAccountId(a) === preferredId);
+    if (match) return match;
+  }
+  // No preference given: default to a demo/virtual account for safety.
+  const demo = accounts.find(a => a.is_virtual === true || a.isVirtual === true || a.is_demo === true);
+  return demo || accounts[0] || null;
+}
+
+async function startTradingConnection(token){
+  setTradeStatus(false, (tradeFailCount ? 'trading: retrying…' : 'trading: fetching accounts…'));
+  clearTimeout(tradeReconnectTimer);
+  try {
+    const accountsJson = await fetchOptionsAccounts(token);
+    logLine(`raw accounts response: ${JSON.stringify(accountsJson).slice(0, 500)}`, 'info');
+    const accounts = extractAccountList(accountsJson);
+    if (!accounts.length) throw new Error('no accounts found in response — see raw log line above to check field names');
+
+    const preferredId = accountIdInput.value.trim() || null;
+    const account = pickAccount(accounts, preferredId);
+    if (!account) throw new Error('could not select an account from the list');
+    const accountId = extractAccountId(account);
+    if (!accountId) throw new Error('could not read an account id from the selected account — see raw log line above');
+
+    logLine(`selected account: ${accountId}${preferredId ? '' : ' (auto-picked)'}`, 'trade');
+    setTradeStatus(false, 'trading: requesting OTP…');
+    const wsUrl = await fetchOtpUrl(token, accountId);
+    logLine(`OTP received — opening scoped trading socket`, 'trade');
+
+    pendingAccountMeta = account; // stash so we can populate derivAuth once the socket is open
+    pendingAccountId = accountId;
+    openTradingSocket(wsUrl, token);
+  } catch (e) {
+    tradeFailCount++;
+    setTradeStatus(false, `trading: setup failed — retrying`);
+    logLine(`trading setup failed: ${e.message}`, 'warn');
+    acctLine.textContent = 'Setup failed: ' + e.message + (e.message.toLowerCase().includes('failed to fetch') ? ' (possibly blocked by CORS — your app_id may need to be your own registered app for these REST calls)' : '');
+    scheduleTradeReconnect(token);
+  }
+}
+
+let pendingAccountMeta = null;
+let pendingAccountId = null;
+
+function openTradingSocket(wsUrl, token){
   let sock;
   try {
-    sock = new WebSocket(TRADE_WS_URL);
+    sock = new WebSocket(wsUrl);
   } catch (e) {
-    setTradeStatus(false, 'trading: failed to open socket');
     logLine(`trading socket create failed: ${e.message}`, 'warn');
     tradeFailCount++;
-    scheduleTradeReconnect();
+    scheduleTradeReconnect(token);
     return;
   }
   tradeWs = sock;
-  let tradeGotAuth = false;
 
-  tradeWs.onopen = () => {
+  sock.onopen = () => {
     if (sock !== tradeWs) return;
     tradeWsAlive = true;
-    setTradeStatus(false, 'trading: authorizing…');
-    logLine('trading socket open — authorizing…', 'trade');
-    tradeWs.send(JSON.stringify({ authorize: token }));
+    tradeFailCount = 0;
+    lastTradeMsgAt = Date.now();
+    setTradeStatus(true, 'trading: connected');
+    const a = pendingAccountMeta || {};
+    derivAuth = {
+      loginid: a.loginid || a.login_id || pendingAccountId,
+      is_virtual: a.is_virtual === true || a.isVirtual === true || a.is_demo === true,
+      currency: a.currency || 'USD',
+      balance: a.balance !== undefined ? a.balance : '—'
+    };
+    renderAcctLine();
+    autoTradeBtn.disabled = false;
+    logLine(`trading socket open & OTP-authenticated as account ${derivAuth.loginid} (${derivAuth.is_virtual ? 'DEMO' : 'REAL'})`, 'trade');
+    tradeSend({ balance: 1, subscribe: 1 });
   };
-  tradeWs.onmessage = (msg) => {
+
+  sock.onmessage = (msg) => {
     if (sock !== tradeWs) return;
     lastTradeMsgAt = Date.now();
     let data;
@@ -1308,26 +1406,7 @@ function connectTradingSocket(token){
 
     if (data.error) {
       logLine(`trading API error (${data.msg_type || 'request'}): ${data.error.message}`, 'warn');
-      if (data.msg_type === 'authorize') {
-        setTradeStatus(false, 'trading: auth failed');
-        acctLine.textContent = 'Authorization failed: ' + data.error.message;
-      }
-      if (data.msg_type === 'buy') {
-        cancelPendingConfirm('buy rejected: ' + data.error.message);
-      }
-      return;
-    }
-
-    if (data.msg_type === 'authorize') {
-      const a = data.authorize;
-      tradeGotAuth = true;
-      tradeFailCount = 0;
-      derivAuth = { loginid: a.loginid, is_virtual: a.is_virtual, currency: a.currency, balance: a.balance };
-      setTradeStatus(true, 'trading: connected');
-      renderAcctLine();
-      autoTradeBtn.disabled = false;
-      tradeWs.send(JSON.stringify({ balance: 1, subscribe: 1 }));
-      logLine(`trading account authorized: ${a.loginid} (${a.is_virtual ? 'DEMO' : 'REAL'})`, 'trade');
+      if (data.msg_type === 'buy') cancelPendingConfirm('buy rejected: ' + data.error.message);
       return;
     }
 
@@ -1336,29 +1415,17 @@ function connectTradingSocket(token){
       renderAcctLine();
       return;
     }
-
-    if (data.msg_type === 'proposal' && data.proposal) {
-      handleProposalResponse(data.proposal);
-      return;
-    }
-
-    if (data.msg_type === 'buy' && data.buy) {
-      handleBuyResponse(data.buy);
-      return;
-    }
-
-    if (data.msg_type === 'proposal_open_contract' && data.proposal_open_contract) {
-      handleContractUpdate(data.proposal_open_contract);
-      return;
-    }
-
+    if (data.msg_type === 'proposal' && data.proposal) { handleProposalResponse(data.proposal); return; }
+    if (data.msg_type === 'buy' && data.buy) { handleBuyResponse(data.buy); return; }
+    if (data.msg_type === 'proposal_open_contract' && data.proposal_open_contract) { handleContractUpdate(data.proposal_open_contract); return; }
     if (data.msg_type === 'sell' && data.sell) {
       logLine(`live contract ${data.sell.contract_id} closed manually, sold for $${data.sell.sold_for}`, 'trade');
       return;
     }
   };
-  tradeWs.onclose = (e) => {
-    if (sock !== tradeWs) return; // a newer socket has replaced this one — ignore stale close
+
+  sock.onclose = (e) => {
+    if (sock !== tradeWs) return;
     tradeWsAlive = false;
     derivAuth = null;
     renderAcctLine();
@@ -1366,21 +1433,21 @@ function connectTradingSocket(token){
     tradeFailCount++;
     const detail = `code ${e.code}${e.reason ? ' ' + e.reason : ''}`;
     setTradeStatus(false, `trading: closed (${detail}) — retrying`);
-    logLine(`trading socket closed (${detail})${tradeGotAuth ? ' after authorizing' : ' — never authorized'} — retrying`, 'warn');
-    scheduleTradeReconnect();
+    logLine(`trading socket closed (${detail}) — re-fetching a fresh OTP and retrying`, 'warn');
+    scheduleTradeReconnect(token);
   };
-  tradeWs.onerror = () => { try { sock.close(); } catch (e) {} };
+  sock.onerror = () => { try { sock.close(); } catch (e) {} };
 }
 
-function scheduleTradeReconnect(){
-  if (!lastTradeToken) return;
+function scheduleTradeReconnect(token){
   clearTimeout(tradeReconnectTimer);
   const delay = Math.min(3000 * tradeFailCount, 20000);
-  tradeReconnectTimer = setTimeout(() => connectTradingSocket(lastTradeToken), delay);
+  // The OTP is single-use and expires in 120s, so a reconnect must redo the
+  // whole REST(accounts)->REST(otp)->WS chain — reopening the old URL won't work.
+  tradeReconnectTimer = setTimeout(() => startTradingConnection(token), delay);
 }
 
 // Trading socket also goes stale on backgrounded mobile tabs without a clean close event.
-// A periodic watchdog forces a reconnect if we haven't heard anything in a while.
 let lastTradeMsgAt = Date.now();
 setInterval(() => {
   if (tradeWs && tradeWs.readyState === WebSocket.OPEN) {
@@ -1403,7 +1470,8 @@ function renderAcctLine(){
   const badge = derivAuth.is_virtual
     ? '<span class="badge badge-demo">DEMO</span>'
     : '<span class="badge badge-real">REAL</span>';
-  acctLine.innerHTML = `<b>${derivAuth.loginid}</b>${badge}<br>Balance: <b>${Number(derivAuth.balance).toFixed(2)} ${derivAuth.currency}</b>`;
+  const balTxt = typeof derivAuth.balance === 'number' ? derivAuth.balance.toFixed(2) : derivAuth.balance;
+  acctLine.innerHTML = `<b>${derivAuth.loginid}</b>${badge}<br>Balance: <b>${balTxt} ${derivAuth.currency}</b>`;
 }
 
 //---- Proposal / Buy / Confirm flow ----

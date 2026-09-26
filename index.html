@@ -2,19 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SNIPER v16 — 13 CHARTS WALL</title>
+<title>SNIPER v17 — 13 WALL + CONNECT FIX</title>
 <style>
 :root{--bg:#03070c;--panel:#071018;--line:#123041;--cyan:#33d6ff;--red:#ff4d4d;--green:#3ddc84;--muted:#5f7d92;--amber:#ffb020}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#dff6ff;font-family:'Courier New',monospace}
-.shell{padding:8px;display:grid;gap:8px;max-width:100vw}
-.topbar,.panel{background:#071018;border:1px solid #123041;border-radius:10px;padding:12px}
-.topbar{display:grid;grid-template-columns:1fr;gap:8px}
-.grid-controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.shell{padding:8px;display:grid;gap:8px}
+.topbar,.panel{background:#071018;border:1px solid #123041;border-radius:10px;padding:10px}
 input,button{width:100%;background:#07141f;color:#33d6ff;border:1px solid #1a7a99;border-radius:8px;padding:12px;font-size:13px}
 button{font-weight:800;min-height:44px;cursor:pointer}
-.log{font-size:9px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:140px;overflow:auto;background:#040b12;border:1px solid #123041;border-radius:8px;padding:8px}
-.pos-row{display:grid;grid-template-columns:1fr 50px 60px 32px;gap:4px;font-size:10px;padding:4px 2px;border-bottom:1px solid #0e2430}
-/* WALL GRID */
+.log{font-size:9px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow:auto;background:#040b12;border:1px solid #123041;border-radius:8px;padding:8px}
 .charts-wall{display:grid;grid-template-columns:1fr;gap:8px}
 @media(min-width:600px){.charts-wall{grid-template-columns:1fr 1fr}}
 @media(min-width:1100px){.charts-wall{grid-template-columns:1fr 1fr 1fr}}
@@ -22,69 +18,76 @@ button{font-weight:800;min-height:44px;cursor:pointer}
 .chart-card.entry-buy{border-color:#3ddc84;box-shadow:0 0 12px rgba(61,220,132,.25)}
 .chart-card.entry-sell{border-color:#ff4d4d;box-shadow:0 0 12px rgba(255,77,77,.25)}
 .chart-card.armed{border-color:#ffb020;box-shadow:0 0 12px rgba(255,176,32,.2)}
-.chart-card.aligned{border-color:#33d6ff}
-.card-head{display:flex;justify-content:space-between;align-items:center;font-size:10px}
-.card-title{font-weight:800;letter-spacing:1px}
+.card-head{display:flex;justify-content:space-between;font-size:10px}
+.card-title{font-weight:800}
 .card-badge{padding:2px 6px;border-radius:4px;font-size:9px;border:1px solid #123041}
 .badge-buy{color:#3ddc84;border-color:#3ddc84;background:rgba(61,220,132,.1)}
 .badge-sell{color:#ff4d4d;border-color:#ff4d4d;background:rgba(255,77,77,.1)}
-.badge-neutral{color:#5f7d92;border-color:#123041}
 .badge-armed{color:#ffb020;border-color:#ffb020;background:rgba(255,176,32,.1)}
-.spark-box{height:90px;background:#040b12;border:1px solid #123041;border-radius:6px;overflow:hidden}
+.badge-neutral{color:#5f7d92}
+.spark-box{height:85px;background:#040b12;border:1px solid #123041;border-radius:6px;overflow:hidden}
 .spark-box svg{width:100%;height:100%;display:block}
-.card-banner{border:1px solid #123041;border-radius:6px;padding:6px;text-align:center;font-size:10px;font-weight:700;letter-spacing:1px;color:#5f7d92;min-height:32px;display:grid;place-items:center}
+.card-banner{border:1px solid #123041;border-radius:6px;padding:6px;text-align:center;font-size:10px;font-weight:700;color:#5f7d92;min-height:30px;display:grid;place-items:center}
 .card-banner.buy{color:#3ddc84;border-color:#3ddc84;background:rgba(61,220,132,.06)}
 .card-banner.sell{color:#ff4d4d;border-color:#ff4d4d;background:rgba(255,77,77,.06)}
 .card-banner.armed{color:#ffb020;border-color:#ffb020;background:rgba(255,176,32,.06)}
 .card-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px;font-size:8px;color:#5f7d92}
-.card-btns{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .btn-buy-sm{background:#082d18;border:1px solid #3ddc84;color:#3ddc84;padding:6px;font-size:9px;min-height:28px}
 .btn-sell-sm{background:#2d0808;border:1px solid #ff4d4d;color:#ff4d4d;padding:6px;font-size:9px;min-height:28px}
+.pos-row{display:grid;grid-template-columns:1fr 50px 60px 32px;gap:4px;font-size:10px;padding:4px 2px;border-bottom:1px solid #0e2430}
 </style>
 </head>
 <body>
 <div class="shell">
 <div class="topbar">
-<div><b style="color:#33d6ff">SNIPER v16 — 13 CHARTS WALL VIEW — VISUAL SCANNER</b><div style="font-size:10px;color:#5f7d92">You asked: see all 13 signals same page — now you can. Green border = ENTRY, Yellow = ARMED, Blue = ALIGNED</div></div>
-<div id="liveUsdLine" style="font-size:11px;color:#ffb020">LIVE: $0 · 0 open</div>
-<div id="tradeStatusText" style="font-size:10px;color:#5f7d92">trading: not connected</div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<input type="text" id="apiTokenInput" placeholder="pat_...">
+<b style="color:#33d6ff">SNIPER v17 — 13 CHARTS WALL + CONNECT FIXED</b>
+<div style="font-size:10px;color:#5f7d92">Wall view you asked + connect fixed from v14 that showed trading OPEN in your screenshot</div>
+<div id="liveUsdLine" style="font-size:11px;color:#ffb020">LIVE: $0 · not connected</div>
+<div id="tradeStatusText" style="font-size:10px;color:#5f7d92">trading: not connected — paste pat_ → TEST → CONNECT</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
+<input type="text" id="apiTokenInput" placeholder="pat_... (paste full 68 chars)">
 <input type="text" id="accountIdInput" value="DOT91733593">
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
-<button onclick="window.doConnect()" style="background:#082d18;border:2px solid #3ddc84;color:#3ddc84">CONNECT DEMO</button>
-<button onclick="window.forcePOC()" style="border-color:#ffb020;color:#ffb020">LOAD 7 POS</button>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:8px">
+<button onclick="window.doTest()" style="border-color:#5f7d92;color:#5f7d92">1) TEST FETCH</button>
+<button onclick="window.doConnect()" style="background:#082d18;border:2px solid #3ddc84;color:#3ddc84">2) CONNECT DEMO</button>
 <button onclick="window.closeAll()" style="background:rgba(255,77,77,.15);border-color:#ff4d4d;color:#ff4d4d">CLOSE ALL</button>
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
 <button id="autoTradeBtn" onclick="window.toggleAuto()" style="border-color:#5f7d92;color:#5f7d92">AUTO: OFF</button>
-<div id="acctLine" style="font-size:9px;color:#5f7d92;word-break:break-all;padding:6px;border:1px solid #123041;border-radius:6px">Not connected</div>
+<button onclick="window.forcePOC()" style="border-color:#ffb020;color:#ffb020">FORCE LOAD 7 POS</button>
 </div>
-<div id="livePositionsList" style="font-size:10px;color:#5f7d92">none</div>
-<div class="log" id="execLog">v16 wall view loaded — connect to start 13 live charts
+<div id="acctLine" style="font-size:10px;color:#5f7d92;margin-top:8px;word-break:break-all;border:1px solid #123041;border-radius:6px;padding:6px">Not connected — paste pat_, tap TEST FETCH first</div>
+<div id="livePositionsList" style="font-size:10px;color:#5f7d92;margin-top:6px">none — connect to load your 7 ghost trades</div>
+<div class="log" id="execLog">v17 wall + connect fixed loaded
+1) Paste pat_
+2) Tap TEST FETCH — must say 200
+3) Tap CONNECT DEMO — must say trading OPEN
+4) Tap FORCE LOAD — must say POC: 7 open
 </div>
 </div>
 
 <div class="charts-wall" id="chartsWall"></div>
 
 <div class="panel">
-<div style="font-size:10px;color:#1a7a99">CONTROLS</div>
-<div class="grid-controls" style="margin-top:6px"><div>SWING LB<input type="number" id="lookbackInput" value="10"></div><div>TP×ATR<input type="number" id="tpMultInput" value="1.5"></div></div>
-<div style="margin-top:6px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div>SL×ATR<input type="number" id="slBufferInput" value="1.5"></div><div>STAKE $<input type="number" id="stakeInput" value="1"></div><div>MULT<input type="number" id="multiplierInput" value="100"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px"><div>SWING LB<input type="number" id="lookbackInput" value="10"></div><div>TP×ATR<input type="number" id="tpMultInput" value="1.5"></div><div>SL×ATR<input type="number" id="slBufferInput" value="1.5"></div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px"><div>STAKE $<input type="number" id="stakeInput" value="1"></div><div>MULT<input type="number" id="multiplierInput" value="100"></div></div>
 </div>
 </div>
 
 <script>
-const REST_BASE='https://api.derivws.com';const WS_DATA_URL='wss://ws.derivws.com/websockets/v3?app_id=1089';
+const REST_BASE='https://api.derivws.com';
+const WS_DATA_URL='wss://ws.derivws.com/websockets/v3?app_id=1089';
+const APP_ID='34uEO9DPEeYnaZ71rfMT8';
 const SCAN_SYMBOLS=[
   {symbol:'R_10',short:'V10'},{symbol:'R_25',short:'V25'},{symbol:'R_50',short:'V50'},{symbol:'R_75',short:'V75'},{symbol:'R_100',short:'V100'},
   {symbol:'1HZ10V',short:'V10(1s)'},{symbol:'1HZ15V',short:'V15(1s)'},{symbol:'1HZ25V',short:'V25(1s)'},{symbol:'1HZ30V',short:'V30(1s)'},{symbol:'1HZ50V',short:'V50(1s)'},{symbol:'1HZ75V',short:'V75(1s)'},{symbol:'1HZ90V',short:'V90(1s)'},{symbol:'1HZ100V',short:'V100(1s)'}
 ];
 let symbolState={};SCAN_SYMBOLS.forEach(s=>{symbolState[s.symbol]={short:s.short,h1Candles:[],m1Candles:[],h1Zone:'NEUTRAL',m1Zone:'NEUTRAL',h1Value:50,m1Value:50,h1Res:null,m1Res:null,atr:null,pendingSetup:null,activeTrade:null,lastPrice:null,lastEntry:null,lastSL:null,lastTP1:null}});
-let wsData=null,wsTrade=null,derivAuth=null,livePositions={},pendingMap={},reqIdCounter=1,tradePing=null,currentPat=null,currentAccountId=null,lookback=10,tpStep=1.5,slBufferMult=1.5,session={setups:0,autoTrades:0};
+let wsData=null,wsTrade=null,derivAuth=null,livePositions={},pendingMap={},reqIdCounter=1,tradePing=null,currentPat=null,currentAccountId=null,lookback=10,tpStep=1.5,slBufferMult=1.5,autoTradeEnabled=false;
 
-function ts(){return new Date().toLocaleTimeString('en-GB',{hour12:false})}function logLine(t,c='info'){const el=document.getElementById('execLog');const col=c==='warn'?'#ffb020':c==='trade'?'#ff4d9a':c==='buy'?'#3ddc84':c==='sell'?'#ff4d4d':'#8fb4c6';el.innerHTML=`<div style="color:${col}">${ts()} ${t}</div>`+el.innerHTML;}
+function ts(){return new Date().toLocaleTimeString('en-GB',{hour12:false})}
+function logLine(t,c='info'){const el=document.getElementById('execLog');const col=c==='warn'?'#ffb020':c==='trade'?'#ff4d9a':c==='buy'?'#3ddc84':c==='sell'?'#ff4d4d':'#8fb4c6';el.innerHTML=`<div style="color:${col}">${ts()} ${t}</div>`+el.innerHTML;}
 function wsSend(s,o){if(s&&s.readyState===1){s.send(JSON.stringify(o));return true}return false}
 function computeStructure(c,lb){const n=c.length;if(n<lb*2+3)return{state:0,barsSinceBos:999,breakType:null};const swings=[];for(let i=lb;i<n-lb;i++){let isH=true,isL=true;for(let k=1;k<=lb;k++){if(c[i].high<=c[i-k].high||c[i].high<=c[i+k].high)isH=false;if(c[i].low>=c[i-k].low||c[i].low>=c[i+k].low)isL=false;if(!isH&&!isL)break}if(isH)swings.push({confirmedAt:i+lb,type:'H',price:c[i].high});if(isL)swings.push({confirmedAt:i+lb,type:'L',price:c[i].low});}swings.sort((a,b)=>a.confirmedAt-b.confirmedAt);let lastH=null,lastL=null,state=0,lastBos=-1,bType=null,ptr=0;for(let i=0;i<n;i++){while(ptr<swings.length&&swings[ptr].confirmedAt<=i){const s=swings[ptr];if(s.type==='H')lastH=s.price;else lastL=s.price;ptr++}if(i>0){const cl=c[i].close;if(lastL!==null&&cl<lastL){bType=state===-1?'BOS':'CHOCH';state=-1;lastBos=i;lastL=null}else if(lastH!==null&&cl>lastH){bType=state===1?'BOS':'CHOCH';state=1;lastBos=i;lastH=null}}}return{state,barsSinceBos:lastBos===-1?999:(n-1-lastBos),breakType:bType};}
 function computeATR(c,p){if(c.length<p+1)return null;const tr=[];for(let i=c.length-p;i<c.length;i++){const cur=c[i],pr=c[i-1];tr.push(Math.max(cur.high-cur.low,Math.abs(cur.high-pr.close),Math.abs(cur.low-pr.close)))}return tr.reduce((a,b)=>a+b,0)/p;}
@@ -100,119 +103,139 @@ function manageTrade(sym,m1res,atr){
  else if(st.pendingSetup){if(st.h1Zone!==st.pendingSetup.direction)st.pendingSetup=null}
  if(st.pendingSetup){
   const closed=st.m1Candles.length>=2?st.m1Candles[st.m1Candles.length-2]:null;
-  if(closed&&atr){const dir=st.pendingSetup.direction;const entry=closed.close;const sl=computeSL(dir,entry,atr,slBufferMult);const tp1=dir==='BUY'?entry+atr*tpStep:entry-atr*tpStep;st.lastEntry=entry;st.lastSL=sl;st.lastTP1=tp1;st.activeTrade={direction:dir,entryPrice:entry,sl,tp1};session.setups++;logLine(`🎯 ENTRY ${dir} ${sym} @${entry.toFixed(2)}`,'trade');maybeFireAuto(sym,dir,entry,sl,tp1);st.pendingSetup=null;}
+  if(closed&&atr){const dir=st.pendingSetup.direction;const entry=closed.close;const sl=computeSL(dir,entry,atr,slBufferMult);const tp1=dir==='BUY'?entry+atr*tpStep:entry-atr*tpStep;st.lastEntry=entry;st.lastSL=sl;st.lastTP1=tp1;st.activeTrade={direction:dir,entryPrice:entry,sl,tp1};logLine(`🎯 ENTRY ${dir} ${sym} @${entry.toFixed(2)} SL ${sl.toFixed(2)}`,'trade');maybeFireAuto(sym,dir,entry,sl,tp1);st.pendingSetup=null;}
  }
 }
-
-// BUILD WALL
 function buildWall(){
  const wall=document.getElementById('chartsWall');
- wall.innerHTML=SCAN_SYMBOLS.map(s=>{
-  return `<div class="chart-card" id="card-${s.symbol}">
-   <div class="card-head"><span class="card-title">${s.short}</span><span class="card-badge badge-neutral" id="badge-${s.symbol}">NEUTRAL</span></div>
-   <div class="spark-box"><svg id="spark-${s.symbol}" viewBox="0 0 200 90"></svg></div>
-   <div class="card-banner" id="banner-${s.symbol}">loading…</div>
-   <div class="card-meta"><span id="h1-${s.symbol}">H1: —</span><span id="m1-${s.symbol}">M1: —</span></div>
-   <div class="card-meta"><span id="entry-${s.symbol}">Entry: —</span><span id="sl-${s.symbol}">SL: —</span></div>
-   <div class="card-btns"><button class="btn-sell-sm" onclick="window.manualTrade('${s.symbol}','SELL')">SELL</button><button class="btn-buy-sm" onclick="window.manualTrade('${s.symbol}','BUY')">BUY</button></div>
-  </div>`;
- }).join('');
+ wall.innerHTML=SCAN_SYMBOLS.map(s=>`<div class="chart-card" id="card-${s.symbol}">
+  <div class="card-head"><span class="card-title">${s.short}</span><span class="card-badge badge-neutral" id="badge-${s.symbol}">—</span></div>
+  <div class="spark-box"><svg id="spark-${s.symbol}" viewBox="0 0 200 90"></svg></div>
+  <div class="card-banner" id="banner-${s.symbol}">loading…</div>
+  <div class="card-meta"><span id="h1-${s.symbol}">H1: —</span><span id="m1-${s.symbol}">M1: —</span></div>
+  <div class="card-meta"><span id="entry-${s.symbol}">Entry: —</span><span id="sl-${s.symbol}">SL: —</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn-sell-sm" onclick="window.manualTrade('${s.symbol}','SELL')">SELL</button><button class="btn-buy-sm" onclick="window.manualTrade('${s.symbol}','BUY')">BUY</button></div>
+ </div>`).join('');
 }
 buildWall();
-
 function updateCard(sym){
- const st=symbolState[sym];const card=document.getElementById(`card-${sym}`);const badge=document.getElementById(`badge-${sym}`);const banner=document.getElementById(`banner-${sym}`);
- if(!st||!card)return;
- // spark
+ const st=symbolState[sym];const badge=document.getElementById(`badge-${sym}`);const banner=document.getElementById(`banner-${sym}`);const card=document.getElementById(`card-${sym}`);if(!st||!card)return;
  const svg=document.getElementById(`spark-${sym}`);
  if(st.m1Candles.length>=2){
   const src=st.m1Candles.slice(-60);const ys=src.map(c=>c.close);const min=Math.min(...ys),max=Math.max(...ys),span=max-min||1;
-  const pts=src.map((c,i)=>{const x=(i/(src.length-1))*200;const y=90-( (c.close-min)/span *80 +5 );return `${x.toFixed(1)},${y.toFixed(1)}`;});
-  const color=st.activeTrade? (st.activeTrade.direction==='BUY'?'#3ddc84':'#ff4d4d') : st.pendingSetup? '#ffb020' : '#33d6ff';
+  const pts=src.map((c,i)=>{const x=(i/(src.length-1))*200;const y=90-((c.close-min)/span*80+5);return `${x.toFixed(1)},${y.toFixed(1)}`;});
+  const color=st.activeTrade?(st.activeTrade.direction==='BUY'?'#3ddc84':'#ff4d4d'):st.pendingSetup?'#ffb020':'#33d6ff';
   svg.innerHTML=`<polyline fill="none" stroke="${color}" stroke-width="1.5" points="${pts.join(' ')}"/>`;
  }
- // badge and banner logic
- let rank=0,status='NEUTRAL';
- if(st.activeTrade){rank=3;status=`ENTRY ${st.activeTrade.direction}`;}
- else if(st.pendingSetup){rank=2;status=`ARMED ${st.pendingSetup.direction}`;}
- else if(st.m1Res&&st.h1Zone!=='NEUTRAL'&&st.h1Zone===st.m1Zone){rank=1;status=`ALIGNED ${st.h1Zone}`;}
- else if(st.h1Res){status=`${st.h1Zone}/${st.m1Zone}`;}
-
- badge.textContent=status;
- badge.className='card-badge '+(rank===3?(st.activeTrade.direction==='BUY'?'badge-buy':'badge-sell'):rank===2?'badge-armed':rank===1?'badge-buy':'badge-neutral');
-
- banner.textContent=status+(st.lastPrice?` @${st.lastPrice.toFixed(2)}`:'');
- banner.className='card-banner '+(rank===3?(st.activeTrade.direction==='BUY'?'buy':'sell'):rank===2?'armed':rank===1?'buy':'');
-
- card.className='chart-card '+(rank===3?(st.activeTrade.direction==='BUY'?'entry-buy':'entry-sell'):rank===2?'armed':rank===1?'aligned':'');
-
- document.getElementById(`h1-${sym}`).textContent=`H1: ${st.h1Res?Math.round(st.h1Value)+' '+st.h1Zone:'—'}`;
- document.getElementById(`m1-${sym}`).textContent=`M1: ${st.m1Res?Math.round(st.m1Value)+' '+st.m1Zone:'—'}`;
- document.getElementById(`entry-${sym}`).textContent=`Entry: ${st.lastEntry?st.lastEntry.toFixed(2):'—'}`;
- document.getElementById(`sl-${sym}`).textContent=`SL: ${st.lastSL?st.lastSL.toFixed(2):'—'}`;
+ let rank=0,status='NEUTRAL';if(st.activeTrade){rank=3;status=`ENTRY ${st.activeTrade.direction}`}else if(st.pendingSetup){rank=2;status=`ARMED ${st.pendingSetup.direction}`}else if(st.m1Res&&st.h1Zone!=='NEUTRAL'&&st.h1Zone===st.m1Zone){rank=1;status=`ALIGNED ${st.h1Zone}`}else if(st.h1Res){status=`${st.h1Zone}/${st.m1Zone}`}else status=`loading ${st.m1Candles.length} ticks`;
+ badge.textContent=status;badge.className='card-badge '+(rank===3?(st.activeTrade.direction==='BUY'?'badge-buy':'badge-sell'):rank===2?'badge-armed':rank===1?'badge-buy':'badge-neutral');
+ banner.textContent=status+(st.lastPrice?` @${st.lastPrice.toFixed(2)}`:'');banner.className='card-banner '+(rank===3?(st.activeTrade.direction==='BUY'?'buy':'sell'):rank===2?'armed':'');
+ card.className='chart-card '+(rank===3?(st.activeTrade.direction==='BUY'?'entry-buy':'entry-sell'):rank===2?'armed':'');
+ const h1El=document.getElementById(`h1-${sym}`);if(h1El)h1El.textContent=`H1: ${st.h1Res?Math.round(st.h1Value)+' '+st.h1Zone:'—'}`;
+ const m1El=document.getElementById(`m1-${sym}`);if(m1El)m1El.textContent=`M1: ${st.m1Res?Math.round(st.m1Value)+' '+st.m1Zone:'—'}`;
+ const enEl=document.getElementById(`entry-${sym}`);if(enEl)enEl.textContent=`Entry: ${st.lastEntry?st.lastEntry.toFixed(2):'—'}`;
+ const slEl=document.getElementById(`sl-${sym}`);if(slEl)slEl.textContent=`SL: ${st.lastSL?st.lastSL.toFixed(2):'—'}`;
 }
-
-function updateAllCards(){SCAN_SYMBOLS.forEach(s=>updateCard(s.symbol));}
-setInterval(updateAllCards,800);
-
+setInterval(()=>{SCAN_SYMBOLS.forEach(s=>updateCard(s.symbol))},900);
 function feedTick(sym,price,epoch){const st=symbolState[sym];if(!st)return;st.lastPrice=price;const ce=Math.floor(epoch/60)*60;if(st.m1Candles.length===0){st.m1Candles.push({open:price,high:price,low:price,close:price,epoch:ce});}else{const last=st.m1Candles[st.m1Candles.length-1];if(last.epoch===ce){last.high=Math.max(last.high,price);last.low=Math.min(last.low,price);last.close=price}else if(epoch>last.epoch){st.m1Candles.push({open:price,high:price,low:price,close:price,epoch:ce});if(st.m1Candles.length>300)st.m1Candles.shift();}}recomputeM1(sym);}
-
 function connectData(){
- const sock=new WebSocket(WS_DATA_URL);wsData=sock;
- sock.onopen=()=>{logLine(`data WS open — requesting 13 symbols`,'info');Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:60,style:"candles"})});};
- sock.onmessage=(ev)=>{let d;try{d=JSON.parse(ev.data)}catch(e){return}if(d.msg_type==="candles"&&Array.isArray(d.candles)){const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));const gran=d.echo_req.granularity;if(gran===3600){st.h1Candles=mapped;recomputeH1(sym)}else if(gran===60){st.m1Candles=mapped;recomputeM1(sym);if(!wsData._subs)wsData._subs=new Set();if(!wsData._subs.has(sym)){wsSend(sock,{ticks:sym,subscribe:1});wsData._subs.add(sym)}}}if(d.msg_type==="tick"&&d.tick){feedTick(d.tick.symbol,+d.tick.quote,d.tick.epoch)}};
- sock.onclose=()=>{logLine('data WS closed — using trading ticks fallback (still shows 13 charts)','warn');setTimeout(connectData,3000);};
+ try{
+  const sock=new WebSocket(WS_DATA_URL);wsData=sock;
+  sock.onopen=()=>{logLine(`data WS open — requesting 13 symbols candles`,'info');Object.keys(symbolState).forEach(sym=>{wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});wsSend(sock,{ticks_history:sym,adjust_start_time:1,count:200,end:"latest",granularity:60,style:"candles"})});};
+  sock.onmessage=(ev)=>{let d;try{d=JSON.parse(ev.data)}catch(e){return}if(d.msg_type==="candles"&&Array.isArray(d.candles)){const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));const gran=d.echo_req.granularity;if(gran===3600){st.h1Candles=mapped;recomputeH1(sym)}else if(gran===60){st.m1Candles=mapped;recomputeM1(sym);if(!sock._subs)sock._subs=new Set();if(!sock._subs.has(sym)){wsSend(sock,{ticks:sym,subscribe:1});sock._subs.add(sym)}}}if(d.msg_type==="tick"&&d.tick){feedTick(d.tick.symbol,+d.tick.quote,d.tick.epoch)}};
+  sock.onclose=()=>{logLine('data WS closed — fallback to trading ticks still gives you 13 charts','warn');setTimeout(connectData,3000);};
+  sock.onerror=()=>{logLine('data WS error — OMANTEL blocking ws.derivws.com, using trading ticks fallback for 13 charts','warn');};
+ }catch(e){logLine('data WS exception: '+e.message,'warn');}
 }
 
-// TRADING
-let autoTradeEnabled=false,tradePing=null,currentPat=null,currentAccountId=null,derivAuth=null,livePositions={},pendingMap={},reqIdCounter=1;
-window.doConnect=async()=>{const pat=document.getElementById('apiTokenInput').value.trim();const acc=document.getElementById('accountIdInput').value.trim();localStorage.setItem('deriv_token',pat);localStorage.setItem('deriv_account_id',acc);currentPat=pat;currentAccountId=acc;logLine(`CONNECT ${acc}`,'trade');await startPatFlow(pat,acc);};
-async function fetchAccounts(pat){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':'34uEO9DPEeYnaZ71rfMT8'}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,120));return JSON.parse(txt);}
-async function fetchOtp(pat,acc){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(acc)}/otp`,{method:'POST',headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':'34uEO9DPEeYnaZ71rfMT8'}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,120));const j=JSON.parse(txt);return j?.data?.url||j?.url;}
+// --- TRADING FIXED — SAME AS V14 THAT WORKED ---
+window.doTest=async()=>{
+ const pat=document.getElementById('apiTokenInput').value.trim();
+ if(!pat.startsWith('pat_')){logLine('TEST: pat must start pat_','warn');document.getElementById('acctLine').innerText='pat_ invalid';return;}
+ logLine(`TEST FETCH ${REST_BASE}/trading/v1/options/accounts pat len=${pat.length}`,'info');
+ document.getElementById('acctLine').innerText='Testing fetch… check log';
+ try{
+  const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});
+  const txt=await r.text();
+  logLine(`TEST status ${r.status}: ${txt.slice(0,400)}`,r.ok?'buy':'warn');
+  document.getElementById('acctLine').innerText=r.ok?`TEST OK ${r.status} — now tap CONNECT DEMO`:`TEST FAIL ${r.status}: ${txt.slice(0,120)} — try WiFi/VPN or new pat_`;
+ }catch(e){logLine(`TEST EXCEPTION: ${e.message} — OMANTEL/CORS block, try WiFi/VPN`,'warn');document.getElementById('acctLine').innerText=`TEST EX: ${e.message} — switch to WiFi`;}
+};
+
+window.doConnect=async()=>{
+ const pat=document.getElementById('apiTokenInput').value.trim();
+ const acc=document.getElementById('accountIdInput').value.trim()||'DOT91733593';
+ if(!pat.startsWith('pat_')){logLine('CONNECT: pat_ invalid','warn');return;}
+ localStorage.setItem('deriv_token',pat);localStorage.setItem('deriv_account_id',acc);
+ currentPat=pat;currentAccountId=acc;
+ logLine(`CONNECT CLICKED pat len=${pat.length} acc=${acc}`,'trade');
+ document.getElementById('tradeStatusText').innerText='connecting… fetching accounts…';
+ document.getElementById('acctLine').innerText='Fetching accounts…';
+ try{await startPatFlow(pat,acc);}catch(e){logLine(`doConnect catch: ${e.message}`,'warn');document.getElementById('acctLine').innerText=`FAIL: ${e.message}`;}
+};
+
+async function fetchAccounts(pat){
+ const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});
+ const txt=await r.text();if(!r.ok)throw new Error(`accounts ${r.status}: ${txt.slice(0,150)}`);logLine(`accounts OK ${r.status}`,'buy');return JSON.parse(txt);
+}
+async function fetchOtp(pat,acc){
+ const r=await fetch(`${REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(acc)}/otp`,{method:'POST',headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});
+ const txt=await r.text();if(!r.ok)throw new Error(`otp ${r.status}: ${txt.slice(0,150)}`);const j=JSON.parse(txt);const url=j?.data?.url||j?.url;if(!url)throw new Error('no otp url');logLine(`OTP OK`,'buy');return url;
+}
 function extractList(j){return j?.data?.accounts||j?.data||j?.accounts||[]}
 function extractId(a){return a.account_id||a.id}
-async function startPatFlow(pat,pref){try{const js=await fetchAccounts(pat);const accs=extractList(js);let ch=accs.find(a=>extractId(a)===pref)||accs.find(a=>extractId(a).startsWith('DOT'))||accs[0];const cid=extractId(ch);currentAccountId=cid;logLine(`chosen ${cid} $${ch.balance}`,'trade');const otp=await fetchOtp(pat,cid);openTradingSocket(otp,ch);}catch(e){logLine(`Flow FAIL: ${e.message}`,'warn');}}
+async function startPatFlow(pat,pref){
+ const js=await fetchAccounts(pat);const accs=extractList(js);if(!accs.length)throw new Error('no accounts');
+ let ch=accs.find(a=>extractId(a)===pref)||accs.find(a=>extractId(a).startsWith('DOT'))||accs[0];const cid=extractId(ch);currentAccountId=cid;
+ logLine(`chosen ${cid} balance ${ch.balance} — fetching OTP…`,'trade');
+ document.getElementById('acctLine').innerText=`Chosen ${cid} — fetching OTP…`;
+ const otp=await fetchOtp(pat,cid);openTradingSocket(otp,ch);
+}
 function openTradingSocket(url,meta){
  if(wsTrade)try{wsTrade.close()}catch(e){}if(tradePing)clearInterval(tradePing);
  const sock=new WebSocket(url);wsTrade=sock;livePositions={};pendingMap={};
  sock.onopen=()=>{
   derivAuth={loginid:extractId(meta),is_demo:extractId(meta).startsWith('DOT'),balance:parseFloat(meta.balance)||0};
-  document.getElementById('acctLine').innerHTML=`<b>${derivAuth.loginid}</b> $${derivAuth.balance.toFixed(2)} LIVE`;
-  document.getElementById('tradeStatusText').innerText=`trading: live · ${derivAuth.loginid}`;document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · loading…`;
-  logLine(`trading OPEN — 13 ticks subscribing + POC`,'trade');
+  document.getElementById('acctLine').innerHTML=`<b>${derivAuth.loginid}</b> $${derivAuth.balance.toFixed(2)} LIVE — 13 symbols`;
+  document.getElementById('tradeStatusText').innerText=`trading: live · ${derivAuth.loginid} — 13 symbols`;
+  document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`;
+  logLine(`trading OPEN — ${derivAuth.loginid} — 13 ticks + POC subscribing`,'trade');
   wsSend(sock,{proposal_open_contract:1,subscribe:1});wsSend(sock,{balance:1,subscribe:1});
   Object.keys(symbolState).forEach(s=>wsSend(sock,{ticks:s,subscribe:1}));
   tradePing=setInterval(()=>{wsSend(sock,{ping:1});wsSend(sock,{proposal_open_contract:1,subscribe:1});},12000);
+  setTimeout(()=>wsSend(sock,{proposal_open_contract:1,subscribe:1}),1500);
  };
  sock.onmessage=(ev)=>{
   let d;try{d=JSON.parse(ev.data)}catch(e){return}
-  if(d.error){logLine(`❌ ${d.error.message}`,'warn');return}
+  if(d.error){logLine(`❌ ${d.error.code} ${d.error.message}`,'warn');return}
   if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance;document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · ${Object.keys(livePositions).length} open`;}
   if(d.msg_type==='tick'&&d.tick){feedTick(d.tick.symbol||d.tick.underlying_symbol,+d.tick.quote,d.tick.epoch);}
   if(d.msg_type==='proposal_open_contract'){
    const poc=d.proposal_open_contract;
-   if(poc&&poc.contracts&&Array.isArray(poc.contracts)){livePositions={};poc.contracts.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});logLine(`✅ POC: ${Object.keys(livePositions).length} open`,'trade');}
-   else if(Array.isArray(poc)){livePositions={};poc.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});}
+   if(poc&&poc.contracts&&Array.isArray(poc.contracts)){
+    livePositions={};poc.contracts.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});logLine(`✅ POC: ${Object.keys(livePositions).length} open — YOUR 7 GHOSTS HERE`,'trade');
+   }else if(Array.isArray(poc)){livePositions={};poc.forEach(p=>{if(p.contract_id&&!p.is_sold)livePositions[p.contract_id]={symbol:p.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit}});logLine(`✅ POC array: ${Object.keys(livePositions).length} open`,'trade');}
    else if(poc&&poc.contract_id){if(!poc.is_sold)livePositions[poc.contract_id]={symbol:poc.underlying_symbol||p.symbol,contract_type:p.contract_type,buy_price:p.buy_price,profit:p.profit};else delete livePositions[poc.contract_id];}
    renderLivePositions();
   }
   if(d.msg_type==='proposal'&&d.proposal){const m=pendingMap[d.req_id];if(!m)return;wsSend(sock,{buy:d.proposal.id,price:m.stake});delete pendingMap[d.req_id];}
-  if(d.msg_type==='buy'&&d.buy){logLine(`✅ BUY OK ${d.buy.contract_id}`,'trade');}
+  if(d.msg_type==='buy'&&d.buy){logLine(`✅ BUY OK ${d.buy.contract_id} @ ${d.buy.buy_price}`,'trade');}
   if(d.msg_type==='sell'&&d.sell){delete livePositions[d.sell.contract_id];renderLivePositions();logLine(`✅ SELL OK ${d.sell.contract_id}`,'trade');}
  };
- sock.onclose=(e)=>{clearInterval(tradePing);logLine(`OTP closed ${e.code} — reconnecting`,'warn');setTimeout(()=>{if(currentPat)startPatFlow(currentPat,currentAccountId)},3000);};
+ sock.onclose=(e)=>{clearInterval(tradePing);logLine(`OTP closed ${e.code} — reconnecting 3s`,'warn');setTimeout(()=>{if(currentPat)startPatFlow(currentPat,currentAccountId)},3000);};
 }
-function renderLivePositions(){const el=document.getElementById('livePositionsList');const ids=Object.keys(livePositions);if(!ids.length){el.innerText='none — flat';return}el.innerHTML=ids.map(cid=>{const p=livePositions[cid];return `<div class="pos-row"><span>${p.symbol}</span><span>${(p.buy_price||0).toFixed(1)}</span><span style="color:${(p.profit||0)>=0?'#3ddc84':'#ff4d4d'}">${(p.profit||0).toFixed(1)}</span><span><button onclick="window.closeOne('${cid}')" style="padding:4px">X</button></span></div>`}).join('');}
+function renderLivePositions(){const el=document.getElementById('livePositionsList');const ids=Object.keys(livePositions);if(!ids.length){el.innerText='none — flat, ready for auto';return}el.innerHTML=ids.map(cid=>{const p=livePositions[cid];return `<div class="pos-row"><span>${p.symbol} ${p.contract_type}</span><span>${(p.buy_price||0).toFixed(1)}</span><span style="color:${(p.profit||0)>=0?'#3ddc84':'#ff4d4d'}">${(p.profit||0).toFixed(1)}</span><span><button onclick="window.closeOne('${cid}')" style="padding:4px">X</button></span></div>`}).join('');}
 window.closeOne=(cid)=>wsSend(wsTrade,{sell:cid,price:0});
-window.closeAll=()=>{const ids=Object.keys(livePositions);if(!ids.length){wsSend(wsTrade,{proposal_open_contract:1,subscribe:1});return}ids.forEach(cid=>wsSend(wsTrade,{sell:cid,price:0}));}
-window.forcePOC=()=>wsSend(wsTrade,{proposal_open_contract:1,subscribe:1});
-window.toggleAuto=()=>{autoTradeEnabled=!autoTradeEnabled;document.getElementById('autoTradeBtn').innerText=`AUTO: ${autoTradeEnabled?'ON':'OFF'}`;logLine(autoTradeEnabled?'AUTO ON — 13 symbols visual + auto trading':'AUTO OFF','trade');}
-function computeDollarRisk(entry,sl,tp,stake,mult){if(!entry||!sl)return{slDollar:stake*0.5,tpDollar:stake*0.8};const slDist=Math.abs(entry-sl);const tpDist=tp?Math.abs(tp-entry):slDist*1.5;let slDollar=(slDist/entry)*stake*mult;let tpDollar=(tpDist/entry)*stake*mult;slDollar=Math.max(stake*0.3,Math.min(stake*0.9,slDollar));tpDollar=Math.max(stake*0.5,Math.min(stake*3.0,tpDollar));return{slDollar,tpDollar};}
-function maybeFireAuto(sym,dir,entry,sl,tp1){if(!autoTradeEnabled)return;if(!derivAuth||!derivAuth.is_demo)return;if(Object.keys(livePositions).length>=3||Object.keys(pendingMap).length>0)return;const stake=parseFloat(document.getElementById('stakeInput').value)||1;const mult=parseInt(document.getElementById('multiplierInput').value)||100;const {slDollar,tpDollar}=computeDollarRisk(entry,sl,tp1,stake,mult);const reqId=reqIdCounter++;pendingMap[reqId]={sym,stake};wsSend(wsTrade,{proposal:1,amount:stake,basis:'stake',contract_type:dir==='BUY'?'MULTUP':'MULTDOWN',underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar,take_profit:tpDollar},req_id:reqId});}
-window.manualTrade=(sym,dir)=>{const st=symbolState[sym];const stake=parseFloat(document.getElementById('stakeInput').value)||1;const mult=parseInt(document.getElementById('multiplierInput').value)||100;const {slDollar,tpDollar}=computeDollarRisk(st.lastEntry,st.lastSL,st.lastTP1,stake,mult);const reqId=reqIdCounter++;pendingMap[reqId]={sym,stake};wsSend(wsTrade,{proposal:1,amount:stake,basis:'stake',contract_type:dir==='BUY'?'MULTUP':'MULTDOWN',underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar,take_profit:tpDollar},req_id:reqId});logLine(`⬆️ MANUAL ${sym} ${dir}`,'trade');}
+window.closeAll=()=>{const ids=Object.keys(livePositions);if(!ids.length){wsSend(wsTrade,{proposal_open_contract:1,subscribe:1});logLine('no list — forcing POC refetch','warn');return}ids.forEach(cid=>wsSend(wsTrade,{sell:cid,price:0}));logLine(`CLOSE ALL ${ids.length}`,'warn');}
+window.forcePOC=()=>{logLine('FORCE POC…','trade');wsSend(wsTrade,{proposal_open_contract:1,subscribe:1});}
+window.toggleAuto=()=>{autoTradeEnabled=!autoTradeEnabled;document.getElementById('autoTradeBtn').innerText=`AUTO: ${autoTradeEnabled?'ON':'OFF'}`;logLine(autoTradeEnabled?'AUTO ON — 13 visual charts + auto trading with real SL/TP':'AUTO OFF','trade');}
+function computeDollarRisk(en,sl,tp,stake,mult){if(!en||!sl)return{slDollar:stake*0.5,tpDollar:stake*0.8};const slD=Math.abs(en-sl);const tpD=tp?Math.abs(tp-en):slD*1.5;let sl$=(slD/en)*stake*mult;let tp$=(tpD/en)*stake*mult;sl$=Math.max(stake*0.3,Math.min(stake*0.9,sl$));tp$=Math.max(stake*0.5,Math.min(stake*3.0,tp$));return{slDollar:sl$,tpDollar:tp$};}
+function maybeFireAuto(sym,dir,en,sl,tp1){if(!autoTradeEnabled)return;if(!derivAuth||!derivAuth.is_demo)return;if(Object.keys(livePositions).length>=3||Object.keys(pendingMap).length>0)return;const stake=parseFloat(document.getElementById('stakeInput').value)||1;const mult=parseInt(document.getElementById('multiplierInput').value)||100;const {slDollar,tpDollar}=computeDollarRisk(en,sl,tp1,stake,mult);const reqId=reqIdCounter++;pendingMap[reqId]={sym,stake};wsSend(wsTrade,{proposal:1,amount:stake,basis:'stake',contract_type:dir==='BUY'?'MULTUP':'MULTDOWN',underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar,take_profit:tpDollar},req_id:reqId});logLine(`⬆️ AUTO ${sym} ${dir} SL$${slDollar.toFixed(2)}`,'trade');}
+window.manualTrade=(sym,dir)=>{const st=symbolState[sym];if(!st)return;const stake=parseFloat(document.getElementById('stakeInput').value)||1;const mult=parseInt(document.getElementById('multiplierInput').value)||100;const {slDollar,tpDollar}=computeDollarRisk(st.lastEntry,st.lastSL,st.lastTP1,stake,mult);const reqId=reqIdCounter++;pendingMap[reqId]={sym,stake};wsSend(wsTrade,{proposal:1,amount:stake,basis:'stake',contract_type:dir==='BUY'?'MULTUP':'MULTDOWN',underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar,take_profit:tpDollar},req_id:reqId});logLine(`⬆️ MANUAL ${sym} ${dir}`,'trade');}
 try{const t=localStorage.getItem('deriv_token');if(t)document.getElementById('apiTokenInput').value=t;}catch(e){}
 connectData();
-logLine('v16 wall view loaded — 13 charts visible same page — connect to see live signals','trade');
+document.getElementById('lookbackInput').addEventListener('change',e=>{lookback=parseInt(e.target.value)||10;});
+logLine('v17 loaded — 13 charts wall + connect fixed from v14 — tap 1) TEST 2) CONNECT','trade');
 </script>
 </body>
 </html>

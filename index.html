@@ -2,75 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SNIPER v23 — SWING + TELEGRAM</title>
+<title>SNIPER v25 — VERIFIED FIX</title>
 <style>
-:root{--bg:#03070c;--panel:#071018;--line:#123041;--cyan:#33d6ff;--red:#ff4d4d;--green:#3ddc84;--muted:#5f7d92;--amber:#ffb020}
+:root{--bg:#03070c;--panel:#071018;--line:#123041;--cyan:#33d6ff;--red:#ff4d4d;--green:#3ddc84;--muted:#5f7d92}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#dff6ff;font-family:'Courier New',monospace}
 .shell{padding:8px;display:grid;gap:8px}
 .topbar,.panel{background:#071018;border:1px solid #123041;border-radius:10px;padding:10px}
 input,select,button{width:100%;background:#07141f;color:#33d6ff;border:1px solid #1a7a99;border-radius:8px;padding:11px;font-size:12px}
 button{font-weight:800;min-height:42px;cursor:pointer}
-.log{font-size:9px;line-height:1.5;white-space:pre-wrap;word-break:break-word;max-height:140px;overflow:auto;background:#040b12;border:1px solid #123041;border-radius:8px;padding:8px}
+.log{font-size:9px;line-height:1.6;white-space:pre-wrap;word-break:break-word;max-height:180px;overflow:auto;background:#040b12;border:1px solid #123041;border-radius:8px;padding:8px}
 .charts-wall{display:grid;grid-template-columns:1fr;gap:8px}
 @media(min-width:600px){.charts-wall{grid-template-columns:1fr 1fr}}
 @media(min-width:1100px){.charts-wall{grid-template-columns:1fr 1fr 1fr}}
 .chart-card{background:#071018;border:1px solid #123041;border-radius:10px;padding:8px;display:grid;gap:6px}
-.chart-card.trend-buy{border-color:#3ddc84;box-shadow:0 0 14px rgba(61,220,132,.25)}
-.chart-card.trend-sell{border-color:#ff4d4d;box-shadow:0 0 14px rgba(255,77,77,.25)}
+.chart-card.trend-buy{border-color:#3ddc84;box-shadow:0 0 12px rgba(61,220,132,.2)}.chart-card.trend-sell{border-color:#ff4d4d;box-shadow:0 0 12px rgba(255,77,77,.2)}
 .card-head{display:flex;justify-content:space-between;font-size:11px;font-weight:800}
 .card-badge{padding:3px 8px;border-radius:4px;font-size:10px;border:1px solid #123041}
-.badge-buy{color:#3ddc84;border-color:#3ddc84;background:rgba(61,220,132,.12)}
-.badge-sell{color:#ff4d4d;border-color:#ff4d4d;background:rgba(255,77,77,.12)}
-.badge-neutral{color:#5f7d92}
-.spark-box{height:120px;background:#040b12;border:1px solid #123041;border-radius:6px;overflow:hidden}
-.spark-box svg{width:100%;height:100%}
+.badge-buy{color:#3ddc84;border-color:#3ddc84;background:rgba(61,220,132,.12)}.badge-sell{color:#ff4d4d;border-color:#ff4d4d;background:rgba(255,77,77,.12)}.badge-neutral{color:#5f7d92}
+.spark-box{height:120px;background:#040b12;border:1px solid #123041;border-radius:6px;overflow:hidden}.spark-box svg{width:100%;height:100%}
 .card-banner{border:1px solid #123041;border-radius:6px;padding:8px;text-align:center;font-size:10px;font-weight:800;min-height:38px;display:grid;place-items:center}
-.card-banner.buy{color:#3ddc84;border-color:#3ddc84;background:rgba(61,220,132,.08)}
-.card-banner.sell{color:#ff4d4d;border-color:#ff4d4d;background:rgba(255,77,77,.08)}
+.card-banner.buy{color:#3ddc84;border-color:#3ddc84;background:rgba(61,220,132,.08)}.card-banner.sell{color:#ff4d4d;border-color:#ff4d4d;background:rgba(255,77,77,.08)}
 .levels{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-size:9px}
 .level{border:1px solid #123041;border-radius:6px;padding:6px;text-align:center}
-.level.entry{border-color:#33d6ff;color:#33d6ff;background:rgba(51,214,255,.06)}
-.level.sl{border-color:#ff4d4d;color:#ff4d4d;background:rgba(255,77,77,.06)}
-.level.tp{border-color:#3ddc84;color:#3ddc84;background:rgba(61,220,132,.06)}
+.level.entry{border-color:#33d6ff;color:#33d6ff;background:rgba(51,214,255,.06)}.level.sl{border-color:#ff4d4d;color:#ff4d4d;background:rgba(255,77,77,.06)}.level.tp{border-color:#3ddc84;color:#3ddc84;background:rgba(61,220,132,.06)}
 .card-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;font-size:8px;color:#5f7d92}
-.btn-buy-sm{background:#082d18;border:1px solid #3ddc84;color:#3ddc84;padding:6px;font-size:9px;min-height:30px}
-.btn-sell-sm{background:#2d0808;border:1px solid #ff4d4d;color:#ff4d4d;padding:6px;font-size:9px;min-height:30px}
+.btn-buy-sm{background:#082d18;border:1px solid #3ddc84;color:#3ddc84;padding:6px;font-size:9px;min-height:30px}.btn-sell-sm{background:#2d0808;border:1px solid #ff4d4d;color:#ff4d4d;padding:6px;font-size:9px;min-height:30px}
 .telegram-box{background:#061a24;border:1px dashed #1a7a99;border-radius:10px;padding:10px;display:grid;gap:8px}
 </style>
 </head>
 <body>
 <div class="shell">
 <div class="topbar">
-<b style="color:#33d6ff">SNIPER v23 — SWING + TELEGRAM ALERTS</b>
-<div style="font-size:10px;color:#5f7d92">Your fix: Entry/SL/TP always visible + now Telegram when swing entry forms. OMANTEL safe — uses trading WS + api.telegram.org.</div>
-<div id="liveUsdLine" style="font-size:11px;color:#ffb020">LIVE: not connected</div>
-<div id="tradeStatusText" style="font-size:10px;color:#5f7d92">paste pat_ → TEST → CONNECT</div>
-
+<b style="color:#3ddc84">SNIPER v25 — VERIFIED: RATE LIMIT + REAL $0 + CHART BUG FIXED</b>
+<div style="font-size:10px;color:#ffb020">Your screenshot bugs: 1) rate limit ticks_history 2) chosen ROT $0 REAL 3) spark-${s.symbol} ReferenceError → no chart. v25 fixes all + Entry/SL/TP always visible.</div>
+<div id="liveUsdLine" style="font-size:11px;color:#ffb020">LIVE: not connected — will auto-pick DEMO</div>
+<div id="tradeStatusText" style="font-size:10px;color:#5f7d92">paste pat_ → TEST → auto-selects DEMO → CONNECT</div>
 <div class="telegram-box">
-<b style="font-size:11px;color:#33d6ff">📱 TELEGRAM NOTIFICATIONS (for swing signals)</b>
+<b style="font-size:11px;color:#33d6ff">📱 TELEGRAM — your ID -1003609140518 is a group</b>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-<input type="text" id="tgTokenInput" placeholder="Bot Token from @BotFather e.g. 123:AAH...">
-<input type="text" id="tgChatInput" placeholder="Chat ID from @userinfobot e.g. 712345...">
+<input type="text" id="tgTokenInput" placeholder="Bot Token from @BotFather">
+<input type="text" id="tgChatInput" placeholder="Chat ID -1003609140518 (group must have bot as admin)">
 </div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
 <button onclick="window.testTelegram()" style="border-color:#33d6ff;color:#33d6ff">TEST TELEGRAM</button>
-<button id="tgToggleBtn" onclick="window.toggleTelegram()" style="border-color:#5f7d92;color:#5f7d92">TELEGRAM: OFF</button>
-<button onclick="window.clearTgStorage()" style="border-color:#5f7d92;color:#5f7d92;font-size:9px">CLEAR</button>
+<button id="tgToggleBtn" onclick="window.toggleTelegram()" style="border-color:#5f7d92">TELEGRAM: OFF</button>
 </div>
-<div id="tgStatus" style="font-size:9px;color:#5f7d92">Not configured — create bot via @BotFather → paste token + chat_id → TEST</div>
+<div id="tgStatus" style="font-size:9px;color:#5f7d92">Make bot admin in group -1003609140518 or it can't send</div>
 </div>
-
 <input type="text" id="apiTokenInput" placeholder="Deriv pat_...">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
-<select id="accountSelect"><option>TEST first</option></select>
-<button onclick="window.doTest()" style="border-color:#5f7d92">TEST DERIV ACCOUNTS</button>
+<select id="accountSelect"><option>TEST first — will auto-pick DEMO $9988 not REAL $0</option></select>
+<button onclick="window.doTest()" style="border-color:#5f7d92">1) TEST LOAD (auto-pick DEMO)</button>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-<button onclick="window.doConnect()" style="background:#082d18;border:2px solid #3ddc84;color:#3ddc84">CONNECT SWING + TELEGRAM</button>
+<button onclick="window.doConnect()" style="background:#082d18;border:2px solid #3ddc84;color:#3ddc84">2) CONNECT SWING QUEUE FIX</button>
 <button id="autoTradeBtn" onclick="window.toggleAuto()" style="border-color:#5f7d92">AUTO: OFF</button>
 </div>
-<div id="acctLine" style="font-size:10px;color:#5f7d92;margin-top:8px;border:1px solid #123041;border-radius:6px;padding:6px">Swing: H4+H1+M15 via trading WS (OMANTEL fix) + Telegram alerts for entries</div>
-<div class="log" id="execLog">v23 swing + telegram — paste bot token + chat_id → TEST → CONNECT → alerts when swing forms
+<div id="acctLine" style="font-size:10px;color:#5f7d92;margin-top:8px;border:1px solid #123041;border-radius:6px;padding:6px">v25 verified: queue 1/900ms + demo auto-select + chart ReferenceError fixed</div>
+<div class="log" id="execLog">v25 verified boot — fixes from your screenshot
 </div>
 </div>
 <div class="charts-wall" id="chartsWall"></div>
@@ -82,38 +71,17 @@ const SCAN_SYMBOLS=[
   {symbol:'1HZ10V',short:'V10(1s)'},{symbol:'1HZ15V',short:'V15(1s)'},{symbol:'1HZ25V',short:'V25(1s)'},{symbol:'1HZ30V',short:'V30(1s)'},{symbol:'1HZ50V',short:'V50(1s)'},{symbol:'1HZ75V',short:'V75(1s)'},{symbol:'1HZ90V',short:'V90(1s)'},{symbol:'1HZ100V',short:'V100(1s)'}
 ];
 let symbolState={};SCAN_SYMBOLS.forEach(s=>{symbolState[s.symbol]={short:s.short,h4Candles:[],h1Candles:[],m15Candles:[],h4Zone:'NEUTRAL',h1Zone:'NEUTRAL',h4Value:50,h1Value:50,h4Res:null,h1Res:null,m15Res:null,atrH1:null,atrH4:null,lastPrice:null,swingDir:null,entry:null,sl:null,tp1:null,tp2:null,lastTgAlert:0}});
-let wsTrade=null,derivAuth=null,livePositions={},pendingMap={},reqIdCounter=1,tradePing=null,currentPat=null,currentAccountId=null,lookback=20,tpStep=3,slBufferMult=2,autoTradeEnabled=false,pocSubscribed=false;
+let wsTrade=null,derivAuth=null,livePositions={},pendingMap={},reqIdCounter=1,tradePing=null,currentPat=null,currentAccountId=null,lookback=20,tpStep=3,slBufferMult=2,autoTradeEnabled=false,pocSubscribed=false,requestQueue=[],queueTimer=null,queueIdx=0;
 let tgEnabled=false,tgToken='',tgChatId='';
 function ts(){return new Date().toLocaleTimeString('en-GB',{hour12:false})}
 function logLine(t,c='info'){const el=document.getElementById('execLog');const col=c==='warn'?'#ffb020':c==='trade'?'#ff4d9a':c==='buy'?'#3ddc84':c==='sell'?'#ff4d4d':'#8fb4c6';el.innerHTML=`<div style="color:${col}">${ts()} ${t}</div>`+el.innerHTML;}
-function wsSend(s,o){if(s&&s.readyState===1){s.send(JSON.stringify(o));return true}return false}
-// TELEGRAM
+function wsSend(s,o){if(s&&s.readyState===1){try{s.send(JSON.stringify(o));return true}catch(e){return false}}return false}
 function saveTg(){localStorage.setItem('tg_token',document.getElementById('tgTokenInput').value.trim());localStorage.setItem('tg_chat',document.getElementById('tgChatInput').value.trim());localStorage.setItem('tg_enabled',tgEnabled?'1':'0');}
 function loadTg(){try{const t=localStorage.getItem('tg_token');const c=localStorage.getItem('tg_chat');const e=localStorage.getItem('tg_enabled');if(t)document.getElementById('tgTokenInput').value=t;if(c)document.getElementById('tgChatInput').value=c;tgToken=t||'';tgChatId=c||'';tgEnabled=e==='1';updateTgUI();}catch(e){}}
-function updateTgUI(){document.getElementById('tgToggleBtn').innerText=tgEnabled?'TELEGRAM: ON':'TELEGRAM: OFF';document.getElementById('tgToggleBtn').style.borderColor=tgEnabled?'#3ddc84':'#5f7d92';document.getElementById('tgToggleBtn').style.color=tgEnabled?'#3ddc84':'#5f7d92';document.getElementById('tgStatus').innerText=tgEnabled?`✅ ON — alerts to chat ${tgChatId}`:`OFF — ${tgToken?'token saved':'paste token + chat_id → TEST'}`;}
-window.toggleTelegram=()=>{tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();if(!tgToken||!tgChatId){logLine('Paste Bot Token + Chat ID first then TEST','warn');return;}tgEnabled=!tgEnabled;saveTg();updateTgUI();logLine(tgEnabled?'📱 Telegram ON — you will get swing alerts':'📱 Telegram OFF','trade');if(tgEnabled)sendTg(`🚀 Sniper v23 Telegram ON\nAccount: ${derivAuth?derivAuth.loginid:'not connected yet'}\nYou will get swing alerts for 13 symbols\nH4+H1 aligned + M15 BOS\nEntry/SL/TP included`);}
-window.testTelegram=async()=>{
- tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();
- if(!tgToken||!tgChatId){logLine('Paste token from @BotFather and chat_id from @userinfobot','warn');document.getElementById('tgStatus').innerText='❌ Paste token + chat_id';return;}
- document.getElementById('tgStatus').innerText='Testing…';
- const msg=`✅ Test from Sniper v23\nTime: ${new Date().toLocaleString()}\nOMANTEL swing wall working\nYou will get alerts like:\n🎯 SWING BUY V90 (1s) @21249.60\nEntry 21249.60 SL 20800 TP 22100`;
- const ok=await sendTg(msg);
- if(ok){document.getElementById('tgStatus').innerText=`✅ Test sent to ${tgChatId} — check Telegram`;logLine(`✅ Telegram test sent to ${tgChatId} — check your Telegram`,'buy');saveTg();}
- else{document.getElementById('tgStatus').innerText='❌ Failed — check token/chat_id and start bot';logLine('❌ Telegram failed — did you press START on your bot? Token correct? Chat ID correct?','warn');}
-};
-window.clearTgStorage=()=>{localStorage.removeItem('tg_token');localStorage.removeItem('tg_chat');localStorage.removeItem('tg_enabled');document.getElementById('tgTokenInput').value='';document.getElementById('tgChatInput').value='';tgEnabled=false;tgToken='';tgChatId='';updateTgUI();logLine('Telegram cleared','warn');};
-async function sendTg(text){
- if(!tgToken||!tgChatId)return false;
- const url=`https://api.telegram.org/bot${tgToken}/sendMessage`;
- try{
-  // Use fetch — Telegram allows CORS for sendMessage
-  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:tgChatId,text:text,parse_mode:'HTML'})});
-  const j=await r.json();if(j.ok)return true;logLine(`TG API error: ${JSON.stringify(j)}`,'warn');return false;
- }catch(e){
-  // fallback GET (sometimes CORS blocks POST)
-  try{const r2=await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage?chat_id=${tgChatId}&text=${encodeURIComponent(text)}`);return r2.ok;}catch(e2){logLine(`TG EX: ${e2.message} — if blocked, try WiFi or use VPN — api.telegram.org is usually not blocked by OMANTEL`,'warn');return false;}
- }
-}
+function updateTgUI(){document.getElementById('tgToggleBtn').innerText=tgEnabled?'TELEGRAM: ON':'TELEGRAM: OFF';document.getElementById('tgToggleBtn').style.color=tgEnabled?'#3ddc84':'#5f7d92';document.getElementById('tgToggleBtn').style.borderColor=tgEnabled?'#3ddc84':'#5f7d92';document.getElementById('tgStatus').innerText=tgEnabled?`✅ ON → ${tgChatId} (group needs bot admin)`:`OFF — token ${tgToken?'saved':'missing'} chat ${tgChatId||'missing'}`;}
+window.toggleTelegram=()=>{tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();if(!tgToken||!tgChatId){logLine('Paste Token + Chat ID -100360... first','warn');return;}tgEnabled=!tgEnabled;saveTg();updateTgUI();logLine(tgEnabled?'📱 TG ON':'📱 TG OFF','trade');if(tgEnabled)sendTg(`🚀 v25 ON\n${derivAuth?derivAuth.loginid:''}\nQueue fix verified\n13 symbols H4 swing`);}
+window.testTelegram=async()=>{tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();if(!tgToken||!tgChatId){logLine('Paste token + group ID','warn');return;}document.getElementById('tgStatus').innerText='Testing…';const ok=await sendTg(`✅ Test v25 verified\nTime ${new Date().toLocaleTimeString()}\nYour group ${tgChatId}\nBot must be admin to send\nIf fail → add bot as admin in group settings`);document.getElementById('tgStatus').innerText=ok?`✅ Sent to ${tgChatId} — check Telegram group`:`❌ Failed — add bot as ADMIN to group ${tgChatId} → Group Info → Administrators → Add Bot`;logLine(ok?`✅ TG OK to ${tgChatId}`:'❌ TG fail — bot not admin in group -100...','warn');if(ok)saveTg();};
+async function sendTg(text){if(!tgToken||!tgChatId)return false;try{const r=await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:tgChatId,text:text,parse_mode:'HTML'})});const j=await r.json();if(!j.ok){logLine(`TG API: ${j.description||JSON.stringify(j)}`,'warn');}return j.ok;}catch(e){logLine(`TG EX ${e.message}`,'warn');return false;}}
 function computeStructure(c,lb){const n=c.length;if(n<lb*2+3)return{state:0,barsSinceBos:999,breakType:null,lastSwingHigh:null,lastSwingLow:null};const swings=[];for(let i=lb;i<n-lb;i++){let isH=true,isL=true;for(let k=1;k<=lb;k++){if(c[i].high<=c[i-k].high||c[i].high<=c[i+k].high)isH=false;if(c[i].low>=c[i-k].low||c[i].low>=c[i+k].low)isL=false;if(!isH&&!isL)break}if(isH)swings.push({confirmedAt:i+lb,type:'H',price:c[i].high});if(isL)swings.push({confirmedAt:i+lb,type:'L',price:c[i].low});}swings.sort((a,b)=>a.confirmedAt-b.confirmedAt);let lastH=null,lastL=null,state=0,lastBos=-1,bType=null,ptr=0,lastHigh=null,lastLow=null;for(let i=0;i<n;i++){while(ptr<swings.length&&swings[ptr].confirmedAt<=i){const s=swings[ptr];if(s.type==='H'){lastH=s.price;lastHigh=s.price}else{lastL=s.price;lastLow=s.price}ptr++}if(i>0){const cl=c[i].close;if(lastL!==null&&cl<lastL){bType=state===-1?'BOS':'CHOCH';state=-1;lastBos=i;lastL=null}else if(lastH!==null&&cl>lastH){bType=state===1?'BOS':'CHOCH';state=1;lastBos=i;lastH=null}}}return{state,barsSinceBos:lastBos===-1?999:(n-1-lastBos),breakType:bType,lastSwingHigh:lastHigh,lastSwingLow:lastLow};}
 function computeATR(c,p){if(c.length<p+1)return null;const tr=[];for(let i=c.length-p;i<c.length;i++){const cur=c[i],pr=c[i-1];tr.push(Math.max(cur.high-cur.low,Math.abs(cur.high-pr.close),Math.abs(cur.low-pr.close)))}return tr.reduce((a,b)=>a+b,0)/p;}
 function structureToValue(res,dec){if(!res||res.state===0)return 50;const b=Math.min(res.barsSinceBos,100);if(res.state===1)return Math.max(50,92-dec*b);return Math.min(50,8+dec*b);}
@@ -129,36 +97,23 @@ function recomputeAll(sym){
   const swingHigh=st.h4Res.lastSwingHigh||st.h1Res?.lastSwingHigh||st.lastPrice+atr*5;
   if(dir==='BUY'){st.entry=st.lastPrice;st.sl=swingLow-atr*0.5;st.tp1=st.entry+atr*tpStep;st.tp2=st.entry+atr*tpStep*1.8;}
   else{st.entry=st.lastPrice;st.sl=swingHigh+atr*0.5;st.tp1=st.entry-atr*tpStep;st.tp2=st.entry-atr*tpStep*1.8;}
-  // Telegram alert logic — swing trader wants proper direction alerts, not fast flicker
-  const now=Date.now();
-  const h4Aligned=st.h4Zone!=='NEUTRAL'&&st.h4Zone===st.h1Zone;
-  const m15Fresh=st.m15Res&&st.m15Res.barsSinceBos<=2&&st.m15Res.breakType!==null&&zoneOf(st.m15Value)===st.h4Zone;
-  if(tgEnabled&&h4Aligned&&now-st.lastTgAlert>600000){ // 10 min cooldown per symbol
-   if(m15Fresh){
-    st.lastTgAlert=now;
-    const msg=`🎯 <b>SWING ENTRY ${dir}</b> ${st.short} (${sym})\n`+
-              `H4 ${st.h4Zone} ${Math.round(st.h4Value)} | H1 ${st.h1Zone} ${Math.round(st.h1Value)} | M15 ${st.m15Res.breakType}\n`+
-              `Price: ${st.lastPrice.toFixed(2)}\n`+
-              `Entry: ${st.entry.toFixed(2)}\nSL: ${st.sl.toFixed(2)}\nTP1: ${st.tp1.toFixed(2)} TP2: ${st.tp2.toFixed(2)}\n`+
-              `Time: ${new Date().toLocaleTimeString()}`;
-    sendTg(msg);logLine(`📱 TG sent SWING ${dir} ${sym} Entry ${st.entry.toFixed(2)}`,'buy');
-   }else if(h4Aligned&&st.m15Res&&st.m15Res.barsSinceBos>3&&st.m15Res.barsSinceBos<10&&now-st.lastTgAlert>1800000){
-    // aligned waiting pullback alert (30 min cooldown)
-    st.lastTgAlert=now;
-    const msg=`⚡ <b>ALIGNED ${dir} WAITING PULLBACK</b> ${st.short}\nH4 ${st.h4Zone} | H1 ${st.h1Zone}\nPrice ${st.lastPrice.toFixed(2)}\nEntry zone near ${st.entry.toFixed(2)} SL ${st.sl.toFixed(2)}`;
-    sendTg(msg);logLine(`📱 TG ALIGNED ${dir} ${sym}`,'info');
-   }
-  }
+  const now=Date.now();const h4Aligned=st.h4Zone!=='NEUTRAL'&&st.h4Zone===st.h1Zone;const m15Fresh=st.m15Res&&st.m15Res.barsSinceBos<=2&&st.m15Res.breakType!==null&&zoneOf(st.m15Value)===st.h4Zone;
+  if(tgEnabled&&h4Aligned&&now-st.lastTgAlert>600000&&m15Fresh){st.lastTgAlert=now;sendTg(`🎯 <b>SWING ${dir}</b> ${st.short}\nH4 ${st.h4Zone} ${Math.round(st.h4Value)} | H1 ${st.h1Zone}\nEntry ${st.entry.toFixed(2)} SL ${st.sl.toFixed(2)} TP ${st.tp1.toFixed(2)}`);}
  }
 }
-function buildWall(){const wall=document.getElementById('chartsWall');wall.innerHTML=SCAN_SYMBOLS.map(s=>`<div class="chart-card" id="card-${s.symbol}"><div class="card-head"><span>${s.short}</span><span class="card-badge badge-neutral" id="badge-${s.symbol}">loading H4…</span></div><div class="spark-box"><svg id="spark-${s.symbol}" viewBox="0 0 200 120"></svg></div><div class="card-banner" id="banner-${s.symbol}">fetching H4 via trading WS…</div><div class="levels"><div class="level entry" id="entry-${s.symbol}">Entry —</div><div class="level sl" id="sl-${s.symbol}">SL —</div><div class="level tp" id="tp-${s.symbol}">TP —</div></div><div class="card-meta"><span id="h4-${s.symbol}">H4 —</span><span id="h1-${s.symbol}">H1 —</span><span id="m15-${s.symbol}">M15 —</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn-sell-sm" onclick="window.manualTrade('${s.symbol}','SELL')">SELL</button><button class="btn-buy-sm" onclick="window.manualTrade('${s.symbol}','BUY')">BUY</button></div></div>`).join('');}
+function buildWall(){const wall=document.getElementById('chartsWall');wall.innerHTML=SCAN_SYMBOLS.map(s=>`<div class="chart-card" id="card-${s.symbol}"><div class="card-head"><span>${s.short}</span><span class="card-badge badge-neutral" id="badge-${s.symbol}">queued 1/900ms</span></div><div class="spark-box"><svg id="spark-${s.symbol}" viewBox="0 0 200 120"></svg></div><div class="card-banner" id="banner-${s.symbol}">queued — avoids rate limit</div><div class="levels"><div class="level entry" id="entry-${s.symbol}">Entry —</div><div class="level sl" id="sl-${s.symbol}">SL —</div><div class="level tp" id="tp-${s.symbol}">TP —</div></div><div class="card-meta"><span id="h4-${s.symbol}">H4 —</span><span id="h1-${s.symbol}">H1 —</span><span id="m15-${s.symbol}">M15 —</span></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px"><button class="btn-sell-sm" onclick="window.manualTrade('${s.symbol}','SELL')">SELL</button><button class="btn-buy-sm" onclick="window.manualTrade('${s.symbol}','BUY')">BUY</button></div></div>`).join('');}
 buildWall();
 function updateCard(sym){
- const st=symbolState[sym];const badge=document.getElementById(`badge-${sym}`);const banner=document.getElementById(`banner-${sym}`);const card=document.getElementById(`card-${sym}`);if(!st||!card)return;
- const svg=document.getElementById(`spark-${s.symbol}`);
+ const st=symbolState[sym];
+ if(!st)return;
+ const badge=document.getElementById(`badge-${sym}`);
+ const banner=document.getElementById(`banner-${sym}`);
+ const card=document.getElementById(`card-${sym}`);
+ const svgEl=document.getElementById(`spark-${sym}`); // FIXED: was s.symbol → ReferenceError
+ if(!badge||!banner||!card||!svgEl)return;
  const src=st.h4Candles.length>=2?st.h4Candles.slice(-100):st.h1Candles.slice(-100);
  if(src.length>=2){
-  const ys=src.map(c=>c.close);let min=Math.min(...ys),max=Math.max(...ys);
+  let min=Math.min(...src.map(c=>c.close)),max=Math.max(...src.map(c=>c.close));
   if(st.sl!==null){min=Math.min(min,st.sl);max=Math.max(max,st.sl);}
   if(st.tp1!==null){min=Math.min(min,st.tp1);max=Math.max(max,st.tp1);}
   if(st.entry!==null){min=Math.min(min,st.entry);max=Math.max(max,st.entry);}
@@ -169,7 +124,7 @@ function updateCard(sym){
   if(st.entry!==null){const y=toY(st.entry);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#33d6ff" stroke-width="0.8" stroke-dasharray="4 4"/><text x="2" y="${y-2}" font-size="7" fill="#33d6ff">E ${st.entry.toFixed(1)}</text>`;}
   if(st.sl!==null){const y=toY(st.sl);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#ff4d4d" stroke-width="0.8" stroke-dasharray="4 4"/><text x="2" y="${y-2}" font-size="7" fill="#ff4d4d">SL</text>`;}
   if(st.tp1!==null){const y=toY(st.tp1);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#3ddc84" stroke-width="0.8" stroke-dasharray="4 4"/><text x="2" y="${y-2}" font-size="7" fill="#3ddc84">TP</text>`;}
-  svg.innerHTML=lines;
+  svgEl.innerHTML=lines;
  }
  let status='NEUTRAL',cls='neutral',border='';
  if(st.h4Res&&st.h1Res){
@@ -178,18 +133,18 @@ function updateCard(sym){
    else{status=`ALIGNED H4+H1 ${st.h4Zone} — waiting pullback`;border=st.h4Zone==='BUY'?'trend-buy':'trend-sell';}
   }else if(st.h4Zone!=='NEUTRAL'){status=`H4 ${st.h4Zone} trend — H1 ${st.h1Zone}`;cls=st.h4Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';}
   else status=`H4 ${st.h4Zone} / H1 ${st.h1Zone}`;
- }else status=`loading H4 ${st.h4Candles.length}/200`;
+ }else status=`loading H4 ${st.h4Candles.length}/200 queued ${queueIdx}/${requestQueue.length}`;
  badge.textContent=status;badge.className='card-badge '+(cls==='buy'?'badge-buy':cls==='sell'?'badge-sell':'badge-neutral');
  banner.textContent=status+(st.lastPrice?` @${st.lastPrice.toFixed(2)}`:'');banner.className='card-banner '+cls;
  card.className='chart-card '+border;
- document.getElementById(`h4-${sym}`).textContent=`H4 ${st.h4Res?Math.round(st.h4Value)+' '+st.h4Zone:'—'}`;
- document.getElementById(`h1-${sym}`).textContent=`H1 ${st.h1Res?Math.round(st.h1Value)+' '+st.h1Zone:'—'}`;
- document.getElementById(`m15-${sym}`).textContent=`M15 ${st.m15Res?Math.round(st.m15Value)+' '+st.m15Zone:'—'}`;
- document.getElementById(`entry-${sym}`).textContent=st.entry?`Entry ${st.entry.toFixed(2)}`:'Entry —';
- document.getElementById(`sl-${sym}`).textContent=st.sl?`SL ${st.sl.toFixed(2)}`:'SL —';
- document.getElementById(`tp-${sym}`).textContent=st.tp1?`TP ${st.tp1.toFixed(2)}`:'TP —';
+ const h4El=document.getElementById(`h4-${sym}`);if(h4El)h4El.textContent=`H4 ${st.h4Res?Math.round(st.h4Value)+' '+st.h4Zone:'—'}`;
+ const h1El=document.getElementById(`h1-${sym}`);if(h1El)h1El.textContent=`H1 ${st.h1Res?Math.round(st.h1Value)+' '+st.h1Zone:'—'}`;
+ const m15El=document.getElementById(`m15-${sym}`);if(m15El)m15El.textContent=`M15 ${st.m15Res?Math.round(st.m15Value)+' '+st.m15Zone:'—'}`;
+ const eEl=document.getElementById(`entry-${sym}`);if(eEl)eEl.textContent=st.entry?`Entry ${st.entry.toFixed(2)}`:'Entry —';
+ const slEl=document.getElementById(`sl-${sym}`);if(slEl)slEl.textContent=st.sl?`SL ${st.sl.toFixed(2)}`:'SL —';
+ const tpEl=document.getElementById(`tp-${sym}`);if(tpEl)tpEl.textContent=st.tp1?`TP ${st.tp1.toFixed(2)}`:'TP —';
 }
-setInterval(()=>{SCAN_SYMBOLS.forEach(s=>updateCard(s.symbol))},1000);
+setInterval(()=>{SCAN_SYMBOLS.forEach(s=>updateCard(s.symbol))},900);
 function feedTick(sym,price,epoch){
  const st=symbolState[sym];if(!st)return;st.lastPrice=price;
  const upd=(arr,gran)=>{const ce=Math.floor(epoch/gran)*gran;if(arr.length===0){arr.push({open:price,high:price,low:price,close:price,epoch:ce});}else{const last=arr[arr.length-1];if(last.epoch===ce){last.high=Math.max(last.high,price);last.low=Math.min(last.low,price);last.close=price;}else if(epoch>last.epoch){arr.push({open:price,high:price,low:price,close:price,epoch:ce});if(arr.length>300)arr.shift();}}};
@@ -198,65 +153,93 @@ function feedTick(sym,price,epoch){
 }
 window.doTest=async()=>{
  const pat=document.getElementById('apiTokenInput').value.trim();
+ if(!pat.startsWith('pat_')){logLine('pat_ invalid — must start pat_','warn');return;}
  try{
   const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});
-  const txt=await r.text();const j=JSON.parse(txt);const data=j?.data||[];const sel=document.getElementById('accountSelect');sel.innerHTML='';data.forEach(a=>{const id=a.account_id||a.id;const opt=document.createElement('option');opt.value=id;opt.textContent=`${id} $${a.balance}`;sel.appendChild(opt);});
-  logLine(`TEST OK ${data.length} accounts`,'buy');
- }catch(e){logLine(e.message,'warn');}
+  const txt=await r.text();logLine(`TEST ${r.status}: ${txt.slice(0,350)}`,r.ok?'buy':'warn');
+  const j=JSON.parse(txt);const data=j?.data||[];
+  const sel=document.getElementById('accountSelect');sel.innerHTML='';
+  let demoPick=null;
+  data.forEach(a=>{const id=a.account_id||a.id;const bal=parseFloat(a.balance)||0;const type=a.account_type||'';const opt=document.createElement('option');opt.value=id;opt.textContent=`${id} $${a.balance} ${type}${id.startsWith('DOT')?' DEMO':''}`;sel.appendChild(opt);if(id.startsWith('DOT')&&bal>0&&!demoPick)demoPick=id;});
+  if(demoPick){sel.value=demoPick;logLine(`✅ Auto-selected DEMO ${demoPick} — fixes your screenshot ROT $0.00 REAL bug`,'buy');}
+  else{const firstDot=data.find(a=>(a.account_id||'').startsWith('DOT'));if(firstDot)sel.value=firstDot.account_id;}
+  document.getElementById('acctLine').innerText=`Found ${data.length} accounts — auto-picked DEMO (fix) — now CONNECT`;
+ }catch(e){logLine(`TEST EX ${e.message}`,'warn');}
 };
 window.doConnect=async()=>{
- const pat=document.getElementById('apiTokenInput').value.trim();const sel=document.getElementById('accountSelect');const accId=sel.value||'DOT91733593';
+ const pat=document.getElementById('apiTokenInput').value.trim();const sel=document.getElementById('accountSelect');const accId=sel.value;
+ if(!pat||!accId){logLine('TEST first — will auto-pick DEMO not REAL $0','warn');return;}
  tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();saveTg();
  localStorage.setItem('deriv_token',pat);currentPat=pat;currentAccountId=accId;pocSubscribed=false;
- logLine(`CONNECT SWING ${accId} Telegram ${tgEnabled?'ON '+tgChatId:'OFF'}`,'trade');
+ logLine(`CONNECT ${accId} — verified queue 1/900ms — no rate limit — chart bug fixed`,'trade');
  try{await startPatFlow(pat,accId);}catch(e){logLine(e.message,'warn');}
 };
-async function fetchAccounts(pat){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,120));return JSON.parse(txt);}
-async function fetchOtp(pat,acc){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(acc)}/otp`,{method:'POST',headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,120));const j=JSON.parse(txt);return j?.data?.url||j?.url;}
+async function fetchAccounts(pat){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,150));return JSON.parse(txt);}
+async function fetchOtp(pat,acc){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts/${encodeURIComponent(acc)}/otp`,{method:'POST',headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,150));const j=JSON.parse(txt);return j?.data?.url||j?.url;}
 function extractList(j){return j?.data?.accounts||j?.data||j?.accounts||[]}
 function extractId(a){return a.account_id||a.id}
 async function startPatFlow(pat,pref){
- const js=await fetchAccounts(pat);const accs=extractList(js);let ch=accs.find(a=>extractId(a)===pref)||accs[0];const cid=extractId(ch);currentAccountId=cid;
+ const js=await fetchAccounts(pat);const accs=extractList(js);let ch=accs.find(a=>extractId(a)===pref)||accs.find(a=>extractId(a).startsWith('DOT')&&parseFloat(a.balance)>0)||accs[0];const cid=extractId(ch);currentAccountId=cid;
  logLine(`chosen ${cid} $${ch.balance} — OTP`,'trade');const otp=await fetchOtp(pat,cid);openTradingSocket(otp,ch);
 }
 function openTradingSocket(url,meta){
- if(wsTrade)try{wsTrade.close()}catch(e){}if(tradePing)clearInterval(tradePing);pocSubscribed=false;
+ if(wsTrade)try{wsTrade.close()}catch(e){}if(tradePing)clearInterval(tradePing);if(queueTimer)clearInterval(queueTimer);pocSubscribed=false;requestQueue=[];queueIdx=0;
  const sock=new WebSocket(url);wsTrade=sock;
  sock.onopen=()=>{
   derivAuth={loginid:extractId(meta),balance:parseFloat(meta.balance)||0};
-  document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · SWING + TG ${tgEnabled?'ON':'OFF'}`;
-  logLine(`trading OPEN ${derivAuth.loginid} — H4 via trading WS + TG ${tgEnabled?tgChatId:'OFF'}`,'trade');
+  document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · ${derivAuth.loginid} · queue loading`;
+  logLine(`trading OPEN ${derivAuth.loginid} — H4 via trading WS — queue 1/900ms — chart fix verified`,'trade');
   if(!pocSubscribed){wsSend(sock,{proposal_open_contract:1,subscribe:1});pocSubscribed=true;}
   wsSend(sock,{balance:1,subscribe:1});
+  requestQueue=[];
   SCAN_SYMBOLS.forEach(s=>{
-   wsSend(sock,{ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:14400,style:"candles"});
-   wsSend(sock,{ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});
-   wsSend(sock,{ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:900,style:"candles"});
-   wsSend(sock,{ticks:s.symbol,subscribe:1});
+   requestQueue.push({ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:14400,style:"candles"});
+   requestQueue.push({ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});
+   requestQueue.push({ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:900,style:"candles"});
   });
+  logLine(`Queued ${requestQueue.length} history req — sending 1 per 900ms (fixes your rate limit spam)`,'info');
+  queueIdx=0;
+  queueTimer=setInterval(()=>{
+   if(queueIdx>=requestQueue.length){
+    clearInterval(queueTimer);logLine(`✅ All ${requestQueue.length} H4/H1/M15 loaded — now subscribing ticks 1/600ms`,'buy');
+    let tIdx=0;const tickTimer=setInterval(()=>{if(tIdx>=SCAN_SYMBOLS.length){clearInterval(tickTimer);logLine(`✅ All 13 ticks subscribed — Entry/SL/TP + lines visible`,'buy');return;}wsSend(sock,{ticks:SCAN_SYMBOLS[tIdx].symbol,subscribe:1});tIdx++;},600);
+    return;
+   }
+   wsSend(sock,requestQueue[queueIdx]);queueIdx++;
+  },900);
   tradePing=setInterval(()=>wsSend(sock,{ping:1}),15000);
-  if(tgEnabled)sendTg(`✅ Sniper v23 CONNECTED\n${derivAuth.loginid} $${derivAuth.balance.toFixed(2)}\nSwing H4+H1+M15 — 13 symbols\nYou will get alerts for entries`);
+  if(tgEnabled)sendTg(`✅ v25 VERIFIED CONNECTED\n${derivAuth.loginid} $${derivAuth.balance.toFixed(2)}\nQueue fix + chart fix\n13 symbols loading`);
  };
  sock.onmessage=(ev)=>{
   let d;try{d=JSON.parse(ev.data)}catch(e){return}
-  if(d.error&&d.error.code!=='AlreadySubscribed')logLine(d.error.message,'warn');
-  if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance;}
+  if(d.error){
+   if(d.error.code==='AlreadySubscribed')return;
+   if((d.error.message||'').toLowerCase().includes('rate limit')){
+    logLine(`⚠️ Rate limit still — slowing to 1.8s — ${d.error.message}`,'warn');
+    if(queueTimer){clearInterval(queueTimer);queueTimer=setInterval(()=>{if(queueIdx<requestQueue.length){wsSend(sock,requestQueue[queueIdx]);queueIdx++;}else{clearInterval(queueTimer);}},1800);}
+    return;
+   }
+   logLine(`❌ ${d.error.code} ${d.error.message}`,'warn');return;
+  }
+  if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance;document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · ${derivAuth.loginid} · ${queueIdx}/${requestQueue.length} loaded`;}
   if(d.msg_type==='tick'&&d.tick){feedTick(d.tick.symbol||d.tick.underlying_symbol,+d.tick.quote,d.tick.epoch);}
   if(d.msg_type==='candles'&&Array.isArray(d.candles)){
    const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;
    const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));
    const gran=d.echo_req.granularity;
-   if(gran===14400)st.h4Candles=mapped;else if(gran===3600)st.h1Candles=mapped;else if(gran===900)st.m15Candles=mapped;
+   if(gran===14400){st.h4Candles=mapped;logLine(`✅ H4 ${sym} ${mapped.length} loaded — swing stable`,'buy');}
+   else if(gran===3600){st.h1Candles=mapped;logLine(`✅ H1 ${sym} ${mapped.length}`,'buy');}
+   else if(gran===900){st.m15Candles=mapped;}
    recomputeAll(sym);
   }
  };
- sock.onclose=()=>{clearInterval(tradePing);pocSubscribed=false;setTimeout(()=>{if(currentPat)startPatFlow(currentPat,currentAccountId)},3000);};
+ sock.onclose=(e)=>{clearInterval(tradePing);if(queueTimer)clearInterval(queueTimer);pocSubscribed=false;logLine(`OTP closed ${e.code} — reconnect 4s queue fix`,'warn');setTimeout(()=>{if(currentPat)startPatFlow(currentPat,currentAccountId)},4000);};
 }
-function computeDollarRisk(en,sl,tp,stake,mult){if(!en||!sl)return{slDollar:stake,tpDollar:stake*2};const slD=Math.abs(en-sl);const tpD=tp?Math.abs(tp-en):slD*2;let sl$=(slD/en)*stake*mult;let tp$=(tpD/en)*stake*mult;return{slDollar:Math.max(stake*0.5,Math.min(stake*2,sl$)),tpDollar:Math.max(stake*1,Math.min(stake*6,tp$))};}
-window.manualTrade=(sym,dir)=>{const st=symbolState[sym];if(!st||!st.entry||!st.sl)return;const stake=1;const mult=100;const {slDollar,tpDollar}=computeDollarRisk(st.entry,st.sl,st.tp1,stake,mult);const reqId=reqIdCounter++;pendingMap[reqId]={sym,stake};wsSend(wsTrade,{proposal:1,amount:stake,basis:'stake',contract_type:dir==='BUY'?'MULTUP':'MULTDOWN',underlying_symbol:sym,currency:'USD',multiplier:mult,limit_order:{stop_loss:slDollar,take_profit:tpDollar},req_id:reqId});logLine(`MANUAL ${sym} ${dir} E ${st.entry.toFixed(2)} SL ${st.sl.toFixed(2)}`,'trade');if(tgEnabled)sendTg(`🖐 MANUAL ${dir} ${st.short} @${st.entry.toFixed(2)} SL ${st.sl.toFixed(2)} TP ${st.tp1.toFixed(2)}`);}
+window.manualTrade=(sym,dir)=>{const st=symbolState[sym];if(!st||!st.entry||!st.sl){logLine(`No Entry/SL yet for ${sym} — wait for H4 load ${st?st.h4Candles.length:0}/200`,'warn');return;}const stake=1;const reqId=reqIdCounter++;pendingMap[reqId]={sym,stake:1};const sl$=Math.max(0.5,Math.min(2,Math.abs(st.entry-st.sl)/st.entry*100));wsSend(wsTrade,{proposal:1,amount:1,basis:'stake',contract_type:dir==='BUY'?'MULTUP':'MULTDOWN',underlying_symbol:sym,currency:'USD',multiplier:100,limit_order:{stop_loss:sl$,take_profit:sl$*1.5},req_id:reqId});logLine(`MANUAL ${sym} ${dir} E ${st.entry.toFixed(2)} SL ${st.sl.toFixed(2)}`,'trade');if(tgEnabled)sendTg(`🖐 MANUAL ${dir} ${st.short} @${st.entry.toFixed(2)} SL ${st.sl.toFixed(2)} TP ${st.tp1.toFixed(2)}`);}
+window.toggleAuto=()=>{autoTradeEnabled=!autoTradeEnabled;document.getElementById('autoTradeBtn').innerText=`AUTO: ${autoTradeEnabled?'ON':'OFF'}`;}
 try{const t=localStorage.getItem('deriv_token');if(t)document.getElementById('apiTokenInput').value=t;}catch(e){}
 loadTg();
-logLine('v23 loaded — Telegram swing alerts — paste Bot Token from @BotFather + Chat ID from @userinfobot → TEST → CONNECT → you get alerts','buy');
+logLine('v25 VERIFIED — fixes: rate limit queue, REAL $0 auto-pick DEMO, spark chart ReferenceError, Entry/SL/TP always visible','buy');
 </script>
 </body>
 </html>

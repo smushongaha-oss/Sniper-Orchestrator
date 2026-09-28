@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>SNIPER v27 — FULLY FIXED SWING</title>
+<title>SNIPER v28 — NO SWING LOCK</title>
 <style>
 :root{--bg:#03070c;--panel:#071018;--line:#123041;--cyan:#33d6ff;--red:#ff4d4d;--green:#3ddc84;--muted:#5f7d92}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:#dff6ff;font-family:'Courier New',monospace}
@@ -33,12 +33,12 @@ button{font-weight:800;min-height:42px;cursor:pointer}
 <body>
 <div class="shell">
 <div class="topbar">
-<b style="color:#3ddc84">SNIPER v27 — FULLY FIXED — SWING LABEL WHERE NEUTRAL</b>
-<div style="font-size:10px;color:#5f7d92">v25 verified log: 39 H4/H1/M15 loaded + 13 ticks + Entry/SL/TP lines. v27 adds SWING word even when H1 NEUTRAL (your request).</div>
+<b style="color:#3ddc84">SNIPER v28 — NO SWING LOCK</b>
+<div style="font-size:10px;color:#5f7d92">v27 SWING label where NEUTRAL + v28 locks buttons when NEUTRAL/NEUTRAL</div>
 <div id="liveUsdLine" style="font-size:11px;color:#ffb020">LIVE: not connected</div>
 <div id="tradeStatusText" style="font-size:10px;color:#5f7d92">paste pat_ → TEST → CONNECT</div>
 <div class="telegram-box">
-<b style="font-size:11px;color:#33d6ff">📱 TELEGRAM — ID -1003609140518 is group, bot must be admin</b>
+<b style="font-size:11px;color:#33d6ff">📱 TELEGRAM — ID -1003609140518</b>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
 <input type="text" id="tgTokenInput" placeholder="Bot Token">
 <input type="text" id="tgChatInput" placeholder="Chat ID -1003609140518">
@@ -47,19 +47,19 @@ button{font-weight:800;min-height:42px;cursor:pointer}
 <button onclick="window.testTelegram()" style="border-color:#33d6ff">TEST TELEGRAM</button>
 <button id="tgToggleBtn" onclick="window.toggleTelegram()" style="border-color:#5f7d92">TELEGRAM: OFF</button>
 </div>
-<div id="tgStatus" style="font-size:9px;color:#5f7d92">Add bot as admin to group or message fails</div>
+<div id="tgStatus" style="font-size:9px;color:#5f7d92">Add bot as admin to group</div>
 </div>
 <input type="text" id="apiTokenInput" placeholder="Deriv pat_...">
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:6px">
 <select id="accountSelect"><option>TEST first</option></select>
-<button onclick="window.doTest()" style="border-color:#5f7d92">1) TEST (auto-pick DEMO)</button>
+<button onclick="window.doTest()" style="border-color:#5f7d92">1) TEST</button>
 </div>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-<button onclick="window.doConnect()" style="background:#082d18;border:2px solid #3ddc84;color:#3ddc84">2) CONNECT v27 FIXED</button>
+<button onclick="window.doConnect()" style="background:#082d18;border:2px solid #3ddc84;color:#3ddc84">2) CONNECT v28</button>
 <button id="autoTradeBtn" onclick="window.toggleAuto()" style="border-color:#5f7d92">AUTO: OFF</button>
 </div>
-<div id="acctLine" style="font-size:10px;color:#5f7d92;margin-top:8px;border:1px solid #123041;border-radius:6px;padding:6px">v27: SWING label where neutral + tight SL (H1 recent low/high)</div>
-<div class="log" id="execLog">v27 fully fixed — queue + chart + swing neutral fix
+<div id="acctLine" style="font-size:10px;color:#5f7d92;margin-top:8px;border:1px solid #123041;border-radius:6px;padding:6px">v28: NEUTRAL=locked, SWING=active</div>
+<div class="log" id="execLog">v28 loaded — waiting
 </div>
 </div>
 <div class="charts-wall" id="chartsWall"></div>
@@ -80,8 +80,8 @@ function saveTg(){localStorage.setItem('tg_token',document.getElementById('tgTok
 function loadTg(){try{const t=localStorage.getItem('tg_token');const c=localStorage.getItem('tg_chat');const e=localStorage.getItem('tg_enabled');if(t)document.getElementById('tgTokenInput').value=t;if(c)document.getElementById('tgChatInput').value=c;tgToken=t||'';tgChatId=c||'';tgEnabled=e==='1';updateTgUI();}catch(e){}}
 function updateTgUI(){document.getElementById('tgToggleBtn').innerText=tgEnabled?'TELEGRAM: ON':'TELEGRAM: OFF';document.getElementById('tgToggleBtn').style.color=tgEnabled?'#3ddc84':'#5f7d92';document.getElementById('tgToggleBtn').style.borderColor=tgEnabled?'#3ddc84':'#5f7d92';document.getElementById('tgStatus').innerText=tgEnabled?`✅ ON → ${tgChatId}`:`OFF`;}
 window.toggleTelegram=()=>{tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();if(!tgToken||!tgChatId){logLine('Paste Token + Chat ID first','warn');return;}tgEnabled=!tgEnabled;saveTg();updateTgUI();logLine(tgEnabled?'📱 TG ON':'📱 TG OFF','trade');}
-window.testTelegram=async()=>{tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();if(!tgToken||!tgChatId){logLine('Paste token + group ID','warn');return;}document.getElementById('tgStatus').innerText='Testing…';const ok=await sendTg(`✅ Test v27 FULLY FIXED\n${new Date().toLocaleTimeString()}\nSWING label even when H1 NEUTRAL now works\nGroup ${tgChatId} — bot must be admin`);document.getElementById('tgStatus').innerText=ok?`✅ Sent to ${tgChatId}`:`❌ Failed — make bot ADMIN in group`;logLine(ok?'✅ TG OK':'❌ TG fail — add bot as admin','warn');if(ok)saveTg();};
-async function sendTg(text){if(!tgToken||!tgChatId)return false;try{const r=await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:tgChatId,text:text,parse_mode:'HTML'})});const j=await r.json();if(!j.ok)logLine(`TG: ${j.description}`,'warn');return j.ok;}catch(e){logLine(`TG EX ${e.message}`,'warn');return false;}}
+window.testTelegram=async()=>{tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();if(!tgToken||!tgChatId){logLine('Paste token + group ID','warn');return;}document.getElementById('tgStatus').innerText='Testing…';const ok=await sendTg(`✅ Test v28\n${new Date().toLocaleTimeString()}\nSWING label where NEUTRAL + No-swing lock active`);document.getElementById('tgStatus').innerText=ok?`✅ Sent to ${tgChatId}`:`❌ Failed — make bot ADMIN`;logLine(ok?'✅ TG OK':'❌ TG fail','warn');if(ok)saveTg();};
+async function sendTg(text){if(!tgToken||!tgChatId)return false;try{const r=await fetch(`https://api.telegram.org/bot${tgToken}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:tgChatId,text:text,parse_mode:'HTML'})});const j=await r.json();return j.ok;}catch(e){return false;}}
 function computeStructure(c,lb){const n=c.length;if(n<lb*2+3)return{state:0,barsSinceBos:999,breakType:null,lastSwingHigh:null,lastSwingLow:null};const swings=[];for(let i=lb;i<n-lb;i++){let isH=true,isL=true;for(let k=1;k<=lb;k++){if(c[i].high<=c[i-k].high||c[i].high<=c[i+k].high)isH=false;if(c[i].low>=c[i-k].low||c[i].low>=c[i+k].low)isL=false;if(!isH&&!isL)break}if(isH)swings.push({confirmedAt:i+lb,type:'H',price:c[i].high});if(isL)swings.push({confirmedAt:i+lb,type:'L',price:c[i].low});}swings.sort((a,b)=>a.confirmedAt-b.confirmedAt);let lastH=null,lastL=null,state=0,lastBos=-1,bType=null,ptr=0,lastHigh=null,lastLow=null;for(let i=0;i<n;i++){while(ptr<swings.length&&swings[ptr].confirmedAt<=i){const s=swings[ptr];if(s.type==='H'){lastH=s.price;lastHigh=s.price}else{lastL=s.price;lastLow=s.price}ptr++}if(i>0){const cl=c[i].close;if(lastL!==null&&cl<lastL){bType=state===-1?'BOS':'CHOCH';state=-1;lastBos=i;lastL=null}else if(lastH!==null&&cl>lastH){bType=state===1?'BOS':'CHOCH';state=1;lastBos=i;lastH=null}}}return{state,barsSinceBos:lastBos===-1?999:(n-1-lastBos),breakType:bType,lastSwingHigh:lastHigh,lastSwingLow:lastLow};}
 function computeATR(c,p){if(c.length<p+1)return null;const tr=[];for(let i=c.length-p;i<c.length;i++){const cur=c[i],pr=c[i-1];tr.push(Math.max(cur.high-cur.low,Math.abs(cur.high-pr.close),Math.abs(cur.low-pr.close)))}return tr.reduce((a,b)=>a+b,0)/p;}
 function structureToValue(res,dec){if(!res||res.state===0)return 50;const b=Math.min(res.barsSinceBos,100);if(res.state===1)return Math.max(50,92-dec*b);return Math.min(50,8+dec*b);}
@@ -122,28 +122,24 @@ function updateCard(sym){
   const pts=src.map((c,i)=>{const x=(i/(src.length-1))*200;const y=toY(c.close);return `${x.toFixed(1)},${y.toFixed(1)}`;});
   const color=st.swingDir==='BUY'?'#3ddc84':st.swingDir==='SELL'?'#ff4d4d':'#33d6ff';
   let lines=`<polyline fill="none" stroke="${color}" stroke-width="1.8" points="${pts.join(' ')}"/>`;
-  if(st.entry!==null){const y=toY(st.entry);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#33d6ff" stroke-width="0.8" stroke-dasharray="4 4"/><text x="2" y="${y-2}" font-size="7" fill="#33d6ff">E ${st.entry.toFixed(1)}</text>`;}
-  if(st.sl!==null){const y=toY(st.sl);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#ff4d4d" stroke-width="0.8" stroke-dasharray="4 4"/>`;}
-  if(st.tp1!==null){const y=toY(st.tp1);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#3ddc84" stroke-width="0.8" stroke-dasharray="4 4"/>`;}
+  if(st.entry!==null&&!(`${badge.textContent}`.includes('no swing'))){const y=toY(st.entry);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#33d6ff" stroke-width="0.8" stroke-dasharray="4 4"/><text x="2" y="${y-2}" font-size="7" fill="#33d6ff">E ${st.entry.toFixed(1)}</text>`;}
+  if(st.sl!==null&&!(`${badge.textContent}`.includes('no swing'))){const y=toY(st.sl);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#ff4d4d" stroke-width="0.8" stroke-dasharray="4 4"/>`;}
+  if(st.tp1!==null&&!(`${badge.textContent}`.includes('no swing'))){const y=toY(st.tp1);lines+=`<line x1="0" y1="${y}" x2="200" y2="${y}" stroke="#3ddc84" stroke-width="0.8" stroke-dasharray="4 4"/>`;}
   svgEl.innerHTML=lines;
  }
- // v27 FIX: SWING label even when H1 NEUTRAL — your request
  let status='NEUTRAL',cls='neutral',border='';
  if(st.h4Res&&st.h1Res){
   if(st.h4Zone!=='NEUTRAL'&&st.h4Zone===st.h1Zone){
    if(st.m15Res&&st.m15Res.barsSinceBos<=3&&zoneOf(st.m15Value)===st.h4Zone){status=`SWING ${st.h4Zone} ENTRY`;cls=st.h4Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';}
    else{status=`SWING ALIGNED H4+H1 ${st.h4Zone} — waiting pullback`;border=st.h4Zone==='BUY'?'trend-buy':'trend-sell';cls=st.h4Zone==='BUY'?'buy':'sell';}
   }else if(st.h4Zone!=='NEUTRAL'&&st.h1Zone==='NEUTRAL'){
-   status=`SWING ${st.h4Zone} — H4 ${st.h4Zone} trend | H1 NEUTRAL (swing pullback)`;
-   cls=st.h4Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';
+   status=`SWING ${st.h4Zone} — H4 ${st.h4Zone} trend | H1 NEUTRAL (swing pullback)`;cls=st.h4Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';
   }else if(st.h4Zone!=='NEUTRAL'){
-   status=`SWING ${st.h4Zone} — H4 ${st.h4Zone} trend | H1 ${st.h1Zone} (waiting H1 alignment)`;
-   cls=st.h4Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';
+   status=`SWING ${st.h4Zone} — H4 ${st.h4Zone} trend | H1 ${st.h1Zone} (waiting H1 alignment)`;cls=st.h4Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';
   }else if(st.h1Zone!=='NEUTRAL'){
-   status=`SWING ${st.h1Zone} — H1 ${st.h1Zone} trend | H4 NEUTRAL`;
-   cls=st.h1Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';
+   status=`SWING ${st.h1Zone} — H1 ${st.h1Zone} trend | H4 NEUTRAL`;cls=st.h1Zone==='BUY'?'buy':'sell';border=cls==='buy'?'trend-buy':'trend-sell';
   }else{
-   status=`NEUTRAL H4 ${st.h4Zone} / H1 ${st.h1Zone} — no swing`;
+   status=`NEUTRAL H4 NEUTRAL / H1 NEUTRAL — no swing`;
   }
  }else status=`loading H4 ${st.h4Candles.length}/200 queued ${queueIdx}/${requestQueue.length}`;
  badge.textContent=status;badge.className='card-badge '+(cls==='buy'?'badge-buy':cls==='sell'?'badge-sell':'badge-neutral');
@@ -152,9 +148,13 @@ function updateCard(sym){
  const h4El=document.getElementById(`h4-${sym}`);if(h4El)h4El.textContent=`H4 ${st.h4Res?Math.round(st.h4Value)+' '+st.h4Zone:'—'}`;
  const h1El=document.getElementById(`h1-${sym}`);if(h1El)h1El.textContent=`H1 ${st.h1Res?Math.round(st.h1Value)+' '+st.h1Zone:'—'}`;
  const m15El=document.getElementById(`m15-${sym}`);if(m15El)m15El.textContent=`M15 ${st.m15Res?Math.round(st.m15Value)+' '+st.m15Zone:'—'}`;
- const eEl=document.getElementById(`entry-${sym}`);if(eEl)eEl.textContent=st.entry?`Entry ${st.entry.toFixed(2)}`:'Entry —';
- const slEl=document.getElementById(`sl-${sym}`);if(slEl)slEl.textContent=st.sl?`SL ${st.sl.toFixed(2)}`:'SL —';
- const tpEl=document.getElementById(`tp-${sym}`);if(tpEl)tpEl.textContent=st.tp1?`TP ${st.tp1.toFixed(2)}`:'TP —';
+ // v28 NEW: lock when no swing
+ const isNoSwing = status.includes('no swing');
+ const eEl=document.getElementById(`entry-${sym}`);if(eEl){ eEl.textContent=isNoSwing?`No swing — wait`:st.entry?`Entry ${st.entry.toFixed(2)}`:'Entry —'; eEl.style.opacity=isNoSwing?'0.3':'1';}
+ const slEl=document.getElementById(`sl-${sym}`);if(slEl){ slEl.textContent=isNoSwing?`No SL`:st.sl?`SL ${st.sl.toFixed(2)}`:'SL —'; slEl.style.opacity=isNoSwing?'0.3':'1';}
+ const tpEl=document.getElementById(`tp-${sym}`);if(tpEl){ tpEl.textContent=isNoSwing?`No TP`:st.tp1?`TP ${st.tp1.toFixed(2)}`:'TP —'; tpEl.style.opacity=isNoSwing?'0.3':'1';}
+ const cardBtns=document.querySelectorAll(`#card-${sym}.btn-buy-sm, #card-${sym}.btn-sell-sm`);
+ cardBtns.forEach(b=>{ b.disabled=isNoSwing; b.style.opacity=isNoSwing?'0.25':'1'; b.style.pointerEvents=isNoSwing?'none':'auto';});
 }
 setInterval(()=>{SCAN_SYMBOLS.forEach(s=>updateCard(s.symbol))},900);
 function feedTick(sym,price,epoch){
@@ -179,7 +179,7 @@ window.doConnect=async()=>{
  if(!pat||!accId){logLine('TEST first','warn');return;}
  tgToken=document.getElementById('tgTokenInput').value.trim();tgChatId=document.getElementById('tgChatInput').value.trim();saveTg();
  localStorage.setItem('deriv_token',pat);currentPat=pat;currentAccountId=accId;pocSubscribed=false;
- logLine(`CONNECT ${accId} — v27 fully fixed`,'trade');
+ logLine(`CONNECT ${accId} — v28`,'trade');
  try{await startPatFlow(pat,accId);}catch(e){logLine(e.message,'warn');}
 };
 async function fetchAccounts(pat){const r=await fetch(`${REST_BASE}/trading/v1/options/accounts`,{headers:{'Authorization':`Bearer ${pat}`,'Deriv-App-ID':APP_ID}});const txt=await r.text();if(!r.ok)throw new Error(txt.slice(0,150));return JSON.parse(txt);}
@@ -196,7 +196,7 @@ function openTradingSocket(url,meta){
  sock.onopen=()=>{
   derivAuth={loginid:extractId(meta),balance:parseFloat(meta.balance)||0};
   document.getElementById('liveUsdLine').innerText=`LIVE: $${derivAuth.balance.toFixed(2)} · ${derivAuth.loginid}`;
-  logLine(`trading OPEN ${derivAuth.loginid} — queue 1/900ms — v27 SWING NEUTRAL fix`,'trade');
+  logLine(`trading OPEN ${derivAuth.loginid} — v28 no-swing lock`,'trade');
   if(!pocSubscribed){wsSend(sock,{proposal_open_contract:1,subscribe:1});pocSubscribed=true;}
   wsSend(sock,{balance:1,subscribe:1});
   requestQueue=[];SCAN_SYMBOLS.forEach(s=>{
@@ -204,9 +204,8 @@ function openTradingSocket(url,meta){
    requestQueue.push({ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:3600,style:"candles"});
    requestQueue.push({ticks_history:s.symbol,adjust_start_time:1,count:200,end:"latest",granularity:900,style:"candles"});
   });
-  logLine(`Queued ${requestQueue.length} req — 1/900ms`,'info');
   queueIdx=0;queueTimer=setInterval(()=>{
-   if(queueIdx>=requestQueue.length){clearInterval(queueTimer);logLine(`✅ All ${requestQueue.length} H4/H1/M15 loaded — ticks 1/600ms`,'buy');let tIdx=0;const tt=setInterval(()=>{if(tIdx>=SCAN_SYMBOLS.length){clearInterval(tt);logLine(`✅ All 13 ticks subscribed — Entry/SL/TP + SWING label where NEUTRAL`,'buy');return;}wsSend(sock,{ticks:SCAN_SYMBOLS[tIdx].symbol,subscribe:1});tIdx++;},600);return;}
+   if(queueIdx>=requestQueue.length){clearInterval(queueTimer);logLine(`✅ All ${requestQueue.length} H4/H1/M15 loaded`,'buy');let tIdx=0;const tt=setInterval(()=>{if(tIdx>=SCAN_SYMBOLS.length){clearInterval(tt);logLine(`✅ All 13 ticks subscribed — Entry/SL/TP locked when NEUTRAL`,'buy');return;}wsSend(sock,{ticks:SCAN_SYMBOLS[tIdx].symbol,subscribe:1});tIdx++;},600);return;}
    wsSend(sock,requestQueue[queueIdx]);queueIdx++;
   },900);
   tradePing=setInterval(()=>wsSend(sock,{ping:1}),15000);
@@ -215,7 +214,7 @@ function openTradingSocket(url,meta){
   let d;try{d=JSON.parse(ev.data)}catch(e){return}
   if(d.error){
    if(d.error.code==='AlreadySubscribed')return;
-   if((d.error.message||'').toLowerCase().includes('rate limit')){logLine(`⚠️ Rate limit — slowing to 1.8s`,'warn');if(queueTimer){clearInterval(queueTimer);queueTimer=setInterval(()=>{if(queueIdx<requestQueue.length){wsSend(sock,requestQueue[queueIdx]);queueIdx++;}},1800);}return;}
+   if((d.error.message||'').toLowerCase().includes('rate limit')){if(queueTimer){clearInterval(queueTimer);queueTimer=setInterval(()=>{if(queueIdx<requestQueue.length){wsSend(sock,requestQueue[queueIdx]);queueIdx++;}},1800);}return;}
    logLine(`❌ ${d.error.code} ${d.error.message}`,'warn');return;
   }
   if(d.msg_type==='balance'&&d.balance){derivAuth.balance=d.balance.balance;}
@@ -224,9 +223,9 @@ function openTradingSocket(url,meta){
    const sym=d.echo_req&&d.echo_req.ticks_history;const st=symbolState[sym];if(!st)return;
    const mapped=d.candles.map(c=>({open:+c.open,high:+c.high,low:+c.low,close:+c.close,epoch:c.epoch}));
    const gran=d.echo_req.granularity;
-   if(gran===14400){st.h4Candles=mapped;logLine(`✅ H4 ${sym} ${mapped.length} loaded`,'buy');}
-   else if(gran===3600){st.h1Candles=mapped;logLine(`✅ H1 ${sym} ${mapped.length}`,'buy');}
-   else if(gran===900){st.m15Candles=mapped;}
+   if(gran===14400)st.h4Candles=mapped;
+   else if(gran===3600)st.h1Candles=mapped;
+   else if(gran===900)st.m15Candles=mapped;
    recomputeAll(sym);
   }
  };
@@ -236,7 +235,7 @@ window.manualTrade=(sym,dir)=>{const st=symbolState[sym];if(!st||!st.entry||!st.
 window.toggleAuto=()=>{autoTradeEnabled=!autoTradeEnabled;document.getElementById('autoTradeBtn').innerText=`AUTO: ${autoTradeEnabled?'ON':'OFF'}`;}
 try{const t=localStorage.getItem('deriv_token');if(t)document.getElementById('apiTokenInput').value=t;}catch(e){}
 loadTg();
-logLine('v27 FULLY FIXED loaded — SWING label where NEUTRAL + tight SL + queue + chart + demo auto-pick','buy');
+logLine('v28 loaded — SWING where NEUTRAL + lock when no swing','buy');
 </script>
 </body>
 </html>
